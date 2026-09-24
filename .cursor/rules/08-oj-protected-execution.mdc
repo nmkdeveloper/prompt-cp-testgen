@@ -1,0 +1,13 @@
+---
+description: Enforces agent-generated cross-platform protected execution with hard resource limits.
+alwaysApply: true
+---
+# OJ Protected Execution
+
+- The agent must generate the protected runner for the detected host.
+- Do not use a bundled generic runner implementation.
+- Limit protected child executions to 1024 MiB RAM and 1000 ms wall time.
+- Enforce 1000 ms CPU time where the OS provides a reliable mechanism.
+- Kill the complete process tree on any limit violation.
+- Do not leave timed-out children running.
+- If reliable enforcement is unavailable, do not silently bypass the guard; recover or mark FAIL.

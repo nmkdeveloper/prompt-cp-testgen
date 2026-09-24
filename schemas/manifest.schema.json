@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OJ Test Engineering Input Manifest",
+  "type": "object",
+  "required": ["input_root", "statement_sources"],
+  "properties": {
+    "input_root": {"type": "string"},
+    "statement_sources": {"type": "array", "items": {"type": "string"}},
+    "statement_assets": {"type": "array", "items": {"type": "string"}},
+    "sample_files": {"type": "array", "items": {"type": "string"}},
+    "brute_solutions": {"type": "array", "items": {"type": "string"}},
+    "reference_candidates": {"type": "array", "items": {"type": "string"}},
+    "wrong_solutions": {"type": "array", "items": {"type": "string"}},
+    "generators": {"type": "array", "items": {"type": "string"}},
+    "validators": {"type": "array", "items": {"type": "string"}},
+    "checkers": {"type": "array", "items": {"type": "string"}},
+    "benchmarks": {"type": "array", "items": {"type": "string"}},
+    "other_files": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

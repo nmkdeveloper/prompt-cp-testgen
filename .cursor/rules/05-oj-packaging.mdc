@@ -1,0 +1,18 @@
+---
+description: Enforces clean Polygon packaging and prohibits shipping internal workspace artifacts.
+alwaysApply: true
+---
+# OJ Packaging
+
+Build the final Polygon package in a clean staging directory and use an allowlist. Do not zip the whole workspace. Exclude logs, reports, candidate pools, provenance, caches and temporary files unless the target package explicitly requires them.
+
+
+## Golden VNOJ template
+
+Use the user-provided Polygon package as the structural golden template. Default language directories are `english` and `vietnamese`. Mirror `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, root scripts, `tags`, and checker/validator resource relationships as applicable.
+
+Include the actual `files/testlib.h` used by the package when testlib is used. Testlib C++ sources must use `#include <testlib.h>`.
+
+Do not invent or guess unsupported Polygon XML. Build a clean staging directory and verify all descriptor paths against actual files before ZIP creation.
+
+After building the staging tree and final ZIP, run the offline-package-verifier in offline mode. ZIP readability alone is insufficient.

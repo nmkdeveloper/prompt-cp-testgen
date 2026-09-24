@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Generated OJ Toolchain Manifest",
+  "type": "object",
+  "required": ["os", "architecture", "compiler", "language_policy", "execution_limits"],
+  "properties": {
+    "os": {"type": "string"},
+    "architecture": {"type": "string"},
+    "compiler": {"type": "string"},
+    "cxx_standard": {"type": "string"},
+    "language_policy": {
+      "type": "object",
+      "required": ["preferred", "reason"],
+      "properties": {
+        "preferred": {"const": "cpp"},
+        "reason": {"type": "string"}
+      }
+    },
+    "execution_limits": {
+      "type": "object",
+      "required": ["memory_mib", "wall_ms", "cpu_ms", "serial"],
+      "properties": {
+        "memory_mib": {"const": 1024},
+        "wall_ms": {"const": 1000},
+        "cpu_ms": {"const": 1000},
+        "serial": {"const": true}
+      }
+    },
+    "os_backend": {"type": "string"},
+    "testlib_include_verified": {"const": true}
+  }
+}

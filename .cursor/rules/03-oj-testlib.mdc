@@ -1,0 +1,13 @@
+---
+description: Enforces the testlib include convention and reproducible test generation.
+alwaysApply: true
+---
+# OJ Testlib
+
+When using testlib in C++, use exactly:
+
+```cpp
+#include <testlib.h>
+```
+
+Never use `#include "testlib.h"`. Prefer deterministic seeded generation and consistent testlib versioning.

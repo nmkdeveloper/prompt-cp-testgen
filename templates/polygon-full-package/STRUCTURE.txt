@@ -1,0 +1,71 @@
+Polygon/VNOJ Full Package Golden Structure
+
+ROOT
+  problem.xml
+  check.cpp              [when root checker mirror is required]
+  check.exe              [when required by target profile]
+  doall.sh
+  doall.bat
+  wipe.sh
+  wipe.bat
+  tags
+  files/
+  statements/
+  statement-sections/
+  solutions/
+  stresses/              [when used]
+  scripts/
+  tests/
+
+FILES/
+  testlib.h              [required when testlib is used]
+  problem.tex            [when target template uses it]
+  tutorial.tex           [when tutorial exists]
+  statements.ftl         [when target template uses it]
+  olymp.sty              [when required by statement build]
+  check.cpp + target binary
+  validator.cpp + target binary
+  generator_*.cpp + target binaries
+  tests/checker-tests/
+  tests/validator-tests/
+
+STATEMENTS/
+  english/
+  vietnamese/
+  .html/english/
+  .html/vietnamese/
+  .pdf/english/
+  .pdf/vietnamese/
+
+STATEMENT-SECTIONS/
+  english/
+  vietnamese/
+
+SOLUTIONS/
+  source.cpp
+  source.cpp.desc
+  source.binary (when target requires it)
+
+TESTS/
+  01 ... 100
+  01.a ... 100.a
+
+IMPORTANT
+  Test 01..Nsamples = original samples, byte-faithfully preserved.
+  Final test count = exactly 100 on success.
+  Killer tests must be distributed, not clustered in one final block.
+  Every subtask ends with multiple max-boundary tests whenever feasible.
+  Do not manually edit generated tests or answers.
+  Rebuild from source when anything changes.
+
+
+I/O CONTRACT
+  Preserve explicit judging input-file/output-file attributes exactly.
+  Empty attributes mean standard I/O; do not invent filenames.
+  File-I/O solutions and runtime tests must use the exact source filenames.
+  Never rewrite the I/O mode for local convenience.
+
+TUTORIAL CONTRACT
+  Successful default package contains both English and Vietnamese tutorials whenever tutorials are supported.
+  Preserve supplied tutorial source language; translate only the missing default language faithfully.
+  Keep problem.xml, statements/*/tutorial.tex, statement-sections/*/tutorial.tex and problem-properties.json synchronized.

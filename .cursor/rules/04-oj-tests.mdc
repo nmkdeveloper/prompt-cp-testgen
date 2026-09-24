@@ -1,0 +1,21 @@
+---
+description: Enforces OJ test suite size, subtask, brute, wrong-solution and answer-diversity requirements.
+alwaysApply: true
+---
+# OJ Test Suite
+
+- Successful problems have exactly 100 final tests.
+- Samples are first and immutable.
+- Subtask count is dynamic.
+- Prefer nested subtasks when natural.
+- End each subtask with approximately 2–3 meaningful max-boundary tests when feasible.
+- Verify small tests with brute/reference differential testing where practical.
+- Attack supplied wrong solutions and meaningful mutants.
+- Generate answers only from verified reference/oracle logic.
+- Minimize unnecessary repeated numeric answers.
+- Include a small proportion of valid no-solution/zero cases when naturally applicable.
+
+
+## Distributed specialized killers
+
+Killer tests must be distributed across the final 100 tests rather than clustered in one end block. For each meaningful wrong solution, seek an executed testcase where the reference is AC and the wrong solution is WA/TLE/RE. Prefer universal-killer tests when feasible; otherwise use a distributed hitting set.

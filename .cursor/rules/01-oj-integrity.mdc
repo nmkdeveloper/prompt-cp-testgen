@@ -1,0 +1,12 @@
+---
+description: Enforces source and sample integrity for competitive-programming test engineering.
+alwaysApply: true
+---
+# OJ Test Integrity
+
+- Original statement content is authoritative.
+- Never invent constraints, semantics, scoring, filenames or answers.
+- Never change original sample input/output or sample order.
+- `problem.md` may normalize extraction/formatting only; it must not alter meaning.
+- Generated `.in/.out` artifacts are immutable; fix source and regenerate.
+- Never manually patch an output to make a solution pass.

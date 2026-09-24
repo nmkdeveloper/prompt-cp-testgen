@@ -1,0 +1,40 @@
+execution_policy:
+  version: 2
+  protected_code_only: true
+  memory_limit_mib: 1024
+  wall_time_limit_ms: 1000
+  cpu_time_limit_ms: 1000
+  kill_on_wall_timeout: true
+  kill_on_cpu_timeout: true
+  kill_on_memory_limit: true
+  process_tree_kill: true
+  serial_execution_only: true
+  subagents_allowed: false
+  internal_worker_threads_preferred: false
+  benchmark_uses_same_limits: true
+
+implementation_policy:
+  generate_runtime_code_at_execution_time: true
+  bundle_does_not_ship_runtime_source: true
+  preferred_language: cpp
+  preferred_standard: c++20
+  fallback_standard: c++17
+  testlib_cpp_include: '#include <testlib.h>'
+  forbidden_testlib_include: '#include "testlib.h"'
+
+os_backends:
+  windows:
+    preferred: Win32 Job Objects + CreateProcess + native timers/accounting
+    process_tree: job_object
+  linux:
+    preferred: POSIX limits/process groups with native Linux accounting/polling as needed
+    process_tree: process_group_or_equivalent
+  macos:
+    preferred: POSIX process controls plus native process-resource observation
+    process_tree: process_group_or_equivalent
+  freebsd:
+    preferred: POSIX process controls plus FreeBSD resource facilities/observation where available
+    process_tree: process_group_or_equivalent
+  other:
+    strategy: implement a dedicated native backend when reliable enforcement is available
+    otherwise: fail_problem_rather_than_run_unprotected

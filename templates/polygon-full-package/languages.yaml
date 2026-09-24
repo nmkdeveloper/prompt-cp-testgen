@@ -1,0 +1,14 @@
+default_languages:
+  - english
+  - vietnamese
+language_directories:
+  english: english
+  vietnamese: vietnamese
+problem_xml_language_ids:
+  - english
+  - vietnamese
+policy:
+  preserve_source_language_verbatim: true
+  translate_missing_default_language: true
+  do_not_change_samples: true
+  do_not_change_constraints: true

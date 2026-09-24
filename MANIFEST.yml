@@ -1,0 +1,54 @@
+bundle:
+  name: oj-test-engineering-antigravity-cursor
+  version: 2.4.2
+  purpose: autonomous single-agent competitive-programming test engineering and Polygon packaging
+platforms:
+  - antigravity
+  - cursor
+shared_skill_root: .agents/skills
+main_skill: .agents/skills/oj-test-engineering/SKILL.md
+antigravity_rules: .agents/rules
+cursor_rules: .cursor/rules
+antigravity_primary_agent: .agents/agents/oj-test-engineer/agent.md
+core_artifacts:
+  - README.md
+  - PROMPT.md
+  - INSTALL.md
+  - AGENTS.md
+  - docs/
+  - schemas/
+  - templates/
+  - vendor/testlib/
+policy_changes:
+  runtime_sources_bundled: false
+  agent_generates_runtime_sources: true
+  preferred_language: cpp
+  preferred_cxx_standard: c++20
+  fallback_cxx_standard: c++17
+  serial_execution_only: true
+  subagents_allowed: false
+  protected_memory_mib: 1024
+  protected_wall_time_ms: 1000
+  protected_cpu_time_ms: 1000
+  kill_process_tree_on_limit: true
+notes:
+  - testlib.h is an external dependency and is not vendored as a frozen snapshot.
+  - Final Polygon ZIPs are generated per problem and are not included in this bundle.
+  - Default Polygon statement languages are English and Vietnamese.
+  - The user-provided Polygon package is the golden structural template for VNOJ-compatible Full Packages.
+  - No generic runtime Python/C++ implementation is bundled. The agent generates tooling per actual problem and host.
+  - Offline package verification is mandatory and does not depend on Polygon API.
+
+skills:
+  offline_package_verifier: .agents/skills/offline-package-verifier/SKILL.md
+verification:
+  mode: offline
+  polygon_api_authoritative: false
+  layered_required: true
+  golden_template_required: true
+
+references:
+  vnoj_importer_source: references/vnoj_codeforces_polygon_importer.py
+  golden_package: references/golden-package-example.zip
+  supplemental_package: references/socdist-polygon-package.zip
+    latest_user_supplied_package: references/socdist-polygon-package.zip

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OJ Test Engineering Report",
+  "type": "object",
+  "required": ["status", "final_test_count"],
+  "properties": {
+    "status": {"enum": ["PASS", "FAIL"]},
+    "problem": {"type": "string"},
+    "final_test_count": {"type": "integer", "minimum": 0},
+    "sample_count": {"type": "integer", "minimum": 0},
+    "subtask_count": {"type": "integer", "minimum": 0},
+    "candidate_count": {"type": "integer", "minimum": 0},
+    "brute_verified_count": {"type": "integer", "minimum": 0},
+    "wrong_solution_count": {"type": "integer", "minimum": 0},
+    "wrong_solutions_killed": {"type": "integer", "minimum": 0},
+    "unique_answers": {"type": "integer", "minimum": 0},
+    "zero_or_no_solution_count": {"type": "integer", "minimum": 0}
+  },
+  "additionalProperties": true
+}

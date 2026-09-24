@@ -1,0 +1,10 @@
+---
+description: Enforces single-agent serial execution with no subagents or concurrent OJ tasks.
+alwaysApply: true
+---
+# OJ Serial Execution
+
+- Do not spawn subagents.
+- Do not run multiple OJ test-engineering tasks concurrently.
+- Run generators, validators, brute, reference, wrong solutions and benchmarks serially.
+- Do not use background task fan-out or parallel execution helpers.

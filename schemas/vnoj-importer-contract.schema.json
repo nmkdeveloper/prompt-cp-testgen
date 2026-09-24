@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VNOJ Polygon Importer Contract",
+  "type": "object",
+  "required": ["statement", "problem_properties", "testset", "checker"],
+  "properties": {
+    "statement": {"type": "object", "required": ["type", "path", "language"]},
+    "problem_properties": {"type": "object", "required": ["legend", "input", "output", "interaction", "scoring", "sampleTests", "notes", "tutorial"]},
+    "testset": {"type": "object", "required": ["name", "input_path_pattern", "answer_path_pattern"]},
+    "checker": {"type": "object", "required": ["type"]}
+  }
+}

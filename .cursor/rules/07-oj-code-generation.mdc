@@ -1,0 +1,12 @@
+---
+description: Requires agent-generated, OS-adapted runtime tooling and protected execution.
+alwaysApply: true
+---
+# OJ Agent-Generated Toolchain
+
+- Do not depend on pre-written runtime Python/C++ tools shipped by the bundle.
+- Generate the required native tooling for the detected operating system.
+- Prefer C++20, falling back to C++17.
+- Prefer C++ for executable problem/tooling components.
+- Protected executions are limited to 1 GiB RAM and 1 second; exceeding a limit requires process-tree termination.
+- Use native OS APIs for enforcement when available.

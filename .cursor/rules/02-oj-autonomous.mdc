@@ -1,0 +1,9 @@
+---
+description: Enforces autonomous execution for OJ test engineering.
+alwaysApply: true
+---
+# OJ Autonomous Completion
+
+Do not ask for approval or permission to continue. Automatically diagnose, repair, regenerate and rerun recoverable failures. For unrecoverable failure after reasonable recovery, write `FAIL`, report it, skip the problem in batch mode and continue.
+
+Before declaring success, run the offline-package-verifier and require PASS from every mandatory layer; Polygon API is not the authoritative verification path.
