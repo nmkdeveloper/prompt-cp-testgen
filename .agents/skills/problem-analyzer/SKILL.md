@@ -28,6 +28,18 @@ The canonical output package defaults to exactly two statement languages: `engli
 - Record source-vs-generated language provenance in the internal report.
 
 
+## Character & typography sanitization (FuraOJ safety)
+
+To prevent upload errors and display crashes on Fura Online Judge:
+- Strictly sanitize extracted text and translations against `DMOJ_PROBLEM_STATEMENT_DISALLOWED_CHARACTERS`:
+  `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`
+- Replace curly double quotes `“`, `”` with ASCII `"`.
+- Replace curly single quotes `‘`, `’` with ASCII `'`.
+- Replace Unicode minus `−` (U+2212) with ASCII `-` (U+002D).
+- Expand typographic ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
+- Use `$ ... $` for inline math, `$$ ... $$` for display math, and escape literal dollar signs as `\$`.
+
+
 ## Immutable statement/sample contract
 
 Use the original PDF/images/files as authoritative source material. `problem.md` is normalized documentation, not permission to rewrite the problem. The generated `problem.tex` and each language's `problem-properties.json` must preserve the original statement semantics and exact original sample input/output.

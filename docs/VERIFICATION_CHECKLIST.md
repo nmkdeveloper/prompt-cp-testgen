@@ -25,6 +25,29 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] Sample order is unchanged.
 - [ ] Default package languages are `english` and `vietnamese`.
 
+## TeX, LaTeX & Markdown Verification (Crash Prevention)
+
+- [ ] Disallowed characters check: ZERO occurrences of `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }` across all XML, JSON, TeX, and Markdown files.
+- [ ] Smart quotes normalized to ASCII `"` and `'`.
+- [ ] Unicode minus `−` normalized to ASCII `-`.
+- [ ] Ligatures expanded to ASCII (`ff`, `fi`, `fl`, `ffi`, `ffl`).
+- [ ] Math delimiters: `$ ... $` for inline, `$$ ... $$` for display.
+- [ ] Literal dollar signs escaped as `\$`.
+- [ ] Pandoc conversion dry-run passes without error.
+- [ ] All image references (`![image](...)` and `<img>`) exist in statement directories.
+
+## FuraOJ Importer Compatibility & Upload Safety
+
+- [ ] Problem code: lowercase alphanumeric `^[a-z0-9]+$`, max 20 characters.
+- [ ] Problem name: non-empty, max 100 characters.
+- [ ] Memory limit: default 1 GB RAM (`<memory-limit>1073741824</memory-limit>` bytes = 1048576 KB, within range).
+- [ ] Time limit: default 1s (`<time-limit>1000</time-limit>` ms, within range 0.01 - 60.0s).
+- [ ] Points: default 1đ, total problem points strictly > 0.
+- [ ] All 8 keys present in `problem-properties.json` (`legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, `tutorial`).
+- [ ] Full package check: test 1 input and answer exist at resolved paths.
+- [ ] Batches/groups: non-empty, valid points policy, valid dependencies.
+- [ ] `D:\Workspaces\Github\furavietnam\furaoj` treated strictly as READONLY.
+
 ## Tests
 
 - [ ] Exactly 100 final tests.

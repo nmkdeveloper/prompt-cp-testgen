@@ -15,6 +15,6 @@ Use testlib where applicable and only with `#include <testlib.h>`.
 
 Preserve original statement and samples exactly. Verify supplied AC/reference code before reuse. Never manually edit generated `.in/.out`; fix source and regenerate.
 
-Log work incrementally, write a detailed report, produce exactly 100 final tests on success, and build only the required Polygon package files.
+Log work incrementally, write a detailed report, produce exactly 100 final tests on success, and build only the required Polygon package files conforming to Fura Online Judge (`D:\Workspaces\Github\furavietnam\furaoj`, strictly READONLY) defaults: 1 GB RAM, 1s time limit, and 1đ problem score.
 
 Do not ask the user for approval or clarification. Automatically recover from ordinary failures. If reasonable recovery is exhausted, record `FAIL`, skip the problem in batch mode, and continue to the next problem.

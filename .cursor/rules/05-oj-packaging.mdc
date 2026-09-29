@@ -7,9 +7,9 @@ alwaysApply: true
 Build the final Polygon package in a clean staging directory and use an allowlist. Do not zip the whole workspace. Exclude logs, reports, candidate pools, provenance, caches and temporary files unless the target package explicitly requires them.
 
 
-## Golden VNOJ template
+## Golden FuraOJ / VNOJ template
 
-Use the user-provided Polygon package as the structural golden template. Default language directories are `english` and `vietnamese`. Mirror `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, root scripts, `tags`, and checker/validator resource relationships as applicable.
+Use the user-provided Polygon package as the structural golden template and conform to Fura Online Judge importer logic (`D:\Workspaces\Github\furavietnam\furaoj`, strictly READONLY). Default import limits & score: 1 GB RAM (`<memory-limit>1073741824</memory-limit>`), 1s time limit (`<time-limit>1000</time-limit>`), and 1đ problem score. Default language directories are `english` and `vietnamese`. Mirror `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, root scripts, `tags`, and checker/validator resource relationships as applicable.
 
 Include the actual `files/testlib.h` used by the package when testlib is used. Testlib C++ sources must use `#include <testlib.h>`.
 

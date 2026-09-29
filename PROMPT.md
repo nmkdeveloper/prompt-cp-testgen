@@ -37,15 +37,22 @@ If, after reasonable automatic recovery, a problem remains impossible to verify 
 Final output is a clean Polygon Full Package ZIP containing only required package artifacts. Internal analysis, logs, candidate pools and provenance remain outside the final ZIP unless explicitly required by the target package.
 
 
-## VNOJ importer and golden-package study
+## FuraOJ / VNOJ importer and golden-package study
 
-Before generating the final package, study these read-only reference artifacts inside `references/`:
+Before generating the final package, study the reference artifacts:
 
-- `vnoj_codeforces_polygon_importer.py` — the supplied OJ importer source and its actual field/path assumptions.
+- Fura Online Judge importer logic at `D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py` and command `judge/management/commands/import_polygon_package.py`.
+  **CRITICAL NOTICE**: `D:\Workspaces\Github\furavietnam\furaoj` is strictly **READONLY**. Never modify, delete, or create any files in it!
+- `references/vnoj_codeforces_polygon_importer.py` — snapshot contract of the OJ importer and its actual field/path assumptions.
 - `golden-package-example.zip` — the supplied Polygon Full Package used as the structural golden package.
 - `socdist-polygon-package.zip` — an additional supplied Polygon package for cross-checking package conventions.
 
-Do not treat generic Polygon documentation alone as sufficient. The final package must be compatible with the supplied VNOJ importer implementation. Build an offline verifier that checks the package against the importer behavior, especially `problem-properties.json`, statement paths/languages, testset paths, checker type/source, test/answer pairs, solutions and any files read by the importer.
+Default import parameters:
+- **1 GB RAM** memory limit (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
+- **1s time** limit (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
+- **1đ** problem score (1 point: unbatched non-partial imports assign `last_case.points = 1`, giving 1đ total for the problem).
+
+Do not treat generic Polygon documentation alone as sufficient. The final package must be compatible with the Fura Online Judge importer implementation. Build an offline verifier that checks the package against the importer behavior, especially `problem-properties.json`, statement paths/languages, testset paths, checker type/source, test/answer pairs, solutions and any files read by the importer.
 
 The final ZIP should match the golden package's *structure and artifact roles* as closely as possible without copying problem-specific content.
 

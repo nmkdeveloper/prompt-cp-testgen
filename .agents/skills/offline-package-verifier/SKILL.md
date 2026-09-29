@@ -154,6 +154,47 @@ Never repair a sample during verification.
 
 Verify canonical `problem.md` against the original source materials for semantic consistency.
 
+### Layer 4.1 — TeX, LaTeX, Markdown & Character Verification (Crash & Conflict Prevention)
+
+Before a package can be accepted, all textual and markup components must pass strict validation against Fura Online Judge's rendering and database constraints to prevent upload errors, crashes, and layout breakage:
+
+1. **Disallowed Characters Sanitization (`DMOJ_PROBLEM_STATEMENT_DISALLOWED_CHARACTERS`)**:
+   Fura Online Judge strictly forbids the following Unicode characters in problem statements, names, translations, and editorial content:
+   `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`
+   The verifier must scan `problem.xml` (all name and short-name tags), every `problem-properties.json` (`legend`, `input`, `output`, `interaction`, `scoring`, `notes`, `tutorial`), and all `.tex` / `.md` files.
+   Zero occurrences of disallowed characters are permitted. The verifier must verify that:
+   - Curly double quotes `“` and `”` (U+201C, U+201D) are replaced with ASCII `"` (U+0022).
+   - Curly single quotes `‘` and `’` (U+2018, U+2019) are replaced with ASCII `'` (U+0027).
+   - Unicode minus `−` (U+2212) is replaced with standard ASCII hyphen-minus `-` (U+002D).
+   - Unicode typographic ligatures (`ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ`) are expanded to ASCII equivalents (`ff`, `fi`, `fl`, `ffi`, `ffl`).
+
+2. **LaTeX & Math Delimiter Verification**:
+   - Inline math must strictly use single dollar delimiters: `$ ... $`.
+   - Display/block math must strictly use double dollar delimiters: `$$ ... $$`.
+   - Unescaped dollar signs in regular text are forbidden: currency or literal dollars must be written as `\$` or enclosed in backtick code spans.
+   - LaTeX bracket balance: all `\left ... \right`, `{ ... }`, `( ... )`, and math environments must be balanced.
+   - Pandoc macro compatibility: only use standard TeX macros compatible with FuraOJ's Pandoc pipeline (`\bf`, `\it`, `\tt`, `\t`, `\text`, `\textbf`, `\textit`). Avoid unparseable raw LaTeX packages or undefined macros.
+
+3. **Pandoc Conversion Dry-Run**:
+   - The verifier must perform a dry-run conversion of all TeX sections using pandoc (GFM markdown target) to confirm that pandoc converts every statement section without syntax errors or process exceptions.
+
+4. **Image & Asset Path Integrity**:
+   - Every image referenced via Markdown `![image](<path>)` or HTML `<img src="<path>">` must exist as a real file in the corresponding statement directory.
+   - Broken image paths cause upload warnings or broken web pages.
+
+5. **Upload Conflict & Page Crash Prevention**:
+   - **Problem Code**: Alphanumeric lowercase `^[a-z0-9]+$`, maximum length 20 characters, no spaces, hyphens, or uppercase letters.
+   - **Problem Name**: Non-empty, maximum length 100 characters, passes `disallowed_characters_validator`.
+   - **Resource Limits in Range**:
+     - Time limit: default `1000` ms (1.0s), strictly within `[0.01, 60.0]` seconds.
+     - Memory limit: default `1073741824` bytes (1 GB = 1048576 KB), strictly within `[0, 1048576]` KB (`DMOJ_PROBLEM_MAX_MEMORY_LIMIT`).
+   - **Total Points > 0**:
+     - Total problem points must be strictly greater than 0 (default 1đ).
+     - For non-partial/unbatched problems, FuraOJ awards 1đ via `last_case.points = 1`.
+     - For batched subtasks, verify that all batches contain at least one test, dependencies are valid, and sum of points > 0.
+   - **init.yml Compilation Safety**:
+     - Verify that `ProblemDataCompiler.generate` would succeed without raising `ProblemDataError` or setting `problem_data.feedback`.
+
 ### Layer 5 — Test-set semantics
 
 Verify the final testset has exactly 100 tests for a successful problem.
@@ -285,6 +326,7 @@ The final report must include a verification matrix:
 | XML/schema | PASS/FAIL | ... | ... | ... |
 | References | PASS/FAIL | ... | ... | ... |
 | Samples | PASS/FAIL | ... | ... | ... |
+| TeX/Markdown/Characters | PASS/FAIL | ... | ... | ... |
 | Tests | PASS/FAIL | ... | ... | ... |
 | Testlib | PASS/FAIL | ... | ... | ... |
 | Runtime | PASS/FAIL | ... | ... | ... |
@@ -295,9 +337,13 @@ The final report must include a verification matrix:
 The report must never claim a check ran when it did not.
 
 
-## VNOJ importer compatibility layer
+## FuraOJ / VNOJ importer compatibility layer
 
-The offline verifier must include a dedicated compatibility layer derived from `references/vnoj_codeforces_polygon_importer.py`. The importer source is behavioral truth for this target.
+The offline verifier must include a dedicated compatibility layer derived from the Fura Online Judge importer implementation (`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`) and `references/vnoj_codeforces_polygon_importer.py`. The importer source is behavioral truth for this target.
+
+**CRITICAL NOTICE ON FURAOJ DIRECTORY**:
+The directory `D:\Workspaces\Github\furavietnam\furaoj` contains the Fura Online Judge codebase.
+**THIS DIRECTORY IS STRICTLY READONLY**. Never write to, modify, or delete any files in `D:\Workspaces\Github\furavietnam\furaoj`.
 
 At minimum, model and verify these observed assumptions:
 
@@ -306,7 +352,10 @@ At minimum, model and verify these observed assumptions:
 - `testset/tests` is non-empty.
 - `input-path-pattern` and `answer-path-pattern` resolve to real ZIP members for every test.
 - At least test 1 exists at the exact resolved input path; this is the importer's definition of a Full Package check.
-- The testset time limit is milliseconds and memory limit is bytes; verify units before building.
+- Default resource limits and scoring in `problem.xml`:
+  - `time-limit` defaults to `1000` (milliseconds, corresponding to 1s time limit in FuraOJ).
+  - `memory-limit` defaults to `1073741824` (bytes, corresponding to 1048576 KB / 1 GB RAM in FuraOJ).
+  - Points default to `1đ` (1 point: unbatched non-partial imports award 1 point via `last_case.points = 1`, or subtask points must sum to 1đ default or problem points).
 - Non-interactive packages require a checker. The checker must have `type="testlib"`.
 - Built-in checker names used by the importer map to supported DMOJ checker modes; otherwise a C++ checker source must exist.
 - Custom checker sources must be `.cpp` and are treated as testlib checker sources.
@@ -319,7 +368,7 @@ At minimum, model and verify these observed assumptions:
 - Images referenced after statement conversion must point to actual package members before importer media upload.
 - Main solution is expected under `<solutions>` with `tag="main"` if solution parsing is needed; its source path must exist.
 
-The verifier must report importer-contract failures before the ZIP is handed to the VNOJ site.
+The verifier must report importer-contract failures before the ZIP is handed to FuraOJ / VNOJ.
 
 ## Golden package comparison
 

@@ -55,9 +55,18 @@ Success requires exactly 100 final tests, preserved samples first, subtask bound
 If recovery is exhausted, write `FAIL` in the report and skip the problem in batch mode.
 
 
-## Golden-package output contract
+## Golden-package output contract (FuraOJ / VNOJ profile)
 
-The final package must mirror the user-supplied Polygon Full Package structure as closely as possible. Treat the sample package as a structural golden template.
+The final package must mirror the user-supplied Polygon Full Package structure as closely as possible and comply with the Fura Online Judge importer (`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`).
+
+**CRITICAL NOTICE ON FURAOJ DIRECTORY**:
+The directory `D:\Workspaces\Github\furavietnam\furaoj` contains the Fura Online Judge codebase.
+**THIS DIRECTORY IS STRICTLY READONLY**. Never write to, modify, or delete any files in `D:\Workspaces\Github\furavietnam\furaoj`. All package generation, code, and verification must happen in the workspace `prompt-cp-testgen`.
+
+Default resource limits and scoring for `problem.xml`:
+- **Default Memory Limit**: **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
+- **Default Time Limit**: **1s time** (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
+- **Default Points**: **1đ** (1 point: unbatched non-partial imports assign `last_case.points = 1` giving 1đ total for the problem, or default problem point value 1đ).
 
 Default statement languages are exactly:
 
