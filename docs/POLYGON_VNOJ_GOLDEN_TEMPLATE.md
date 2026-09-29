@@ -67,6 +67,14 @@ english
 vietnamese
 ```
 
+### Vietnamese Unicode Support (NFC & UTF-8)
+
+All Vietnamese statement files (`statements/vietnamese/`), properties JSON, and XML name tags must fully support Vietnamese characters and diacritics:
+- **Encoding**: Strict UTF-8 without BOM.
+- **Normalization**: Unicode Normalization Form C (NFC) must be enforced via `unicodedata.normalize('NFC', text)`. Decomposed characters (NFD) can cause tone mark detachment or broken rendering in Pandoc and web browsers.
+- **Diacritics Preservation**: Never strip, drop, or transliterate Vietnamese letters (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels).
+- **Sanitization Boundary**: The disallowed character set `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }` must never affect Vietnamese letters or accents.
+
 Recommended structure, matching the reference package:
 
 ```text

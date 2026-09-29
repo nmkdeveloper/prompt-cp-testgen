@@ -26,6 +26,13 @@ Use:
 
 For tutorials, keep both languages whenever tutorials are supported.
 
+## Vietnamese Unicode Support
+
+- Fully support Vietnamese Unicode across statements, problem names, notes, and tutorials.
+- All files must be encoded in **UTF-8 without BOM**.
+- All text must be normalized to **Unicode NFC (Form C)** to ensure diacritics are precomposed and render correctly.
+- Preserve all Vietnamese letters and diacritics (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels); sanitization against disallowed punctuation must never strip or alter Vietnamese letters.
+
 ## Importer compatibility
 
 The offline verifier must model the Fura Online Judge importer (`judge/utils/codeforces_polygon.py`), including:

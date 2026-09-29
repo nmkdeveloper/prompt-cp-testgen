@@ -38,6 +38,11 @@ To prevent upload errors and display crashes on Fura Online Judge:
 - Replace Unicode minus `−` (U+2212) with ASCII `-` (U+002D).
 - Expand typographic ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
 - Use `$ ... $` for inline math, `$$ ... $$` for display math, and escape literal dollar signs as `\$`.
+- **Vietnamese Unicode Support (NFC & UTF-8)**:
+  - Fully preserve all Vietnamese letters and diacritics (`à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, è, é, ẻ, ẽ, ẹ, ê, ề, ế, ể, ễ, ệ, ì, í, ỉ, ĩ, ị, ò, ó, ỏ, õ, ọ, ô, ồ, ố, ổ, ỗ, ộ, ơ, ờ, ớ, ở, ỡ, ợ, ù, ú, ủ, ũ, ụ, ư, ừ, ứ, ử, ữ, ự, ỳ, ý, ỷ, ỹ, ỵ, đ, Đ` and uppercase equivalents).
+  - Save all files as **UTF-8 without BOM**.
+  - Normalize text to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) to avoid broken separated diacritics.
+  - Never strip, remove, or modify Vietnamese characters during sanitization.
 
 
 ## Immutable statement/sample contract

@@ -51,6 +51,7 @@ Default import parameters:
 - **1 GB RAM** memory limit (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
 - **1s time** limit (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
 - **1đ** problem score (1 point: unbatched non-partial imports assign `last_case.points = 1`, giving 1đ total for the problem).
+- **Vietnamese Unicode**: Fully support Vietnamese Unicode across statements, problem names, notes, and tutorials in UTF-8 without BOM; normalize to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) and preserve all Vietnamese letters and diacritics. Disallowed characters check (`{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`) strictly applies to typographic punctuation, never touching Vietnamese letters.
 
 Do not treat generic Polygon documentation alone as sufficient. The final package must be compatible with the Fura Online Judge importer implementation. Build an offline verifier that checks the package against the importer behavior, especially `problem-properties.json`, statement paths/languages, testset paths, checker type/source, test/answer pairs, solutions and any files read by the importer.
 

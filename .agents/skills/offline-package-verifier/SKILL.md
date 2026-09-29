@@ -168,21 +168,27 @@ Before a package can be accepted, all textual and markup components must pass st
    - Unicode minus `−` (U+2212) is replaced with standard ASCII hyphen-minus `-` (U+002D).
    - Unicode typographic ligatures (`ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ`) are expanded to ASCII equivalents (`ff`, `fi`, `fl`, `ffi`, `ffl`).
 
-2. **LaTeX & Math Delimiter Verification**:
+2. **Vietnamese Unicode Integrity & Normalization (NFC & UTF-8)**:
+   - Full native support for Vietnamese Unicode: Vietnamese statements (`statements/vietnamese/`), problem names, scoring, notes, and tutorials must faithfully preserve all Vietnamese letters and diacritics (`à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, è, é, ẻ, ẽ, ẹ, ê, ề, ế, ể, ễ, ệ, ì, í, ỉ, ĩ, ị, ò, ó, ỏ, õ, ọ, ô, ồ, ố, ổ, ỗ, ộ, ơ, ờ, ớ, ở, ỡ, ợ, ù, ú, ủ, ũ, ụ, ư, ừ, ứ, ử, ữ, ự, ỳ, ý, ỷ, ỹ, ỵ, đ, Đ` and uppercase).
+   - Verify that all statement files are strictly encoded in **UTF-8 without BOM**.
+   - Verify that all text is normalized to **Unicode NFC (Normalization Form C)** (`unicodedata.normalize('NFC', text)`). Decomposed diacritics (NFD / tổ hợp) must be composed into NFC to prevent font and rendering defects in Pandoc, KaTeX, and web browsers.
+   - Verify zero mojibake, zero replacement characters (`\ufffd`), and that Vietnamese characters are not inadvertently stripped or corrupted during sanitization.
+
+3. **LaTeX & Math Delimiter Verification**:
    - Inline math must strictly use single dollar delimiters: `$ ... $`.
    - Display/block math must strictly use double dollar delimiters: `$$ ... $$`.
    - Unescaped dollar signs in regular text are forbidden: currency or literal dollars must be written as `\$` or enclosed in backtick code spans.
    - LaTeX bracket balance: all `\left ... \right`, `{ ... }`, `( ... )`, and math environments must be balanced.
    - Pandoc macro compatibility: only use standard TeX macros compatible with FuraOJ's Pandoc pipeline (`\bf`, `\it`, `\tt`, `\t`, `\text`, `\textbf`, `\textit`). Avoid unparseable raw LaTeX packages or undefined macros.
 
-3. **Pandoc Conversion Dry-Run**:
+4. **Pandoc Conversion Dry-Run**:
    - The verifier must perform a dry-run conversion of all TeX sections using pandoc (GFM markdown target) to confirm that pandoc converts every statement section without syntax errors or process exceptions.
 
-4. **Image & Asset Path Integrity**:
+5. **Image & Asset Path Integrity**:
    - Every image referenced via Markdown `![image](<path>)` or HTML `<img src="<path>">` must exist as a real file in the corresponding statement directory.
    - Broken image paths cause upload warnings or broken web pages.
 
-5. **Upload Conflict & Page Crash Prevention**:
+6. **Upload Conflict & Page Crash Prevention**:
    - **Problem Code**: Alphanumeric lowercase `^[a-z0-9]+$`, maximum length 20 characters, no spaces, hyphens, or uppercase letters.
    - **Problem Name**: Non-empty, maximum length 100 characters, passes `disallowed_characters_validator`.
    - **Resource Limits in Range**:

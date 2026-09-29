@@ -49,6 +49,11 @@ In Fura Online Judge (`judge/models/problem.py`), problem name, description, tra
   - LaTeX macros supported by FuraOJ's Lua filter: `\bf`, `\it`, `\tt`, `\t`, `\text`, `\textbf`, `\textit`.
 - **Image Assets**:
   - Markdown `![image](<path>)` and `<img src="<path>">` are extracted and re-uploaded via Django storage. If the file `<path>` is missing from the ZIP, extraction fails and image rendering breaks.
+- **Vietnamese Unicode Support (NFC & UTF-8)**:
+  - Statements in Vietnamese (`vietnamese`) and Vietnamese problem names must be fully preserved with complete tone marks and diacritics (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels).
+  - All files must be saved in **UTF-8 without BOM**.
+  - Text must be normalized to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) to avoid detached diacritics (tổ hợp) that break Pandoc and web browsers.
+  - The disallowed characters filter strictly targets typographic symbols and ligatures; it must NEVER alter or strip Vietnamese characters.
 
 ## Upload Conflict & Page Crash Prevention
 

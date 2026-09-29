@@ -118,11 +118,15 @@ Before finalizing statement files and packaging:
    - Replace curly single quotes `‘`, `’` with ASCII `'`.
    - Replace Unicode minus `−` with ASCII `-`.
    - Expand ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
-2. **LaTeX & Math Delimiters**:
+2. **Vietnamese Unicode Support (NFC & UTF-8)**:
+   - Full native preservation of Vietnamese Unicode in `statements/vietnamese/` and `problem.xml`. Never strip, remove, or corrupt Vietnamese tone marks or letters (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels).
+   - Encode all statement files strictly in **UTF-8 without BOM**.
+   - Normalize all text with **Unicode NFC** (`unicodedata.normalize('NFC', text)`) to ensure diacritics are precomposed and render correctly across Pandoc, KaTeX, and web browsers.
+3. **LaTeX & Math Delimiters**:
    - Strictly use `$ ... $` for inline math and `$$ ... $$` for display math.
    - Escape literal dollar signs as `\$`.
    - Ensure all math environments and braces are balanced.
-3. **Image & Resource Paths**:
+4. **Image & Resource Paths**:
    - Ensure every image linked via `![image](<path>)` or `<img src="<path>">` exists within the statement directory.
 
 ### Final verification

@@ -31,6 +31,10 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] Smart quotes normalized to ASCII `"` and `'`.
 - [ ] Unicode minus `−` normalized to ASCII `-`.
 - [ ] Ligatures expanded to ASCII (`ff`, `fi`, `fl`, `ffi`, `ffl`).
+- [ ] Vietnamese Unicode supported: all Vietnamese letters and diacritics (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels) preserved without loss.
+- [ ] UTF-8 without BOM confirmed for all statement and descriptor files.
+- [ ] Unicode NFC normalization confirmed (`unicodedata.normalize('NFC', text)`).
+- [ ] Zero mojibake or replacement characters (`\ufffd`).
 - [ ] Math delimiters: `$ ... $` for inline, `$$ ... $$` for display.
 - [ ] Literal dollar signs escaped as `\$`.
 - [ ] Pandoc conversion dry-run passes without error.

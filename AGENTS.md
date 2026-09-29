@@ -69,6 +69,11 @@ Fura Online Judge (FuraOJ) importer source-of-truth rule
   - Expand ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
   - Format math strictly with `$ ... $` (inline) and `$$ ... $$` (display). Escape literal dollars as `\$`.
   - Verify that all referenced images exist within the statement folder.
+- **Vietnamese Unicode Support (NFC & UTF-8)**:
+  - Full native support for Vietnamese Unicode: all Vietnamese statements (`statements/vietnamese/`), problem names, scoring, notes, and tutorials must fully preserve Vietnamese diacritics and letters (`à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, è, é, ẻ, ẽ, ẹ, ê, ề, ế, ể, ễ, ệ, ì, í, ỉ, ĩ, ị, ò, ó, ỏ, õ, ọ, ô, ồ, ố, ổ, ỗ, ộ, ơ, ờ, ớ, ở, ỡ, ợ, ù, ú, ủ, ũ, ụ, ư, ừ, ứ, ử, ữ, ự, ỳ, ý, ỷ, ỹ, ỵ, đ, Đ` and uppercase variants).
+  - All files must be saved in **UTF-8 without BOM**.
+  - Normalize all text to **Unicode NFC (Normalization Form C)** (`unicodedata.normalize('NFC', text)`) to prevent decomposed diacritics (tổ hợp) from breaking Pandoc/KaTeX rendering or database lookups.
+  - Crucial distinction: `DMOJ_PROBLEM_STATEMENT_DISALLOWED_CHARACTERS` applies exclusively to typographic quotes, unicode minus, and Latin ligatures; it must NEVER strip or alter Vietnamese letters or diacritics (`đ`, `Đ`, `ư`, `ơ`, `ê`, `ô`, `ă`, `â` etc. are fully valid and preserved).
 - **Upload Conflict & Crash Prevention**:
   - Problem code must be alphanumeric lowercase (`^[a-z0-9]+$`), maximum length 20.
   - Problem name must be non-empty, maximum length 100, and free of disallowed characters.
