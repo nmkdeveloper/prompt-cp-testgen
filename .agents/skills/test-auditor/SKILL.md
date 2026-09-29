@@ -15,6 +15,8 @@ Verify:
 - answer distribution is reasonable without fabricated outputs
 - benchmark requirements completed where applicable
 - generated artifacts were not manually edited
+- strict I/O whitespace formatting: zero trailing spaces on any line, zero redundant blank lines, and exactly one terminating newline (`\n`) at EOF across all test inputs and outputs
+- LaTeX math subscript escaping: all math subscripts escape underscores (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` instead of `$s_1$`), zero disallowed characters, Unicode NFC normalized
 
 Write findings incrementally to logs, invoke the offline-package-verifier, and summarize the complete verification matrix in `report.md`. Do not declare PASS from structural inspection alone.
 

@@ -48,6 +48,8 @@ Do not include a generic runner implementation from the bundle.
 - Never manually edit generated `.in/.out`.
 - If generated data is wrong, fix source and regenerate.
 - If supplied reference code conflicts with brute/adversarial evidence, investigate instead of trusting its label.
+- Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) must adhere strictly to statement specifications with zero trailing spaces, no redundant blank lines, and exactly one terminating newline at EOF.
+- LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 
 ## Final conditions
 Success requires exactly 100 final tests, preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, a clean Polygon ZIP, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
@@ -117,9 +119,9 @@ Do not label a killer as successful based on theory alone; execute it.
 Before success, invoke the `offline-package-verifier` skill. The verifier must be generated for the actual environment and may use locally available Python libraries such as `defusedxml`, `lxml`, `xmlschema`, and `jsonschema` when appropriate, with correct standard-library fallbacks. It must validate the package in layers: safe ZIP inspection, golden-template comparison, XML/schema/semantic validation, referential integrity, sample/statement immutability, exact 100-test integrity, testlib/checker/validator runtime checks, reference/brute/wrong-solution checks, protected execution, benchmark evidence and reproducibility. Do not use Polygon API as the authoritative verifier.
 
 
-## I/O contract — immutable
+## I/O contract — immutable & strictly formatted
 
-The original I/O mechanism is part of the problem specification. Never convert file I/O to stdin/stdout or vice versa. Preserve exact input/output filenames and case. Preserve `problem.xml` judging `input-file`/`output-file` values and `problem-properties.json` `inputFile`/`outputFile` values. If standard I/O is specified, do not invent filenames. If file I/O is specified, generated solution/brute/benchmark/protected execution must use the exact filenames. Any mismatch requires a source-level fix and regeneration.
+The original I/O mechanism is part of the problem specification. Never convert file I/O to stdin/stdout or vice versa. Preserve exact input/output filenames and case. Preserve `problem.xml` judging `input-file`/`output-file` values and `problem-properties.json` `inputFile`/`outputFile` values. If standard I/O is specified, do not invent filenames. If file I/O is specified, generated solution/brute/benchmark/protected execution must use the exact filenames. All test inputs and outputs must adhere strictly to the problem format with zero trailing spaces, no redundant blank lines, and exactly one trailing newline at EOF. Any mismatch requires a source-level fix and regeneration.
 
 ## Bilingual tutorial — required
 

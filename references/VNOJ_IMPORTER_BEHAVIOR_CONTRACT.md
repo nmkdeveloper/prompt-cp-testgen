@@ -46,6 +46,7 @@ In Fura Online Judge (`judge/models/problem.py`), problem name, description, tra
 - **Math Formatting**:
   - Pandoc filter converts inline math to `$ ... $` and display math to `$$ ... $$`.
   - Escaped dollars: Currency or literal `$` in text must be escaped as `\$`.
+  - **Subscript Underscore Escaping (`$s\_1$` mandatory)**: All math subscripts MUST escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` instead of raw `$s_1$`, `$a_i$`). FuraOJ's DMOJ Markdown parser intercepts raw underscores inside math as italic markup (`_..._`), corrupting the LaTeX expression before KaTeX/MathJax rendering.
   - LaTeX macros supported by FuraOJ's Lua filter: `\bf`, `\it`, `\tt`, `\t`, `\text`, `\textbf`, `\textit`.
 - **Image Assets**:
   - Markdown `![image](<path>)` and `<img src="<path>">` are extracted and re-uploaded via Django storage. If the file `<path>` is missing from the ZIP, extraction fails and image rendering breaks.
@@ -54,6 +55,13 @@ In Fura Online Judge (`judge/models/problem.py`), problem name, description, tra
   - All files must be saved in **UTF-8 without BOM**.
   - Text must be normalized to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) to avoid detached diacritics (tổ hợp) that break Pandoc and web browsers.
   - The disallowed characters filter strictly targets typographic symbols and ligatures; it must NEVER alter or strip Vietnamese characters.
+
+## Strict I/O Formatting & Whitespace Constraints
+
+All test files (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to statement formatting:
+- Absolutely ZERO trailing whitespace (no trailing spaces ` ` or tabs `\t` on any line).
+- Absolutely ZERO redundant newlines (no empty lines `\n\n`, exactly one trailing newline `\n` at EOF).
+- Token outputs must not include trailing spaces before newline (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
 
 ## Upload Conflict & Page Crash Prevention
 

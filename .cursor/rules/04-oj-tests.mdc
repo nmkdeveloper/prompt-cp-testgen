@@ -14,6 +14,7 @@ alwaysApply: true
 - Generate answers only from verified reference/oracle logic.
 - Minimize unnecessary repeated numeric answers.
 - Include a small proportion of valid no-solution/zero cases when naturally applicable.
+- All test inputs and outputs must strictly conform to problem format with zero trailing spaces, no redundant blank lines, and exactly one trailing newline at EOF.
 
 
 ## Distributed specialized killers

@@ -37,6 +37,7 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] Zero mojibake or replacement characters (`\ufffd`).
 - [ ] Math delimiters: `$ ... $` for inline, `$$ ... $$` for display.
 - [ ] Literal dollar signs escaped as `\$`.
+- [ ] Subscript underscore escaping: all math subscripts MUST escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` instead of `$s_1$`, `$a_i$`).
 - [ ] Pandoc conversion dry-run passes without error.
 - [ ] All image references (`![image](...)` and `<img>`) exist in statement directories.
 
@@ -52,11 +53,14 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] Batches/groups: non-empty, valid points policy, valid dependencies.
 - [ ] `D:\Workspaces\Github\furavietnam\furaoj` treated strictly as READONLY.
 
-## Tests
+## Tests & Strict I/O Whitespace Formatting
 
 - [ ] Exactly 100 final tests.
 - [ ] Samples are first.
 - [ ] Every input has an answer.
+- [ ] Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) adhere strictly to problem format.
+- [ ] ZERO trailing spaces or tabs on any line in any test input/output file.
+- [ ] ZERO redundant newlines (no consecutive empty lines `\n\n`) and exactly one terminating newline at EOF.
 - [ ] Every final test passes validation.
 - [ ] Every subtask ends with max-boundary tests when feasible.
 - [ ] Killer tests are distributed across the suite.

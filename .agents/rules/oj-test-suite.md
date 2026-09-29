@@ -14,3 +14,4 @@ description: "Always-on requirements for exactly 100 final tests, subtasks, boun
 - Answer diversity is optimized without falsifying or manually editing outputs.
 - Include a small fraction of valid zero/no-solution cases when naturally applicable.
 - Default problem score is 1đ (1 point), conforming to Fura Online Judge import conventions.
+- All test inputs and outputs must strictly conform to problem format with zero trailing spaces, no redundant blank lines, and exactly one trailing newline at EOF.

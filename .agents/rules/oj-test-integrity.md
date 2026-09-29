@@ -12,3 +12,5 @@ This is a non-negotiable source-integrity rule for OJ test engineering.
 - `problem.md` may normalize extraction/formatting only; it must not alter meaning.
 - Generated `.in/.out` artifacts are immutable. Fix source and regenerate.
 - Never manually patch an output to make a solution pass.
+- Test files (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to statement formatting with zero redundant whitespace: absolutely NO trailing spaces on any line, NO redundant blank lines (`\n\n`), and exactly one terminating newline (`\n`) at EOF.
+- LaTeX math subscripts must escape underscores (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) instead of unescaped `$s_1$` to avoid markdown parser corruption.

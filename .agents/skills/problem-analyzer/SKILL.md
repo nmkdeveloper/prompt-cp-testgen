@@ -38,6 +38,7 @@ To prevent upload errors and display crashes on Fura Online Judge:
 - Replace Unicode minus `−` (U+2212) with ASCII `-` (U+002D).
 - Expand typographic ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
 - Use `$ ... $` for inline math, `$$ ... $$` for display math, and escape literal dollar signs as `\$`.
+- **Subscript Underscore Escaping (`$s\_1$` mandatory)**: Do NOT use raw `$s_1$` or `$a_i$`; math subscripts MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` to prevent Markdown parsers from interpreting raw underscores as italic emphasis.
 - **Vietnamese Unicode Support (NFC & UTF-8)**:
   - Fully preserve all Vietnamese letters and diacritics (`à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, è, é, ẻ, ẽ, ẹ, ê, ề, ế, ể, ễ, ệ, ì, í, ỉ, ĩ, ị, ò, ó, ỏ, õ, ọ, ô, ồ, ố, ổ, ỗ, ộ, ơ, ờ, ớ, ở, ỡ, ợ, ù, ú, ủ, ũ, ụ, ư, ừ, ứ, ử, ữ, ự, ỳ, ý, ỷ, ỹ, ỵ, đ, Đ` and uppercase equivalents).
   - Save all files as **UTF-8 without BOM**.
@@ -48,6 +49,7 @@ To prevent upload errors and display crashes on Fura Online Judge:
 ## Immutable statement/sample contract
 
 Use the original PDF/images/files as authoritative source material. `problem.md` is normalized documentation, not permission to rewrite the problem. The generated `problem.tex` and each language's `problem-properties.json` must preserve the original statement semantics and exact original sample input/output.
+Sample inputs and outputs must be extracted and preserved with strict whitespace hygiene: zero trailing spaces on any line, no redundant empty lines, and exactly one terminating newline at EOF.
 
 For every section copied into `problem-properties.json`, keep the source content traceable. Do not replace `legend`/`input`/`output` with AI-authored paraphrases unless the package is intentionally generating a faithful missing-language translation; even then, do not alter samples, constraints or semantics.
 

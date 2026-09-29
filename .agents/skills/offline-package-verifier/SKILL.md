@@ -178,6 +178,8 @@ Before a package can be accepted, all textual and markup components must pass st
    - Inline math must strictly use single dollar delimiters: `$ ... $`.
    - Display/block math must strictly use double dollar delimiters: `$$ ... $$`.
    - Unescaped dollar signs in regular text are forbidden: currency or literal dollars must be written as `\$` or enclosed in backtick code spans.
+   - **Subscript Underscore Escaping (`$s\_1$` mandatory)**:
+     All math subscripts MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`, `$x\_{max}$` instead of raw `$s_1$`, `$a_i$`. The verifier must inspect all math formulas across TeX, Markdown, and `problem-properties.json` fields, rejecting unescaped subscript underscores that trigger Markdown italic markup corruption.
    - LaTeX bracket balance: all `\left ... \right`, `{ ... }`, `( ... )`, and math environments must be balanced.
    - Pandoc macro compatibility: only use standard TeX macros compatible with FuraOJ's Pandoc pipeline (`\bf`, `\it`, `\tt`, `\t`, `\text`, `\textbf`, `\textit`). Avoid unparseable raw LaTeX packages or undefined macros.
 
@@ -215,6 +217,14 @@ Verify:
 - each subtask ends with multiple max-boundary tests whenever feasible;
 - generator metadata resolves to real resources when retained in the package;
 - no final testcase was manually patched.
+
+### Layer 5.1 — Strict I/O formatting & whitespace verification
+
+Verify byte-level whitespace and newline conformity across all test input and answer files (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`):
+- **Exact problem specification conformity**: data layout, token counts, and lines conform strictly to statement definitions.
+- **Zero trailing whitespace**: absolutely NO line in any input or answer file contains trailing spaces (` `) or trailing tabs (`\t`).
+- **Zero redundant blank lines**: absolutely NO consecutive newline characters (`\n\n`) unless explicitly required by the problem statement.
+- **Single EOF newline termination**: every file must terminate with exactly ONE `\n`; zero trailing blank lines at the end of the file.
 
 ### Layer 6 — Runtime verification
 
@@ -334,6 +344,7 @@ The final report must include a verification matrix:
 | Samples | PASS/FAIL | ... | ... | ... |
 | TeX/Markdown/Characters | PASS/FAIL | ... | ... | ... |
 | Tests | PASS/FAIL | ... | ... | ... |
+| I/O Whitespace & Format | PASS/FAIL | ... | ... | ... |
 | Testlib | PASS/FAIL | ... | ... | ... |
 | Runtime | PASS/FAIL | ... | ... | ... |
 | Solutions | PASS/FAIL | ... | ... | ... |

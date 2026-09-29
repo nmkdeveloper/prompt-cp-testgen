@@ -39,6 +39,20 @@ Compare, when present:
 
 If sources disagree, investigate. Do not normalize away the discrepancy.
 
+## Strict Whitespace & Formatting Hygiene
+
+All generated test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to the problem format with surgical precision:
+
+1. **Zero Trailing Whitespace**:
+   - Absolutely NO trailing spaces (` `) or tabs (`\t`) at the end of any line.
+   - Every line must end cleanly immediately following the last character/token.
+2. **Zero Redundant Newlines**:
+   - Absolutely NO extraneous empty lines or blank lines (e.g. consecutive `\n\n`) within the file or at the end of the file, unless the problem statement explicitly mandates blank lines in its specification.
+3. **Exact EOF Line Termination**:
+   - Every file must terminate with exactly ONE newline (`\n`). There must be no missing trailing newline, and no multiple blank lines after the final data line.
+4. **Clean Token Output in Generators & Solutions**:
+   - In C++ generators, validators, and solutions, loops must separate items with spaces and terminate the line with a newline without leaving a dangling trailing space (e.g., `for (int i = 0; i < n; ++i) cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
+
 ## Failure
 
-Any unresolved I/O mismatch is a correctness failure. Fix the source implementation/configuration and regenerate all affected artifacts. Never patch generated `.in`/`.out` files or samples.
+Any unresolved I/O mismatch or formatting violation is a correctness failure. Fix the source implementation/configuration and regenerate all affected artifacts. Never patch generated `.in`/`.out` files or samples.

@@ -74,6 +74,7 @@ All Vietnamese statement files (`statements/vietnamese/`), properties JSON, and 
 - **Normalization**: Unicode Normalization Form C (NFC) must be enforced via `unicodedata.normalize('NFC', text)`. Decomposed characters (NFD) can cause tone mark detachment or broken rendering in Pandoc and web browsers.
 - **Diacritics Preservation**: Never strip, drop, or transliterate Vietnamese letters (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels).
 - **Sanitization Boundary**: The disallowed character set `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }` must never affect Vietnamese letters or accents.
+- **LaTeX Subscript Escaping**: Do NOT use raw `$s_1$` or `$a_i$`; math subscripts MUST escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown italic corruption.
 
 Recommended structure, matching the reference package:
 
@@ -125,6 +126,13 @@ with:
 ```
 
 The first tests are the original samples, preserved exactly. The sample order and contents are immutable.
+
+### Strict Whitespace & Formatting Hygiene
+
+- All test inputs and outputs (`01`..`100`, `01.a`..`100.a`) must adhere strictly to statement specifications.
+- Absolutely ZERO trailing whitespace (no trailing spaces ` ` or tabs `\t` on any line).
+- Absolutely ZERO redundant newlines (no consecutive empty lines `\n\n`, exactly one trailing newline `\n` at EOF).
+- Output generator routines must avoid trailing spaces before line breaks (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
 
 ## Solutions
 

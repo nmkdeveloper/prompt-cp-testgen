@@ -37,6 +37,15 @@ Whenever possible, search for universal-killer inputs that defeat all known wron
 A test counts as a killer only after execution confirms the required verdicts. Do not infer verdicts without running the programs.
 
 
+## Strict I/O Formatting & Whitespace Hygiene
+
+Generators and test-design scripts must produce test data conforming strictly to the problem statement format:
+- **Zero trailing whitespace**: absolutely NO trailing spaces (` `) or trailing tabs (`\t`) on any line.
+- **Zero redundant newlines**: absolutely NO consecutive newline characters (`\n\n`) and NO trailing blank lines.
+- **Exact single newline at EOF**: every input file must end with exactly one standard newline (`\n`).
+- **Clean output formatting in loops**: C++ generator loops must output delimiters cleanly without dangling spaces before `\n` (e.g. `for (int i = 0; i < n; ++i) cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
+
+
 ## I/O contract — immutable
 
 The original I/O mechanism is part of the problem specification. Never convert file I/O to stdin/stdout or vice versa. Preserve exact input/output filenames and case. Preserve `problem.xml` judging `input-file`/`output-file` values and `problem-properties.json` `inputFile`/`outputFile` values. If standard I/O is specified, do not invent filenames. If file I/O is specified, generated solution/brute/benchmark/protected execution must use the exact filenames. Any mismatch requires a source-level fix and regeneration.

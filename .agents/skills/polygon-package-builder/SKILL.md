@@ -91,6 +91,7 @@ tests/%02d.a
 ```
 
 or the exact equivalent required by the verified target profile.
+Every test input and answer file must strictly conform to problem specifications with zero trailing whitespace, zero redundant blank lines, and exactly one terminating newline (`\n`) at EOF.
 
 ### C++ / testlib
 
@@ -125,6 +126,7 @@ Before finalizing statement files and packaging:
 3. **LaTeX & Math Delimiters**:
    - Strictly use `$ ... $` for inline math and `$$ ... $$` for display math.
    - Escape literal dollar signs as `\$`.
+   - **Subscript Underscore Escaping (`$s\_1$` mandatory)**: All math subscripts MUST escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` instead of raw `$s_1$`, `$a_i$`) to prevent the markdown parser from interpreting underscores as italic emphasis.
    - Ensure all math environments and braces are balanced.
 4. **Image & Resource Paths**:
    - Ensure every image linked via `![image](<path>)` or `<img src="<path>">` exists within the statement directory.
@@ -137,11 +139,12 @@ After staging:
 2. Verify language directories and statement files.
 3. Verify TeX, LaTeX, Markdown formatting and zero disallowed characters.
 4. Verify all 100 test/answer pairs exist and match.
-5. Verify checker/validator resources and tests.
-6. Verify every declared source/binary pair exists and corresponds to the intended artifact.
-7. Verify all `solution .desc` files are consistent with their source filenames/tags.
-8. Verify no internal workspace files are included.
-9. Open and structurally inspect the ZIP before success.
+5. Verify strict I/O formatting: zero trailing whitespace on any line, no redundant blank lines, and exactly one terminating newline (`\n`) at EOF across all test inputs and outputs.
+6. Verify checker/validator resources and tests.
+7. Verify every declared source/binary pair exists and corresponds to the intended artifact.
+8. Verify all `solution .desc` files are consistent with their source filenames/tags.
+9. Verify no internal workspace files are included.
+10. Open and structurally inspect the ZIP before success.
 
 
 ## FuraOJ / VNOJ importer compatibility is mandatory

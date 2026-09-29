@@ -68,6 +68,7 @@ Fura Online Judge (FuraOJ) importer source-of-truth rule
   - Replace Unicode minus `−` with ASCII `-`.
   - Expand ligatures `ﬀ`, `ﬁ`, `ﬂ`, `ﬃ`, `ﬄ` to `ff`, `fi`, `fl`, `ffi`, `ffl`.
   - Format math strictly with `$ ... $` (inline) and `$$ ... $$` (display). Escape literal dollars as `\$`.
+  - **Subscript Underscore Escaping in LaTeX (`$s\_1$` mandatory)**: Do NOT use raw `$s_1$` or `$a_i$`; all subscripts in LaTeX math MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`, `$x\_{max}$` due to site-specific markdown parser behavior (FuraOJ / DMOJ / Martor interprets unescaped `_` inside math as Markdown italic emphasis, corrupting the formula before MathJax/KaTeX rendering).
   - Verify that all referenced images exist within the statement folder.
 - **Vietnamese Unicode Support (NFC & UTF-8)**:
   - Full native support for Vietnamese Unicode: all Vietnamese statements (`statements/vietnamese/`), problem names, scoring, notes, and tutorials must fully preserve Vietnamese diacritics and letters (`à, á, ả, ã, ạ, ă, ằ, ắ, ẳ, ẵ, ặ, â, ầ, ấ, ẩ, ẫ, ậ, è, é, ẻ, ẽ, ẹ, ê, ề, ế, ể, ễ, ệ, ì, í, ỉ, ĩ, ị, ò, ó, ỏ, õ, ọ, ô, ồ, ố, ổ, ỗ, ộ, ơ, ờ, ớ, ở, ỡ, ợ, ù, ú, ủ, ũ, ụ, ư, ừ, ứ, ử, ữ, ự, ỳ, ý, ỷ, ỹ, ỵ, đ, Đ` and uppercase variants).
@@ -85,9 +86,9 @@ Fura Online Judge (FuraOJ) importer source-of-truth rule
 - Never use the golden package's problem-specific content as generated content for another problem.
 
 
-## I/O IMMUTABILITY — ABSOLUTE
+## STRICT I/O FORMATTING & IMMUTABILITY — ABSOLUTE
 
-Treat the original I/O mode as immutable source data.
+Treat the original I/O mode as immutable source data and test inputs/outputs as strictly formatted artifacts.
 
 - Never convert file I/O to stdin/stdout.
 - Never convert stdin/stdout to file I/O.
@@ -97,6 +98,12 @@ Treat the original I/O mode as immutable source data.
 - If file I/O is specified, all locally executed solutions, brute programs, benchmarks and protected runs must use the exact filenames.
 - If standard I/O is specified, use standard streams and do not invent filenames.
 - Any mismatch is a correctness failure; fix source/configuration and regenerate.
+- **Strict I/O Whitespace & Format Conformity**:
+  - All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, sample tests) must conform strictly to the problem statement format.
+  - Absolutely NO redundant whitespace: zero trailing spaces (` `) or trailing tabs (`\t`) on any line.
+  - Absolutely NO redundant newlines: zero extraneous blank lines (e.g. consecutive `\n\n`) and zero trailing blank lines.
+  - Every file must terminate with exactly one standard newline (`\n`), with no multiple trailing newlines at EOF.
+  - All generators and reference solutions must output tokens cleanly without dangling spaces before `\n` (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
 
 ## BILINGUAL TUTORIAL — ABSOLUTE
 

@@ -211,7 +211,19 @@ If file I/O is specified, generated executable tests MUST use those exact filena
 
 If standard I/O is specified, do not invent file names.
 
-An I/O mismatch is a correctness failure and must be fixed at the source and regenerated.
+### Strict I/O Formatting & Whitespace Hygiene
+
+All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to the problem statement format:
+- **Zero trailing whitespace**: absolutely NO trailing spaces (` `) or trailing tabs (`\t`) on any line.
+- **Zero redundant blank lines**: absolutely NO consecutive newline characters (`\n\n`) and NO trailing blank lines.
+- **Exact single newline at EOF**: every file must terminate with exactly one standard newline (`\n`).
+- **Clean output formatting in loops**: C++ generators and reference solutions must output delimiters cleanly without dangling spaces before `\n` (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
+
+An I/O mismatch or formatting violation is a correctness failure and must be fixed at the source and regenerated.
+
+### LaTeX Subscript Escaping ($s\_1$ mandatory)
+
+Due to specific markdown parser behavior on FuraOJ / DMOJ / Martor, unescaped underscores inside inline math are intercepted as markdown italic emphasis (`_..._`). All LaTeX math subscripts MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`, `$x\_{max}$` instead of raw `$s_1$`, `$a_i$`.
 
 ### Bilingual tutorials
 

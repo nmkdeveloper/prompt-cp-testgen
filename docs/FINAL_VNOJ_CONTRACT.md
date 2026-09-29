@@ -26,12 +26,19 @@ Use:
 
 For tutorials, keep both languages whenever tutorials are supported.
 
-## Vietnamese Unicode Support
+## Vietnamese Unicode & Character Sanitization
 
 - Fully support Vietnamese Unicode across statements, problem names, notes, and tutorials.
 - All files must be encoded in **UTF-8 without BOM**.
 - All text must be normalized to **Unicode NFC (Form C)** to ensure diacritics are precomposed and render correctly.
 - Preserve all Vietnamese letters and diacritics (`đ, Đ, ư, ơ, ê, ô, ă, â` and all accented vowels); sanitization against disallowed punctuation must never strip or alter Vietnamese letters.
+- **LaTeX Subscript Escaping**: Do NOT use raw `$s_1$` or `$a_i$`; math subscripts MUST escape underscores with backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` to prevent Markdown parsers from interpreting raw underscores as italic emphasis.
+
+## Strict I/O Formatting & Whitespace Hygiene
+
+- All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to statement specifications.
+- Absolutely ZERO trailing spaces or tabs on any line.
+- Absolutely ZERO redundant newlines (no consecutive empty lines `\n\n`, exactly one trailing newline at EOF).
 
 ## Importer compatibility
 

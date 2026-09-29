@@ -48,6 +48,10 @@
 - Wrong-solution audit: {{WRONG_STATUS}}
 - Benchmark: {{BENCHMARK_STATUS}}
 - Manual testcase editing detected: {{MANUAL_EDIT_STATUS}}
+- Strict I/O whitespace compliance: {{IO_WHITESPACE_STATUS}}
+- LaTeX subscript escaping ($s\_1$): {{LATEX_SUBSCRIPT_STATUS}}
+- TeX/Markdown/Characters sanitization: {{STATEMENT_SANITIZATION_STATUS}}
+- Vietnamese Unicode (NFC/UTF-8): {{VIETNAMESE_UNICODE_STATUS}}
 
 ## Packaging
 

@@ -52,13 +52,14 @@ Default import parameters:
 - **1s time** limit (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
 - **1đ** problem score (1 point: unbatched non-partial imports assign `last_case.points = 1`, giving 1đ total for the problem).
 - **Vietnamese Unicode**: Fully support Vietnamese Unicode across statements, problem names, notes, and tutorials in UTF-8 without BOM; normalize to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) and preserve all Vietnamese letters and diacritics. Disallowed characters check (`{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`) strictly applies to typographic punctuation, never touching Vietnamese letters.
+- **LaTeX Subscript Escaping (`$s\_1$` mandatory)**: Do NOT use raw `$s_1$` or `$a_i$`; math subscripts MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` to prevent Markdown parsers from interpreting raw underscores as italic emphasis.
 
 Do not treat generic Polygon documentation alone as sufficient. The final package must be compatible with the Fura Online Judge importer implementation. Build an offline verifier that checks the package against the importer behavior, especially `problem-properties.json`, statement paths/languages, testset paths, checker type/source, test/answer pairs, solutions and any files read by the importer.
 
 The final ZIP should match the golden package's *structure and artifact roles* as closely as possible without copying problem-specific content.
 
 
-## Absolute I/O preservation
+## Absolute I/O preservation & strict formatting
 
 Determine the original I/O mode before writing any executable or package artifact.
 
@@ -74,7 +75,9 @@ Preserve `problem.xml` judging input-file/output-file attributes exactly when pr
 If the source has standard I/O, use stdin/stdout and do not add invented filenames.
 If the source has file I/O, all locally executed solutions, brute programs, benchmarks and protected runs must use the exact filenames from the source.
 
-Treat any I/O mismatch as a correctness failure and repair it in source/configuration, then regenerate.
+- **Strict Whitespace & Formatting Hygiene**: All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to the problem statement format. Absolutely ZERO trailing spaces on any line, ZERO redundant blank lines (no `\n\n`), and exactly one terminating newline at EOF.
+
+Treat any I/O mismatch or formatting violation as a correctness failure and repair it in source/configuration, then regenerate.
 
 ## Mandatory bilingual tutorial
 
