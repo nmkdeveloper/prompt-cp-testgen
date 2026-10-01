@@ -100,9 +100,12 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] All recovery attempts are documented.
 - [ ] Any unresolved problem is marked literally `FAIL`.
 
-## Packaging
+## Packaging (Dual Packaging: Polygon & Themis)
 
-- [ ] Clean staging directory.
+- [ ] Clean staging directories (`polygon-package/` and `themis-package/<problemname>/`).
 - [ ] Allowlist packaging only.
-- [ ] Final ZIP contains only required Polygon package files.
-- [ ] ZIP can be reopened after creation.
+- [ ] Polygon Full Package ZIP created (`<problemname>-polygon.zip` or `polygon-package.zip`).
+- [ ] Themis Package ZIP created (`<problemname>-themis.zip` or `themis-package.zip`).
+- [ ] Themis archive contains `<problemname>/TEST[ID]/<problemname>.<ext>` hierarchy.
+- [ ] Themis test files match Polygon tests byte-for-byte with strict whitespace conformity.
+- [ ] Both ZIPs can be reopened and pass offline package verification without errors.

@@ -1,21 +1,18 @@
 ---
 name: polygon-package-builder
-description: Builds a clean Polygon package from verified generated artifacts and exports a ZIP containing only the files required by the target package format.
+description: Builds clean Polygon and Themis packages from verified generated artifacts and exports two ZIP files containing only the files required by each target package format.
 ---
-# Polygon Package Builder
+# Package Builder (Polygon + Themis)
 
-Create a clean staging directory. Use an allowlist, not a recursive zip of the whole workspace.
+Create clean staging directories. Use an allowlist, not a recursive zip of the whole workspace.
 
-Potential package content includes:
-- problem.xml
-- statements/
-- tests/
-- files/
-- solutions/ only when required
+Every successful problem run generates two distinct distribution archives:
+1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / VNOJ / Polygon).
+2. **Themis Package ZIP**: `<problemname>-themis.zip` (for Themis grading software).
 
 Exclude internal analysis, logs, reports, candidate pools, provenance, caches, temporary files and unrelated source files.
 
-Run the offline-package-verifier after staging and again after ZIP creation. Verify the ZIP opens and contains the required files before declaring success. Never use ZIP readability alone as proof of package validity.
+Run the offline-package-verifier after staging and again after ZIP creation for both packages. Verify both ZIPs open and contain the required files before declaring success. Never use ZIP readability alone as proof of package validity.
 
 
 ## Execution constraints
@@ -131,6 +128,29 @@ Before finalizing statement files and packaging:
 4. **Image & Resource Paths**:
    - Ensure every image linked via `![image](<path>)` or `<img src="<path>">` exists within the statement directory.
 
+### Themis Package Layout & Staging
+
+In parallel with the Polygon package, stage the Themis package in a clean staging directory `themis-package/<problemname>/`:
+```text
+<problemname>/
+  TEST01/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+  TEST02/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+  ...
+  TEST[NN]/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+```
+
+- `<problemname>`: problem code / short name (e.g. `SUM`, `solve`, `socdist`).
+- `TEST[ID]`: directory name formatted as `TEST01`, `TEST02`, ... `TESTNN` (%02d pattern, or %03d if tests >= 100).
+- `<problemname>.<ext_inp>` & `<problemname>.<ext_out>`: exact filenames and extensions specified in problem statement (or `<problemname>.INP` / `<problemname>.OUT` for standard I/O).
+- All files must be byte-for-byte identical to Polygon tests and follow strict whitespace rules (zero trailing spaces, zero redundant empty lines, exact 1 newline at EOF).
+- Zip into `<problemname>-themis.zip` (or `themis-package.zip`).
+
 ### Final verification
 
 After staging:
@@ -138,13 +158,14 @@ After staging:
 1. Validate every `problem.xml` path.
 2. Verify language directories and statement files.
 3. Verify TeX, LaTeX, Markdown formatting and zero disallowed characters.
-4. Verify all final test/answer pairs exist and match.
+4. Verify all final test/answer pairs exist and match in Polygon package.
 5. Verify strict I/O formatting: zero trailing whitespace on any line, no redundant blank lines, and exactly one terminating newline (`\n`) at EOF across all test inputs and outputs.
 6. Verify checker/validator resources and tests.
 7. Verify every declared source/binary pair exists and corresponds to the intended artifact.
 8. Verify all `solution .desc` files are consistent with their source filenames/tags.
 9. Verify no internal workspace files are included.
-10. Open and structurally inspect the ZIP before success.
+10. Verify Themis package layout (`<problemname>/TEST[ID]/<problemname>.<ext>`) and byte-for-byte fidelity against Polygon tests.
+11. Open and structurally inspect both Polygon and Themis ZIPs before success.
 
 
 ## FuraOJ / VNOJ importer compatibility is mandatory

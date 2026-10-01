@@ -1,10 +1,14 @@
 ---
-description: Enforces clean Polygon packaging and prohibits shipping internal workspace artifacts.
+description: Enforces clean dual packaging (Polygon Full Package and standard Themis package) and prohibits shipping internal workspace artifacts.
 alwaysApply: true
 ---
 # OJ Packaging
 
-Build the final Polygon package in a clean staging directory and use an allowlist. Do not zip the whole workspace. Exclude logs, reports, candidate pools, provenance, caches and temporary files unless the target package explicitly requires them.
+Build clean final packages in dedicated staging directories using an allowlist. Do not zip the whole workspace. Exclude logs, reports, candidate pools, provenance, caches and temporary files unless explicitly required.
+
+The packaging pipeline must produce TWO final ZIP archives on success:
+1. **Polygon Full Package ZIP**: for FuraOJ / VNOJ / Polygon.
+2. **Themis Package ZIP**: for Themis automated grading software.
 
 
 ## Golden FuraOJ / VNOJ template
@@ -15,4 +19,26 @@ Include the actual `files/testlib.h` used by the package when testlib is used. T
 
 Do not invent or guess unsupported Polygon XML. Build a clean staging directory and verify all descriptor paths against actual files before ZIP creation.
 
-After building the staging tree and final ZIP, run the offline-package-verifier in offline mode. ZIP readability alone is insufficient.
+
+## Themis Package Standard
+
+The companion Themis package ZIP must strictly conform to:
+```text
+<problemname>/
+  TEST01/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+  TEST02/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+  ...
+  TEST[NN]/
+    <problemname>.<ext_inp>
+    <problemname>.<ext_out>
+```
+- `<problemname>`: problem code / short name.
+- `TEST[ID]`: folder name (`TEST01`..`TESTNN` matching %02d or %03d).
+- `<problemname>.<ext_inp>` & `<problemname>.<ext_out>`: exact filenames and extensions specified in problem statement (or `<problemname>.INP` / `<problemname>.OUT` for standard I/O).
+- All files must be byte-for-byte identical to Polygon tests and follow strict whitespace rules (zero trailing spaces, zero redundant empty lines, exact 1 newline at EOF).
+
+After building both staging trees and final ZIPs, run the offline-package-verifier in offline mode against both packages. ZIP readability alone is insufficient.

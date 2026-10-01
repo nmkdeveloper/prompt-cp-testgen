@@ -308,11 +308,21 @@ Regenerate selected tests from provenance and compare outputs. Any mismatch is a
 
 Generated `.in` and `.out` artifacts remain immutable.
 
+### Layer 11 — Themis package verification
+
+Verify the companion Themis package ZIP (`<problemname>-themis.zip` or `themis-package.zip`):
+- **ZIP Safety & Integrity**: Themis archive opens cleanly without CRC errors, absolute paths, or traversal elements.
+- **Root Directory Layout**: Top-level directory contains `<problemname>/` (the problem code / short name).
+- **Subdirectory Numbering**: Test subdirectories are `TEST01`, `TEST02`, ... `TESTNN` matching the total test count and numbering of the Polygon package.
+- **I/O Filenames & Case**: Each `TEST[ID]` directory contains exactly two files: `<problemname>.<ext_inp>` and `<problemname>.<ext_out>`, preserving the exact filenames and case mandated by the problem statement (e.g. `SUM.INP`/`SUM.OUT` or `sum.inp`/`sum.out`, or standardized `<problemname>.INP`/`<problemname>.OUT` for standard I/O).
+- **Byte-for-byte Fidelity**: Every `<problemname>.<ext_inp>` matches `tests/[ID]` byte-for-byte, and every `<problemname>.<ext_out>` matches `tests/[ID].a` byte-for-byte.
+- **Whitespace & Formatting**: Zero trailing spaces/tabs, zero redundant blank lines, and exactly one terminating newline at EOF across all Themis test files.
+
 ## PASS criteria
 
 A package may be marked `PASS` only if every mandatory applicable layer passes and no unresolved critical issue remains.
 
-A clean ZIP alone is insufficient.
+A clean ZIP alone is insufficient. Both Polygon and Themis packages must pass verification.
 
 ## FAIL criteria
 
@@ -325,6 +335,7 @@ Mark the package `FAIL` if, after reasonable automatic recovery:
 - checker/validator behavior is unresolved;
 - runtime protection cannot be trusted on the host;
 - package grammar is incompatible with the target golden profile;
+- Themis package structure, naming, or test fidelity fails;
 - any other critical correctness issue cannot be resolved.
 
 Write the literal `FAIL` into the final report and skip to the next problem in batch mode.
@@ -349,7 +360,8 @@ The final report must include a verification matrix:
 | Runtime | PASS/FAIL | ... | ... | ... |
 | Solutions | PASS/FAIL | ... | ... | ... |
 | Reproducibility | PASS/FAIL | ... | ... | ... |
-| Final package | PASS/FAIL | ... | ... | ... |
+| Polygon package | PASS/FAIL | ... | ... | ... |
+| Themis package | PASS/FAIL | ... | ... | ... |
 
 The report must never claim a check ran when it did not.
 

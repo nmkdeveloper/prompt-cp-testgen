@@ -34,8 +34,8 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 17. Dynamically calculate and select the optimal, reasonable number of final tests, preserving samples and completely covering all subtasks and essential test types.
 18. Audit answer diversity without editing answers.
 19. Re-run final validation and produce incremental logs/final report.
-20. Build a clean Polygon package using the VNOJ Polygon golden-package profile.
-21. Run the offline-package-verifier against the staged package and final ZIP. Do not use Polygon API as the authoritative verification path.
+20. Build clean Polygon and Themis packages (producing both Polygon Full Package ZIP and standard Themis package ZIP).
+21. Run the offline-package-verifier against both staged packages and final ZIPs. Do not use Polygon API as the authoritative verification path.
 22. Only declare success after all mandatory offline verification layers pass; otherwise record FAIL and skip in batch mode.
 
 ## Generated code policy
@@ -56,7 +56,7 @@ Do not include a generic runner implementation from the bundle.
 - LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 
 ## Final conditions
-Success requires dynamic optimal final tests (covering all subtasks and test types), preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, a clean Polygon ZIP, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
+Success requires dynamic optimal final tests (covering all subtasks and test types), preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, clean Polygon and Themis ZIPs, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
 
 If recovery is exhausted, write `FAIL` in the report and skip the problem in batch mode.
 
@@ -99,6 +99,28 @@ Where the golden package contains them and the target profile supports them, gen
 - `tags`
 
 Do not invent unsupported Polygon XML elements. If a feature is not present in the golden sample, rely on verified Polygon schema knowledge or existing package examples rather than guessing.
+
+## Themis package output contract (Themis CP profile)
+
+In addition to the Polygon package, always generate a companion Themis package ZIP (`<problemname>-themis.zip`):
+- Internal layout:
+  ```text
+  <problemname>/
+    TEST01/
+      <problemname>.<ext_inp>
+      <problemname>.<ext_out>
+    TEST02/
+      <problemname>.<ext_inp>
+      <problemname>.<ext_out>
+    ...
+    TEST[NN]/
+      <problemname>.<ext_inp>
+      <problemname>.<ext_out>
+  ```
+- `<problemname>`: the problem code / short name.
+- `TEST[ID]`: directory name formatted as `TEST01`, `TEST02`, ... `TESTNN` (%02d pattern, or %03d if tests >= 100).
+- `<problemname>.<ext_inp>` & `<problemname>.<ext_out>`: exact filenames and extensions specified in problem statement (or `<problemname>.INP` / `<problemname>.OUT` for standard I/O).
+- All files must be byte-for-byte identical to Polygon tests and follow strict whitespace rules (zero trailing spaces, zero redundant empty lines, exact 1 newline at EOF).
 
 ## Distributed killer-test contract
 

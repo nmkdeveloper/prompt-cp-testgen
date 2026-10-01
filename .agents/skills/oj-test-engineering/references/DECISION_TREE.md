@@ -28,6 +28,11 @@
 - Benchmark worst-case structures.
 - Dynamically calculate and select optimal final tests (covering all subtasks and test types).
 
+## Packaging
+
+- Package both Polygon Full Package ZIP and standard Themis Package ZIP (`<problemname>/TEST[ID]/<problemname>.<ext>`).
+- Verify both packages with offline-package-verifier before release.
+
 ## Failure
 
 - Recover automatically when reasonable.

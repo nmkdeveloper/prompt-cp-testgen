@@ -53,11 +53,14 @@
 - TeX/Markdown/Characters sanitization: {{STATEMENT_SANITIZATION_STATUS}}
 - Vietnamese Unicode (NFC/UTF-8): {{VIETNAMESE_UNICODE_STATUS}}
 
-## Packaging
+## Packaging (Dual Packaging)
 
 - Polygon staging: `{{PACKAGE_DIR}}`
-- ZIP: `{{ZIP_PATH}}`
-- Package audit: {{PACKAGE_STATUS}}
+- Polygon ZIP: `{{POLYGON_ZIP_PATH}}`
+- Themis staging: `{{THEMIS_PACKAGE_DIR}}`
+- Themis ZIP: `{{THEMIS_ZIP_PATH}}`
+- Polygon package audit: {{POLYGON_PACKAGE_STATUS}}
+- Themis package audit: {{THEMIS_PACKAGE_STATUS}}
 
 ## Recovery / anomalies
 

@@ -20,6 +20,9 @@ final-tests/
 logs/
 report.md
 polygon-package/
+themis-package/
+<problemname>-polygon.zip
+<problemname>-themis.zip
 ```
 
-A final successful problem requires a dynamically calculated optimal number of final input/output test pairs covering all subtasks and test types.
+A final successful problem requires a dynamically calculated optimal number of final input/output test pairs covering all subtasks and test types, packaged into both Polygon Full Package ZIP and standard Themis Package ZIP.

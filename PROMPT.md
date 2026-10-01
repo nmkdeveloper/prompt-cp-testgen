@@ -30,7 +30,7 @@ Optimize answer diversity without fabricating outputs. Include a small natural s
 
 Create specialized killer tests that are distributed throughout the final suite. Whenever feasible, find tests where all known wrong solutions are WA/TLE/RE while the verified reference is AC. Otherwise create a distributed hitting set that kills every meaningful wrong solution.
 
-Before packaging, run the offline package verifier. Do not depend on Polygon API. Build the verifier locally using the strongest available Python/XML tooling (for example `defusedxml`, `lxml`, `xmlschema`, `jsonschema`) plus standard-library fallbacks and real native compile/runtime checks. Use the user-provided Polygon Full Package as the structural golden template. Verify ZIP safety, problem.xml schema/semantics, all references, statement/sample integrity, comprehensive test suite (covering all subtasks and test types), testlib, checker/validator tests, solutions, wrong-solution behavior, benchmark results, reproducibility and package cleanliness.
+Before packaging, run the offline package verifier. Do not depend on Polygon API. Build the verifier locally using the strongest available Python/XML tooling (for example `defusedxml`, `lxml`, `xmlschema`, `jsonschema`) plus standard-library fallbacks and real native compile/runtime checks. Use the user-provided Polygon Full Package as the structural golden template. Verify ZIP safety for both packages, problem.xml schema/semantics, all references, statement/sample integrity, comprehensive test suite (covering all subtasks and test types), Themis package structure (`<problemname>/TEST[ID]/<problemname>.<ext>`) and byte-for-byte fidelity, testlib, checker/validator tests, solutions, wrong-solution behavior, benchmark results, reproducibility and package cleanliness.
 
 Do not declare PASS unless every mandatory verification layer passes.
 
@@ -38,7 +38,7 @@ Log every significant operation immediately. Write a detailed final report with 
 
 If, after reasonable automatic recovery, a problem remains impossible to verify or generate correctly, write the literal `FAIL` in the report, skip that problem and continue to the next problem in batch mode. Never fabricate success.
 
-Final output is a clean Polygon Full Package ZIP containing only required package artifacts. Internal analysis, logs, candidate pools and provenance remain outside the final ZIP unless explicitly required by the target package.
+Dual final packaging requirement: On success, generate TWO final package ZIPs: (1) a clean Polygon Full Package ZIP (`<problemname>-polygon.zip`), and (2) a standard Themis Package ZIP (`<problemname>-themis.zip` containing `<problemname>/TEST[ID]/<problemname>.<ext>`). Internal analysis, logs, candidate pools and provenance remain outside the final ZIPs unless explicitly required.
 
 
 ## FuraOJ / VNOJ importer and golden-package study

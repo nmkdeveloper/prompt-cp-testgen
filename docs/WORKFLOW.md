@@ -59,9 +59,12 @@ Select the optimal, reasonable number of final tests (dynamically calculated; no
 
 Re-run required checks. Verify no generated artifact was manually edited.
 
-## Phase 13 — Packaging
+## Phase 13 — Dual Packaging (Polygon & Themis)
 
-Build a clean Polygon staging tree and package only files required by Polygon.
+Build clean staging trees for both targets:
+1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / VNOJ / Polygon).
+2. **Standard Themis Package ZIP**: `<problemname>-themis.zip` (hierarchy `<problemname>/TEST[ID]/<problemname>.<ext>` for Themis grading).
+Verify both packages using `offline-package-verifier`.
 
 ## Failure Recovery
 
