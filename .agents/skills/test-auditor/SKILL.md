@@ -5,7 +5,7 @@ description: Performs the final correctness, integrity, coverage, answer-diversi
 # Test Auditor
 
 Verify:
-- exact final count of 100 on success
+- dynamic optimal final test count on success (no rigid 100 requirement; suite completely covers all subtasks and essential test types)
 - samples first and unchanged
 - all tests pass validator
 - reference passes all tests

@@ -26,7 +26,7 @@
 - Use brute on safe small cases.
 - Attack wrong solutions and mutants.
 - Benchmark worst-case structures.
-- Select exactly 100 final tests.
+- Dynamically calculate and select optimal final tests (covering all subtasks and test types).
 
 ## Failure
 

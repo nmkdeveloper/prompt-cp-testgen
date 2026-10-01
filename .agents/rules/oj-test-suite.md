@@ -1,10 +1,10 @@
 ---
 trigger: always_on
-description: "Always-on requirements for exactly 100 final tests, subtasks, boundary cases and answer diversity."
+description: "Always-on requirements for dynamic optimal final tests, subtasks, boundary cases and answer diversity."
 ---
 # OJ Test Suite Requirements
 
-- Successful problems have exactly 100 final tests.
+- Dynamically calculate the optimal, reasonable number of final tests (no rigid 100-test requirement); the suite MUST completely cover all subtasks as well as all essential test types (samples, minimal/boundary, brute-verified, structural/special cases, distributed adversarial killers, max-boundary stress, zero/no-solution).
 - Original sample tests come first.
 - Every subtask ends with approximately 2–3 maximum-boundary tests whenever feasible.
 - Subtask count is dynamic.

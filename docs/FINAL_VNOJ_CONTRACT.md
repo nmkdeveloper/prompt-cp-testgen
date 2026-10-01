@@ -36,7 +36,7 @@ For tutorials, keep both languages whenever tutorials are supported.
 
 ## Strict I/O Formatting & Whitespace Hygiene
 
-- All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to statement specifications.
+- All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`) must adhere strictly to statement specifications.
 - Absolutely ZERO trailing spaces or tabs on any line.
 - Absolutely ZERO redundant newlines (no consecutive empty lines `\n\n`, exactly one trailing newline at EOF).
 

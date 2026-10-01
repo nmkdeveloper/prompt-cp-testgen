@@ -1,10 +1,10 @@
 ---
 name: test-selector
-description: Selects exactly 100 final tests from a verified candidate pool using coverage, subtask boundaries, wrong-solution kills, stress value, answer diversity and redundancy reduction.
+description: Selects an optimal, reasonable number of final tests from a verified candidate pool (covering all subtasks and essential test types) using coverage, subtask boundaries, wrong-solution kills, stress value, answer diversity and redundancy reduction.
 ---
 # Test Selector
 
-On success, select exactly 100 final tests.
+On success, dynamically calculate and select the optimal, reasonable number of final tests. The selected suite must completely cover all subtasks and include all essential test types (samples first, minimal/boundary, brute-verified small, structural/special cases, distributed adversarial killers, max-boundary stress ending each subtask, zero/no-solution).
 
 Hard priorities:
 1. correctness

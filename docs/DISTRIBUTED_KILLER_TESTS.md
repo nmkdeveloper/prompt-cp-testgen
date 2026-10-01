@@ -12,7 +12,7 @@ Accepted wrong-solution outcomes:
 
 ## Distribution rule
 
-Do not put all killer tests in one contiguous block such as tests 81-100.
+Do not put all killer tests in one contiguous block such as at the end of the test set.
 
 Instead:
 
@@ -22,7 +22,7 @@ Instead:
 - preserve sample-first ordering;
 - preserve the max-boundary tests at the end of every subtask.
 
-The final selection algorithm should treat killer tests as constraints on the 100-test set, not merely as an optional category.
+The final selection algorithm should treat killer tests as hard constraints on the final test set, not merely as an optional category.
 
 ## Per-wrong-solution requirement
 

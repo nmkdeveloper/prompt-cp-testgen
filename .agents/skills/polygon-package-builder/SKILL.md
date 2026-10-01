@@ -83,7 +83,7 @@ The exact presence of an artifact is conditional on whether the problem actually
 
 ### Test descriptor
 
-For a successful problem, `problem.xml` must declare exactly 100 final tests and reference:
+For a successful problem, `problem.xml` must declare the selected final tests (contiguous `01`..`NN`) and reference:
 
 ```text
 tests/%02d
@@ -138,7 +138,7 @@ After staging:
 1. Validate every `problem.xml` path.
 2. Verify language directories and statement files.
 3. Verify TeX, LaTeX, Markdown formatting and zero disallowed characters.
-4. Verify all 100 test/answer pairs exist and match.
+4. Verify all final test/answer pairs exist and match.
 5. Verify strict I/O formatting: zero trailing whitespace on any line, no redundant blank lines, and exactly one terminating newline (`\n`) at EOF across all test inputs and outputs.
 6. Verify checker/validator resources and tests.
 7. Verify every declared source/binary pair exists and corresponds to the intended artifact.

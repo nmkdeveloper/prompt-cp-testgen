@@ -58,7 +58,7 @@ In Fura Online Judge (`judge/models/problem.py`), problem name, description, tra
 
 ## Strict I/O Formatting & Whitespace Constraints
 
-All test files (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to statement formatting:
+All test files (`.inp`, `.out`, `tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`) must adhere strictly to statement formatting:
 - Absolutely ZERO trailing whitespace (no trailing spaces ` ` or tabs `\t` on any line).
 - Absolutely ZERO redundant newlines (no empty lines `\n\n`, exactly one trailing newline `\n` at EOF).
 - Token outputs must not include trailing spaces before newline (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).

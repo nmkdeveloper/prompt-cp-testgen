@@ -1,8 +1,15 @@
 # Test Design Policy
 
-## Exact final size
+## Dynamic optimal final size
 
-`FINAL_TEST_COUNT = 100` on successful completion. Candidate generation is not capped at 100.
+The final test count is dynamically calculated to be reasonable and optimal for the specific problem (no rigid 100-test requirement). Candidate generation is not capped. The final selected test suite MUST completely cover all subtasks as well as all essential test types:
+1. Samples first (byte-for-byte unchanged).
+2. Minimal/boundary tests.
+3. Brute-verified small cases.
+4. Structural and mathematical edge cases.
+5. Distributed adversarial killers targeting wrong solutions (WA/TLE/RE).
+6. 2–3 maximum-boundary tests ending each subtask.
+7. Valid zero/no-solution edge cases when naturally applicable.
 
 ## Sample reservation
 

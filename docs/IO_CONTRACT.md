@@ -41,7 +41,7 @@ If sources disagree, investigate. Do not normalize away the discrepancy.
 
 ## Strict Whitespace & Formatting Hygiene
 
-All generated test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to the problem format with surgical precision:
+All generated test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`) must adhere strictly to the problem format with surgical precision:
 
 1. **Zero Trailing Whitespace**:
    - Absolutely NO trailing spaces (` `) or tabs (`\t`) at the end of any line.

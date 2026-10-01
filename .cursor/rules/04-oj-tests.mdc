@@ -4,7 +4,7 @@ alwaysApply: true
 ---
 # OJ Test Suite
 
-- Successful problems have exactly 100 final tests.
+- Dynamically calculate the optimal, reasonable number of final tests (no rigid 100-test requirement); the suite MUST completely cover all subtasks as well as all essential test types (samples, minimal/boundary, brute-verified, structural/special cases, distributed adversarial killers, max-boundary stress, zero/no-solution).
 - Samples are first and immutable.
 - Subtask count is dynamic.
 - Prefer nested subtasks when natural.
@@ -19,4 +19,4 @@ alwaysApply: true
 
 ## Distributed specialized killers
 
-Killer tests must be distributed across the final 100 tests rather than clustered in one end block. For each meaningful wrong solution, seek an executed testcase where the reference is AC and the wrong solution is WA/TLE/RE. Prefer universal-killer tests when feasible; otherwise use a distributed hitting set.
+Killer tests must be distributed across the final test suite rather than clustered in one end block. For each meaningful wrong solution, seek an executed testcase where the reference is AC and the wrong solution is WA/TLE/RE. Prefer universal-killer tests when feasible; otherwise use a distributed hitting set.

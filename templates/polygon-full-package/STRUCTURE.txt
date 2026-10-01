@@ -47,12 +47,12 @@ SOLUTIONS/
   source.binary (when target requires it)
 
 TESTS/
-  01 ... 100
-  01.a ... 100.a
+  01 ... NN
+  01.a ... NN.a
 
 IMPORTANT
   Test 01..Nsamples = original samples, byte-faithfully preserved.
-  Final test count = exactly 100 on success.
+  Final test count = dynamically calculated optimal count (covering all subtasks and test types) on success.
   Killer tests must be distributed, not clustered in one final block.
   Every subtask ends with multiple max-boundary tests whenever feasible.
   Do not manually edit generated tests or answers.

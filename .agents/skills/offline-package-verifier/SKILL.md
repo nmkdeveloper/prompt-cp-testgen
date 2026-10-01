@@ -205,22 +205,22 @@ Before a package can be accepted, all textual and markup components must pass st
 
 ### Layer 5 — Test-set semantics
 
-Verify the final testset has exactly 100 tests for a successful problem.
+Verify the final testset has a valid, dynamically calculated optimal test count covering all subtasks and essential test types for a successful problem (no rigid 100-test requirement).
 
 Verify:
-- tests are contiguous 01..100 under the target naming convention;
+- tests are contiguous 01..NN under the target naming convention (%02d pattern preferred);
 - every input has an answer;
 - no missing answer files;
 - no orphan input/output files;
 - sample tests are first;
-- subtask/group assignment matches the intended design;
+- subtask/group assignment matches the intended design and covers all subtasks;
 - each subtask ends with multiple max-boundary tests whenever feasible;
 - generator metadata resolves to real resources when retained in the package;
 - no final testcase was manually patched.
 
 ### Layer 5.1 — Strict I/O formatting & whitespace verification
 
-Verify byte-level whitespace and newline conformity across all test input and answer files (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`):
+Verify byte-level whitespace and newline conformity across all test input and answer files (`tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`):
 - **Exact problem specification conformity**: data layout, token counts, and lines conform strictly to statement definitions.
 - **Zero trailing whitespace**: absolutely NO line in any input or answer file contains trailing spaces (` `) or trailing tabs (`\t`).
 - **Zero redundant blank lines**: absolutely NO consecutive newline characters (`\n\n`) unless explicitly required by the problem statement.

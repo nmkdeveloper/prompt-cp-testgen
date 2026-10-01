@@ -46,7 +46,7 @@ tests/36
 tests/36.a
 ```
 
-The new workflow requires exactly 100 final tests on success, so the target package should use the same `%02d` convention for `01` through `100` unless verified target syntax requires another equivalent pattern.
+The workflow dynamically calculates the optimal number of final tests on success (covering all subtasks and essential test types), so the target package should use the same contiguous `%02d` convention for `01` through `NN` unless verified target syntax requires another equivalent pattern.
 
 ## Observed statement layout
 

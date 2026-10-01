@@ -1,6 +1,6 @@
 ---
 name: oj-test-engineering
-description: Autonomous, single-agent, serial competitive-programming test engineering from a PDF/image/file problem package. Reconstructs problem.md without changing source semantics, generates an OS-adapted C++ toolchain including protected execution, verifies reference code with brute force, designs dynamic subtasks, attacks wrong solutions, benchmarks, selects exactly 100 tests, logs every step, and builds a clean Polygon package.
+description: Autonomous, single-agent, serial competitive-programming test engineering from a PDF/image/file problem package. Reconstructs problem.md without changing source semantics, generates an OS-adapted C++ toolchain including protected execution, verifies reference code with brute force, designs dynamic subtasks, attacks wrong solutions, benchmarks, dynamically selects optimal tests covering all subtasks and test types, logs every step, and builds a clean Polygon package.
 ---
 # OJ Test Engineering
 
@@ -31,7 +31,7 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 14. Validate candidates and run brute/reference/wrong-solution checks serially.
 15. Benchmark performance-sensitive structures under the same protected limits.
 16. Generate targeted counterexamples for meaningful survivors.
-17. Select exactly 100 final tests, preserving samples and subtask boundaries.
+17. Dynamically calculate and select the optimal, reasonable number of final tests, preserving samples and completely covering all subtasks and essential test types.
 18. Audit answer diversity without editing answers.
 19. Re-run final validation and produce incremental logs/final report.
 20. Build a clean Polygon package using the VNOJ Polygon golden-package profile.
@@ -52,11 +52,11 @@ Do not include a generic runner implementation from the bundle.
 - Never manually edit generated `.in/.out`.
 - If generated data is wrong, fix source and regenerate.
 - Active runaway auto-break with hard time limits: strict 1000 ms limit for solutions and mutants, calibrated hard limit from host FLOPS benchmark for generators and tooling; actively interrupt runaway code (infinite loops `while(true)`, infinite recursion) past the hard limit and forcefully kill the entire process tree.
-- Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) must adhere strictly to statement specifications with zero trailing spaces, no redundant blank lines, and exactly one terminating newline at EOF.
+- Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`, `.inp`, `.out`) must adhere strictly to statement specifications with zero trailing spaces, no redundant blank lines, and exactly one terminating newline at EOF.
 - LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 
 ## Final conditions
-Success requires exactly 100 final tests, preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, a clean Polygon ZIP, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
+Success requires dynamic optimal final tests (covering all subtasks and test types), preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, a clean Polygon ZIP, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
 
 If recovery is exhausted, write `FAIL` in the report and skip the problem in batch mode.
 
@@ -84,7 +84,7 @@ If one of the two default languages is absent from the supplied statement, creat
 Where the golden package contains them and the target profile supports them, generate and package:
 
 - `problem.xml`
-- `tests/01` ... `tests/100` and `.a` answers
+- `tests/01` ... `tests/NN` and `.a` answers
 - `statements/english/` and `statements/vietnamese/`
 - `statement-sections/english/` and `statement-sections/vietnamese/`
 - `statements/.html/english/` and `statements/.html/vietnamese/`
@@ -102,7 +102,7 @@ Do not invent unsupported Polygon XML elements. If a feature is not present in t
 
 ## Distributed killer-test contract
 
-Killer tests are not allowed to exist only in one contiguous block near tests 81-100. The final selection must distribute specialized tests across the suite and across relevant subtasks while preserving sample-first ordering and the requirement that each subtask ends with max-boundary tests whenever feasible.
+Killer tests are not allowed to exist only in one contiguous block near the end of the testset. The final selection must distribute specialized tests across the suite and across relevant subtasks while preserving sample-first ordering and the requirement that each subtask ends with max-boundary tests whenever feasible.
 
 For each meaningful wrong solution:
 
@@ -120,7 +120,7 @@ Do not label a killer as successful based on theory alone; execute it.
 
 ## Offline package verification contract
 
-Before success, invoke the `offline-package-verifier` skill. The verifier must be generated for the actual environment and may use locally available Python libraries such as `defusedxml`, `lxml`, `xmlschema`, and `jsonschema` when appropriate, with correct standard-library fallbacks. It must validate the package in layers: safe ZIP inspection, golden-template comparison, XML/schema/semantic validation, referential integrity, sample/statement immutability, exact 100-test integrity, testlib/checker/validator runtime checks, reference/brute/wrong-solution checks, protected execution, benchmark evidence and reproducibility. Do not use Polygon API as the authoritative verifier.
+Before success, invoke the `offline-package-verifier` skill. The verifier must be generated for the actual environment and may use locally available Python libraries such as `defusedxml`, `lxml`, `xmlschema`, and `jsonschema` when appropriate, with correct standard-library fallbacks. It must validate the package in layers: safe ZIP inspection, golden-template comparison, XML/schema/semantic validation, referential integrity, sample/statement immutability, comprehensive test-suite integrity (covering all subtasks and test types), testlib/checker/validator runtime checks, reference/brute/wrong-solution checks, protected execution, benchmark evidence and reproducibility. Do not use Polygon API as the authoritative verifier.
 
 
 ## I/O contract — immutable & strictly formatted

@@ -24,13 +24,13 @@ Apply token economy in all generated code: write dense, compact code (multiple s
 
 Design a dynamic number of meaningful subtasks. If the problem already has useful subtasks, analyze and preserve them. If it has none, create the best meaningful decomposition you can using constraints, algorithmic thresholds, structural properties, mathematical properties and special cases. Prefer nested ladders when naturally possible. Every subtask should end with multiple maximum-boundary tests when feasible.
 
-Generate a large candidate pool. Verify candidates with validator, brute/reference differential checks, wrong-solution execution and benchmark analysis. Select exactly 100 final tests on success. Samples must come first. Do not manually edit any `.in` or `.out`; fix source and regenerate.
+Generate a large candidate pool. Verify candidates with validator, brute/reference differential checks, wrong-solution execution and benchmark analysis. Dynamically calculate and select the optimal, reasonable number of final tests on success (no rigid 100-test requirement; must completely cover all subtasks and essential test types). Samples must come first. Do not manually edit any `.in` or `.out`; fix source and regenerate.
 
 Optimize answer diversity without fabricating outputs. Include a small natural share of zero/no-solution cases when the statement defines them.
 
 Create specialized killer tests that are distributed throughout the final suite. Whenever feasible, find tests where all known wrong solutions are WA/TLE/RE while the verified reference is AC. Otherwise create a distributed hitting set that kills every meaningful wrong solution.
 
-Before packaging, run the offline package verifier. Do not depend on Polygon API. Build the verifier locally using the strongest available Python/XML tooling (for example `defusedxml`, `lxml`, `xmlschema`, `jsonschema`) plus standard-library fallbacks and real native compile/runtime checks. Use the user-provided Polygon Full Package as the structural golden template. Verify ZIP safety, problem.xml schema/semantics, all references, statement/sample integrity, 100 tests, testlib, checker/validator tests, solutions, wrong-solution behavior, benchmark results, reproducibility and package cleanliness.
+Before packaging, run the offline package verifier. Do not depend on Polygon API. Build the verifier locally using the strongest available Python/XML tooling (for example `defusedxml`, `lxml`, `xmlschema`, `jsonschema`) plus standard-library fallbacks and real native compile/runtime checks. Use the user-provided Polygon Full Package as the structural golden template. Verify ZIP safety, problem.xml schema/semantics, all references, statement/sample integrity, comprehensive test suite (covering all subtasks and test types), testlib, checker/validator tests, solutions, wrong-solution behavior, benchmark results, reproducibility and package cleanliness.
 
 Do not declare PASS unless every mandatory verification layer passes.
 
@@ -79,7 +79,7 @@ Preserve `problem.xml` judging input-file/output-file attributes exactly when pr
 If the source has standard I/O, use stdin/stdout and do not add invented filenames.
 If the source has file I/O, all locally executed solutions, brute programs, benchmarks and protected runs must use the exact filenames from the source.
 
-- **Strict Whitespace & Formatting Hygiene**: All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`) must adhere strictly to the problem statement format. Absolutely ZERO trailing spaces on any line, ZERO redundant blank lines (no `\n\n`), and exactly one terminating newline at EOF.
+- **Strict Whitespace & Formatting Hygiene**: All test inputs and outputs (`.inp`, `.out`, `tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`) must adhere strictly to the problem statement format. Absolutely ZERO trailing spaces on any line, ZERO redundant blank lines (no `\n\n`), and exactly one terminating newline at EOF.
 
 Treat any I/O mismatch or formatting violation as a correctness failure and repair it in source/configuration, then regenerate.
 

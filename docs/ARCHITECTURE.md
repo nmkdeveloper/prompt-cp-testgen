@@ -26,7 +26,7 @@ Candidate Pool
     ↓
 Wrong-Solution Attack
     ↓
-Exactly 100 Final Tests
+Optimal Final Tests
     ↓
 Audit
     ↓

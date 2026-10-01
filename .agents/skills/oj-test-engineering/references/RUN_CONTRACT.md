@@ -22,4 +22,4 @@ report.md
 polygon-package/
 ```
 
-A final successful problem requires exactly 100 final input/output test pairs.
+A final successful problem requires a dynamically calculated optimal number of final input/output test pairs covering all subtasks and test types.

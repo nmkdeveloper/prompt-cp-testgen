@@ -112,24 +112,18 @@ The exact set of `tutorial`, `notes`, `legend`, `input`, `output`, and example s
 
 ## Tests
 
-Successful problems have exactly:
+Successful problems have a dynamically calculated optimal test suite covering all subtasks and essential test types:
 
 ```text
-100 final tests
-```
-
-with:
-
-```text
-01 ... 100
-01.a ... 100.a
+01 ... NN
+01.a ... NN.a
 ```
 
 The first tests are the original samples, preserved exactly. The sample order and contents are immutable.
 
 ### Strict Whitespace & Formatting Hygiene
 
-- All test inputs and outputs (`01`..`100`, `01.a`..`100.a`) must adhere strictly to statement specifications.
+- All test inputs and outputs (`01`..`NN`, `01.a`..`NN.a`) must adhere strictly to statement specifications.
 - Absolutely ZERO trailing whitespace (no trailing spaces ` ` or tabs `\t` on any line).
 - Absolutely ZERO redundant newlines (no consecutive empty lines `\n\n`, exactly one trailing newline `\n` at EOF).
 - Output generator routines must avoid trailing spaces before line breaks (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
@@ -189,7 +183,7 @@ Unless explicitly specified otherwise in the reconstructed problem statement, st
 - **Memory limit**: Default **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes). FuraOJ parses this into kilobytes: `int(testset.find('memory-limit').text) // 1024` = `1048576` KB (1024 MB).
 - **Points**: Default **1đ** (1 point). For non-batched/standard tests, FuraOJ's importer sets `last_case.points = 1` if `total_points == 0`, giving 1 point total for solving the problem. For subtasks, point allocations should sum to the target points or 1đ default.
 
-For the main final testset, use exactly 100 tests. `%02d` is preferred because it matches the reference profile and renders test 100 correctly.
+For the main final testset, use the dynamically selected optimal test set covering all subtasks and test types. `%02d` is preferred because it matches the reference profile.
 
 Do not invent undocumented Polygon XML elements. For groups, points policies, dependencies or other advanced features, use verified Polygon package syntax from trusted source material or existing known-good packages.
 

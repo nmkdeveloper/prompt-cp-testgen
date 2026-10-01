@@ -53,7 +53,7 @@ Run benchmark inputs serially under the protected 1 second / 1 GiB policy and id
 
 ## Phase 11 — Final Selection
 
-Select exactly 100 final tests. Preserve samples first, satisfy subtask boundaries, maximize useful coverage, minimize answer redundancy, and include natural no-solution cases.
+Select the optimal, reasonable number of final tests (dynamically calculated; no rigid 100-test requirement). Preserve samples first, completely cover all subtasks and essential test types, satisfy subtask boundaries, maximize useful coverage, minimize answer redundancy, and include natural no-solution cases.
 
 ## Phase 12 — Final Audit
 

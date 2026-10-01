@@ -55,10 +55,10 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 
 ## Tests & Strict I/O Whitespace Formatting
 
-- [ ] Exactly 100 final tests.
+- [ ] Dynamically calculated optimal final test count (no rigid 100-test requirement; complete coverage of all subtasks and test types).
 - [ ] Samples are first.
 - [ ] Every input has an answer.
-- [ ] Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) adhere strictly to problem format.
+- [ ] Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`, `.inp`, `.out`) adhere strictly to problem format.
 - [ ] ZERO trailing spaces or tabs on any line in any test input/output file.
 - [ ] ZERO redundant newlines (no consecutive empty lines `\n\n`) and exactly one terminating newline at EOF.
 - [ ] Every final test passes validation.

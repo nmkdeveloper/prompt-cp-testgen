@@ -36,7 +36,7 @@ The agent may create `protected_runner.cpp`, generators, validators, brute/refer
 
 - ZIP opens successfully.
 - Required package paths exist.
-- Exactly 100 final tests on successful problems.
+- Dynamic optimal number of final tests (covering all subtasks and test types) on successful problems.
 - Sample tests are first.
 - No accidental internal files are present.
 - Test files and answers correspond one-to-one.
