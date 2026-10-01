@@ -17,28 +17,32 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 ## Required order
 1. Discover every input file and classify its role.
 2. Reconstruct `problem.md` from authoritative sources without semantic changes.
-3. Preserve all original samples exactly and reserve them as the first tests.
-4. Resolve canonical filenames when unspecified.
-5. Detect OS, architecture, compiler, C++ standard, process/resource facilities and testlib availability.
-6. Generate the minimal native C++ toolchain required for the problem, including a protected runner.
-7. Verify any supplied AC/official/reference code before trusting or reusing it.
-8. Determine the safe brute domain and run differential checks serially.
-9. Analyze intended, partial and wrong solution classes.
-10. Design a dynamic number of meaningful subtasks.
-11. Design problem-specific test families.
-12. Generate a large candidate pool with reproducible provenance.
-13. Validate candidates and run brute/reference/wrong-solution checks serially.
-14. Benchmark performance-sensitive structures under the same protected limits.
-15. Generate targeted counterexamples for meaningful survivors.
-16. Select exactly 100 final tests, preserving samples and subtask boundaries.
-17. Audit answer diversity without editing answers.
-18. Re-run final validation and produce incremental logs/final report.
-19. Build a clean Polygon package using the VNOJ Polygon golden-package profile.
-20. Run the offline-package-verifier against the staged package and final ZIP. Do not use Polygon API as the authoritative verification path.
-21. Only declare success after all mandatory offline verification layers pass; otherwise record FAIL and skip in batch mode.
+3. Immediately check system availability of `g++` and `python`. If either is missing, automatically download portable standalone builds from trusted sources, extract locally, and configure environment paths to use them.
+4. Preserve all original samples exactly and reserve them as the first tests.
+5. Resolve canonical filenames when unspecified.
+6. Detect OS, architecture, compiler, C++ standard, process/resource facilities and testlib availability.
+7. Generate the minimal native C++ toolchain required for the problem, including a protected runner with an active runaway auto-break watchdog.
+8. Verify any supplied AC/official/reference code before trusting or reusing it.
+9. Determine the safe brute domain and run differential checks serially.
+10. Analyze intended, partial and wrong solution classes.
+11. Design a dynamic number of meaningful subtasks.
+12. Design problem-specific test families.
+13. Generate a large candidate pool with reproducible provenance.
+14. Validate candidates and run brute/reference/wrong-solution checks serially.
+15. Benchmark performance-sensitive structures under the same protected limits.
+16. Generate targeted counterexamples for meaningful survivors.
+17. Select exactly 100 final tests, preserving samples and subtask boundaries.
+18. Audit answer diversity without editing answers.
+19. Re-run final validation and produce incremental logs/final report.
+20. Build a clean Polygon package using the VNOJ Polygon golden-package profile.
+21. Run the offline-package-verifier against the staged package and final ZIP. Do not use Polygon API as the authoritative verification path.
+22. Only declare success after all mandatory offline verification layers pass; otherwise record FAIL and skip in batch mode.
 
 ## Generated code policy
 The agent writes all problem-specific executable code itself unless a supplied implementation is explicitly being reused after verification. This includes generators, validators, brute solvers, benchmark programs, checkers, mutants and the protected execution harness.
+
+- **Token Economy**: Generated code must be dense and compact (multiple simple statements per line where practical) and use concise variable/function names (`n, m, k, a, ans, adj, dp, solve(), calc()`) to minimize token overhead.
+- **Selective English Comments**: Comment only on functions that genuinely require explanation; state strictly logic, received inputs, and return value; write all comments exclusively in English.
 
 Do not include a generic runner implementation from the bundle.
 
@@ -48,6 +52,7 @@ Do not include a generic runner implementation from the bundle.
 - Never manually edit generated `.in/.out`.
 - If generated data is wrong, fix source and regenerate.
 - If supplied reference code conflicts with brute/adversarial evidence, investigate instead of trusting its label.
+- Active runaway auto-break: the protected runner must actively interrupt runaway code (infinite loops `while(true)`, infinite recursion) and forcefully kill the entire process tree.
 - Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) must adhere strictly to statement specifications with zero trailing spaces, no redundant blank lines, and exactly one terminating newline at EOF.
 - LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 

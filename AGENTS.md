@@ -6,6 +6,7 @@ Non-negotiable principles:
 
 - Read all supplied problem resources before generating final tests.
 - Reconstruct a complete `problem.md` without changing statement semantics.
+- Right after verifying problem statement existence, immediately check system availability of `g++` and `python`. If either is missing, automatically download portable standalone builds from trusted sources and configure the environment to use them throughout execution.
 - Preserve original sample inputs/outputs exactly; samples go first.
 - Never invent or silently repair the statement, samples, constraints, scoring or explicit filenames.
 - Prefer supplied AC/reference code, but verify it with brute/adversarial checks before promoting it to the reference.
@@ -16,7 +17,9 @@ Non-negotiable principles:
 - Do not manually edit generated `.in/.out` files. Fix source and regenerate.
 - Keep answers generated from the verified reference; minimize unnecessary answer duplication and include a small number of valid no-solution/zero cases when applicable.
 - Run benchmark tests where practical.
-- Every untrusted executable must be run through an agent-generated native protected runner with 1 GiB RAM and 1 second limits; kill the process tree when a limit is exceeded.
+- Every untrusted executable must be run through an agent-generated native protected runner with 1 GiB RAM and 1 second limits; include an active auto-break watchdog that terminates runaway execution (infinite loops, infinite recursion) and kills the entire process tree.
+- Token economy in generated code: generate dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve tokens without altering semantics.
+- Code comments convention: comment only on functions that genuinely require explanation; comments must strictly state core logic, inputs, and return value, and must be written exclusively in English.
 - Generate runtime tooling per detected OS/toolchain; prefer C++ for solution/brute/generator/validator/checker/benchmark/runner code.
 - Do not rely on a generic prewritten runtime implementation shipped by this bundle.
 - Never spawn subagents and never run multiple test-engineering tasks concurrently. Execute serially.
@@ -108,3 +111,26 @@ Treat the original I/O mode as immutable source data and test inputs/outputs as 
 ## BILINGUAL TUTORIAL — ABSOLUTE
 
 The final default package must contain both English and Vietnamese tutorials whenever tutorials are supported by the target profile. Preserve supplied tutorial source text verbatim and faithfully translate only the missing default language. Keep both languages represented in package artifacts even though the importer selects one main tutorial for the site.
+
+## TOOLCHAIN PREFLIGHT & PORTABLE RUNTIME
+
+- **Initial Check**: Immediately after verifying that problem files/statement exist, check whether `g++` and `python` are available in PATH.
+- **Automatic Portable Fallback**: If `g++` or `python` is missing, search web and download trusted portable standalone builds (e.g., WinLibs standalone MinGW-w64 archive for Windows, official Python embeddable zip).
+- **Trusted Sources Only**: Ensure portable archives originate from reliable official/reputable repositories.
+- **Local Isolation & Configuration**: Extract portable toolchains into a local directory and configure environment paths so all compilation, validation, and execution steps seamlessly utilize them.
+
+## RUNAWAY WATCHDOG & PROCESS TREE KILL
+
+- **Auto-Break Runaway Execution**: The protected runner must actively detect and interrupt code that executes past time limits due to infinite loops (`while(true)`), infinite recursion (stack overflows or hangs), or exponential search spaces.
+- **Process Tree Kill**: When runaway execution is broken or the hard 1000 ms limit is exceeded, forcefully terminate the entire process tree (parent process and all spawned child processes/tasks).
+- **No Background Stragglers**: Ensure zero lingering child processes or zombie tasks survive in the operating system.
+
+## TOKEN ECONOMY & CODE COMMENT CONVENTION
+
+- **Token Economy (Compact Code)**: To save tokens, write dense and compact code in all agent-generated sources (solutions, brutes, generators, validators, checkers, runners):
+  - Place multiple simple statements on a single line where appropriate (e.g. `if (x < 0) return 0;`, `for (int i=0; i<n; ++i) cin >> a[i];`).
+  - Use concise variable and function names (`n, m, k, a, ans, adj, dp, solve(), calc()`) rather than verbose multi-word identifiers.
+- **Selective English Comments**:
+  - Comment ONLY on functions that genuinely require explanation. Avoid trivial or boilerplate comments.
+  - When commenting, strictly record: (1) core logic, (2) received data/parameters, (3) return value/result.
+  - All comments must be written exclusively in English.

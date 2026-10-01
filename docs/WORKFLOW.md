@@ -8,15 +8,20 @@ Inspect every supplied file and classify its role. Do not trust filenames alone.
 
 Read PDFs, scans, images, diagrams and text. Reconstruct a complete `problem.md` without changing meaning. Samples and explicit source data are immutable.
 
-## Phase 2 — Host/Toolchain Detection
+## Phase 2 — Host/Toolchain Preflight & Portable Fallback
 
-Detect OS, architecture, compiler and testlib availability. Decide which native process/resource backend is required.
+Immediately after confirming problem statement files exist:
+1. Check availability of `g++` and `python` in system PATH (`where.exe` / `which`).
+2. If missing, automatically download trusted portable standalone builds (WinLibs MinGW-w64 standalone archive, official Python embeddable zip), extract locally, and configure environment paths to use them.
+3. Detect OS, architecture, compiler capabilities, and testlib availability. Decide which native process/resource backend is required.
 
 ## Phase 3 — Agent-Generated Runtime Toolchain
 
 Write the required C++ sources for the actual environment and problem. This includes a protected execution runner and any generators/validators/checkers/brute/reference/benchmark tools that are needed.
 
-All untrusted executables must run serially under the 1 GiB / 1 second protected limits.
+- **Protected limits & auto-break**: All untrusted executables run serially under 1 GiB RAM and 1 second limits; an active auto-break watchdog terminates runaway execution (infinite loops, deep recursion) and kills the entire process tree.
+- **Token economy**: Generated code must be dense and compact (multiple statements per line where practical) with short, concise variable/function names to conserve token budget.
+- **Selective English comments**: Comment only on functions that genuinely require explanation; state strictly logic, inputs, and return value; write comments exclusively in English.
 
 ## Phase 4 — Reference Verification
 

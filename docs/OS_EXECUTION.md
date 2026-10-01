@@ -7,9 +7,10 @@ Every untrusted executable used in the OJ test-engineering workflow must be laun
 - 1024 MiB memory limit
 - 1000 ms wall-clock limit
 - 1000 ms CPU-time limit where the OS exposes a reliable mechanism
-- process-tree cleanup on termination
+- active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks
+- process-tree cleanup and forceful termination of all tasks on termination
 
-When a limit is crossed, classify the run as `LIMIT_EXCEEDED`, terminate the complete process tree, wait for cleanup, and write the event to the incremental log.
+When a limit is crossed or runaway execution is detected, classify the run as `LIMIT_EXCEEDED` / `RUNAWAY_BROKEN`, terminate the complete process tree (killing all descendant tasks), wait for cleanup, and write the event to the incremental log.
 
 ## Agent-generated, OS-specific implementation
 

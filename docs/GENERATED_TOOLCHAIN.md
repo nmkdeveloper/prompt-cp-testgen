@@ -24,6 +24,37 @@ Prefer the newest C++ standard that is reliably supported by the detected enviro
 
 Do not rewrite a supplied AC/reference solution merely for style. Once verified, reuse it.
 
+## Toolchain Preflight & Portable Fallback (g++ and python)
+
+Immediately after confirming the problem statement/input files exist, the very first toolchain action is verifying whether `g++` and `python` are available on the host system:
+1. Check executable paths (`where.exe g++`, `where.exe python` on Windows, or `which g++`, `which python3` on Unix).
+2. If `g++` is missing: Search and download a trusted portable/standalone distribution (e.g., WinLibs standalone MinGW-w64 build for Windows via official/GitHub releases, or standalone toolchain archive). Unpack locally into a workspace toolchain directory and configure environment paths to use it.
+3. If `python` is missing: Download an official portable/embeddable package (e.g., Python embeddable zip from python.org). Unpack locally and configure environment paths.
+4. Use these verified portable toolchains across all subsequent compilation, testing, and script executions.
+
+## Runaway Execution Auto-Break & Process-Tree Termination
+
+The generated protected runner must actively guard against runaway tasks:
+- **Infinite loops & recursion**: Automatically detect and break execution when child processes run past time limits due to infinite loops (`while(true)`), infinite recursion (deep stack hangs), or exponential algorithms.
+- **Process-tree termination**: When the timeout limit is reached or a runaway break is triggered, forcefully kill the entire process tree (parent executable and all spawned descendant processes).
+- **Zero background leakage**: Guarantee that no orphaned or zombie tasks remain running in the OS.
+
+## Token Economy in Generated Code
+
+To conserve token budget across prompts and outputs without sacrificing algorithmic precision:
+- **Dense code style**: Place multiple simple statements on a single line where appropriate (e.g., `if (x < 0) return 0;`, `for (int i=0; i<n; ++i) cin >> a[i];`, combining declarations).
+- **Concise naming**: Use short, compact, meaningful names (`n, m, k, a, b, ans, res, adj, vis, dis, dp, solve(), calc(), get(), init()`) rather than verbose multi-word identifiers.
+
+## Code Comments Policy
+
+- **Minimal & selective**: Add comments ONLY to functions that genuinely require explanation. Trivial or self-explanatory functions must have zero comments.
+- **Strict 3-part format**: When a comment is necessary, record strictly:
+  1. Core logic/algorithm
+  2. Received data/inputs
+  3. Returned result/output
+  (e.g., `// Logic: Dijkstra shortest path. In: src node, adj list with weights. Out: min distance vector.`)
+- **English only**: All comments throughout all generated sources must be written exclusively in English.
+
 ## Agent-Owned Code Generation
 
 At the start of each problem, the agent must detect:

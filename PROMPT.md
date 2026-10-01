@@ -6,6 +6,8 @@ Read every supplied PDF, image, statement resource, code file, answer file, chec
 
 First reconstruct a complete `problem.md`. Never invent, repair or silently alter statement semantics. Preserve original sample input/output exactly. If filenames are not specified, choose sensible names and record the decision.
 
+Right after verifying statement files exist, immediately check system availability of `g++` and `python`. If either is missing, automatically download trusted portable standalone builds (e.g., WinLibs standalone MinGW-w64 for Windows, official Python embeddable zip), extract locally, and configure the environment to use them throughout execution.
+
 If an AC/official/reference solution exists, prioritize it but verify it against brute force on its safe domain plus adversarial/boundary tests before reuse. If brute/reference disagree, investigate and fix the real source instead of patching outputs.
 
 Prefer C++20 for executable code, falling back to C++17. Generate runtime tooling specifically for the detected Windows, Linux, macOS, FreeBSD or other host. Do not copy generic runtime implementations from this bundle.
@@ -16,7 +18,9 @@ For testlib-based C++, use exactly:
 
 Never use the quoted form.
 
-Use an agent-generated protected runner with 1 GiB RAM and 1 second wall time, plus CPU-time enforcement where reliable. Kill the complete process tree on violation. Execute serially.
+Use an agent-generated protected runner with 1 GiB RAM and 1 second wall time, plus CPU-time enforcement where reliable. Include an active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks, and forcefully kill the complete process tree on violation. Execute serially.
+
+Apply token economy in all generated code: write dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve token budget. Add code comments only to functions that genuinely require explanation; when commenting, state strictly core logic, received inputs, and return value, and write all comments exclusively in English.
 
 Design a dynamic number of meaningful subtasks. If the problem already has useful subtasks, analyze and preserve them. If it has none, create the best meaningful decomposition you can using constraints, algorithmic thresholds, structural properties, mathematical properties and special cases. Prefer nested ladders when naturally possible. Every subtask should end with multiple maximum-boundary tests when feasible.
 

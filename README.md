@@ -56,19 +56,31 @@ Final audit
 Clean Polygon ZIP
 ```
 
-## Hard execution policy
+## Toolchain Preflight & Portable Fallback
+
+Immediately after confirming problem statement existence, the system verifies `g++` and `python` availability:
+- If either tool is absent from PATH, automatically search and download trusted portable standalone distributions (e.g. WinLibs standalone MinGW-w64 for Windows, official Python embeddable zip).
+- Extract them into a local directory and configure the environment to use them for all subsequent compilation and execution phases.
+
+## Hard execution policy & runaway watchdog
 
 Every untrusted executable in the testing workflow runs through an agent-generated protected runner with:
 
 - **1 GiB RAM**
 - **1 second wall-clock**
 - **1 second CPU-time target/limit where available**
-- **process-tree kill on limit violation**
+- **active runaway auto-break watchdog** to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks
+- **process-tree kill on limit violation or auto-break** (forcefully killing parent and all descendant tasks)
 - **serial execution only**
 
-When a limit is exceeded, the protected runner must kill the process tree and log the reason. No timed-out process may continue in the background.
+When a limit is exceeded or runaway code is detected, the protected runner must kill the complete process tree and log the reason. No timed-out or runaway process may continue in the background.
 
 Windows should prefer native Job Objects; Linux should use native POSIX/Linux resource controls and process groups; macOS and FreeBSD should use the resource/process APIs actually available on the detected system. If a platform cannot provide reliable enforcement, the agent must not silently run unprotected; after reasonable recovery it must mark the problem `FAIL`.
+
+## Token economy & English code comments
+
+- **Token Economy**: All generated C++/Python code should be written compactly, placing multiple simple statements on a single line where practical, and using concise variable and function names (`n, m, k, a, ans, adj, dp, solve(), calc()`) to minimize token overhead.
+- **Selective Comments**: Add comments only to functions that genuinely require explanation. When commenting, state strictly: (1) core logic, (2) received parameters/inputs, (3) return value/result. All comments must be written exclusively in English.
 
 ## No subagents / no concurrency
 
