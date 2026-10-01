@@ -60,9 +60,10 @@ Use this information to select the most appropriate native implementation.
 The agent must generate a protected runner for each actual environment. It must enforce:
 
 - memory: 1024 MiB
-- wall time: 1000 ms
-- CPU time: 1000 ms where a reliable native limit exists
-- active auto-break: detect and break infinite loops (`while(true)`), infinite recursion, and hanging tasks
+- hard time limits:
+  - strict **1000 ms** for solutions and mutants (reference, brute force, WA/TLE/RE)
+  - calibrated hard limit for generators, validators, and checkers derived from a host FLOPS benchmark
+- active auto-break: detect and break infinite loops (`while(true)`), infinite recursion, and hanging tasks past their hard time limit
 - kill complete process tree (parent and all descendant tasks) on violation or runaway break
 - no lingering child process after timeout
 

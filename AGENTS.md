@@ -16,8 +16,7 @@ Non-negotiable principles:
 - Use testlib for direct C++ test-engineering components where applicable and include it as `#include <testlib.h>` only.
 - Do not manually edit generated `.in/.out` files. Fix source and regenerate.
 - Keep answers generated from the verified reference; minimize unnecessary answer duplication and include a small number of valid no-solution/zero cases when applicable.
-- Run benchmark tests where practical.
-- Every untrusted executable must be run through an agent-generated native protected runner with 1 GiB RAM and 1 second limits; include an active auto-break watchdog that terminates runaway execution (infinite loops, infinite recursion) and kills the entire process tree.
+- Every untrusted executable must be run through an agent-generated native protected runner with 1 GiB RAM and enforced hard time limits: solutions and mutant codes have a strict 1000 ms limit; generators and tooling codes have a calibrated hard limit derived from a host FLOPS benchmark. Include an active auto-break watchdog that terminates runaway execution (infinite loops, infinite recursion) and kills the entire process tree.
 - Token economy in generated code: generate dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve tokens without altering semantics.
 - Code comments convention: comment only on functions that genuinely require explanation; comments must strictly state core logic, inputs, and return value, and must be written exclusively in English.
 - Generate runtime tooling per detected OS/toolchain; prefer C++ for solution/brute/generator/validator/checker/benchmark/runner code.
@@ -121,8 +120,11 @@ The final default package must contain both English and Vietnamese tutorials whe
 
 ## RUNAWAY WATCHDOG & PROCESS TREE KILL
 
-- **Auto-Break Runaway Execution**: The protected runner must actively detect and interrupt code that executes past time limits due to infinite loops (`while(true)`), infinite recursion (stack overflows or hangs), or exponential search spaces.
-- **Process Tree Kill**: When runaway execution is broken or the hard 1000 ms limit is exceeded, forcefully terminate the entire process tree (parent process and all spawned child processes/tasks).
+- **Hard Time Limits for All Executables**:
+  - **Solutions & Mutants**: All solution codes (reference, brute force, wrong solutions WA/TLE/RE) have an absolute strict hard time limit of **1000 ms** (1.0 second).
+  - **Generators & Tooling Code**: All generator, validator, checker, and auxiliary code must also have an enforced hard time limit. This limit is calibrated empirically based on host environment capabilities by running a quick host micro-benchmark to estimate FLOPS/throughput and assigning a reasonable hard limit (e.g. allowing complex generation on slower CPUs while strictly bounding runaway time).
+- **Auto-Break Runaway Execution**: The protected runner must actively detect and interrupt code that executes past its designated hard time limit due to infinite loops (`while(true)`), infinite recursion (stack overflows or hangs), or exponential search spaces.
+- **Process Tree Kill**: When runaway execution is broken or a hard limit is exceeded, forcefully terminate the entire process tree (parent process and all spawned child processes/tasks).
 - **No Background Stragglers**: Ensure zero lingering child processes or zombie tasks survive in the operating system.
 
 ## TOKEN ECONOMY & CODE COMMENT CONVENTION

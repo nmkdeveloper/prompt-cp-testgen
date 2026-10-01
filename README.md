@@ -67,9 +67,9 @@ Immediately after confirming problem statement existence, the system verifies `g
 Every untrusted executable in the testing workflow runs through an agent-generated protected runner with:
 
 - **1 GiB RAM**
-- **1 second wall-clock**
-- **1 second CPU-time target/limit where available**
-- **active runaway auto-break watchdog** to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks
+- **Strict 1000 ms hard limit for solutions and mutants** (reference solution, brute force, wrong solutions WA/TLE/RE)
+- **Calibrated hard limit for generators and tooling** derived empirically from a host FLOPS micro-benchmark
+- **active runaway auto-break watchdog** to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks past their hard time limit
 - **process-tree kill on limit violation or auto-break** (forcefully killing parent and all descendant tasks)
 - **serial execution only**
 

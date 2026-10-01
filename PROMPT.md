@@ -18,7 +18,7 @@ For testlib-based C++, use exactly:
 
 Never use the quoted form.
 
-Use an agent-generated protected runner with 1 GiB RAM and 1 second wall time, plus CPU-time enforcement where reliable. Include an active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks, and forcefully kill the complete process tree on violation. Execute serially.
+Use an agent-generated protected runner with 1 GiB RAM and enforced hard time limits: solution and mutant codes have a strict 1000 ms limit; generators, validators, and checkers have a calibrated hard limit derived from a host FLOPS benchmark. Include an active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks past their hard time limit, and forcefully kill the complete process tree on violation. Execute serially.
 
 Apply token economy in all generated code: write dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve token budget. Add code comments only to functions that genuinely require explanation; when commenting, state strictly core logic, received inputs, and return value, and write all comments exclusively in English.
 

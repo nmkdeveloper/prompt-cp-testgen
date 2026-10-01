@@ -20,8 +20,8 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 3. Immediately check system availability of `g++` and `python`. If either is missing, automatically download portable standalone builds from trusted sources, extract locally, and configure environment paths to use them.
 4. Preserve all original samples exactly and reserve them as the first tests.
 5. Resolve canonical filenames when unspecified.
-6. Detect OS, architecture, compiler, C++ standard, process/resource facilities and testlib availability.
-7. Generate the minimal native C++ toolchain required for the problem, including a protected runner with an active runaway auto-break watchdog.
+6. Detect OS, architecture, compiler, C++ standard, process/resource facilities, testlib availability, and run a host micro-benchmark to estimate FLOPS/performance for generator hard limit calibration.
+7. Generate the minimal native C++ toolchain required for the problem, including a protected runner enforcing 1000 ms for solutions/mutants and the calibrated hard limit for generators, with an active runaway auto-break watchdog.
 8. Verify any supplied AC/official/reference code before trusting or reusing it.
 9. Determine the safe brute domain and run differential checks serially.
 10. Analyze intended, partial and wrong solution classes.
@@ -51,8 +51,7 @@ Do not include a generic runner implementation from the bundle.
 - Never modify original sample input/output.
 - Never manually edit generated `.in/.out`.
 - If generated data is wrong, fix source and regenerate.
-- If supplied reference code conflicts with brute/adversarial evidence, investigate instead of trusting its label.
-- Active runaway auto-break: the protected runner must actively interrupt runaway code (infinite loops `while(true)`, infinite recursion) and forcefully kill the entire process tree.
+- Active runaway auto-break with hard time limits: strict 1000 ms limit for solutions and mutants, calibrated hard limit from host FLOPS benchmark for generators and tooling; actively interrupt runaway code (infinite loops `while(true)`, infinite recursion) past the hard limit and forcefully kill the entire process tree.
 - Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/100`, `tests/01.a`..`tests/100.a`, `.inp`, `.out`) must adhere strictly to statement specifications with zero trailing spaces, no redundant blank lines, and exactly one terminating newline at EOF.
 - LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 

@@ -5,12 +5,13 @@
 Every untrusted executable used in the OJ test-engineering workflow must be launched through an agent-generated native protected runner with:
 
 - 1024 MiB memory limit
-- 1000 ms wall-clock limit
-- 1000 ms CPU-time limit where the OS exposes a reliable mechanism
-- active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks
-- process-tree cleanup and forceful termination of all tasks on termination
+- **Differentiated hard time limits**:
+  - **Solutions and Mutants**: Strict **1000 ms** limit (1 second wall/CPU time) matching FuraOJ/Polygon judge constraints.
+  - **Generators and Tooling Code**: Enforced calibrated hard time limit determined empirically from host capabilities (by running a host micro-benchmark measuring FLOPS/compute throughput).
+- Active runaway auto-break watchdog to interrupt infinite loops (`while(true)`), infinite recursion, and hanging tasks past their hard time limit.
+- Process-tree cleanup and forceful termination of all tasks on limit violation or runaway break.
 
-When a limit is crossed or runaway execution is detected, classify the run as `LIMIT_EXCEEDED` / `RUNAWAY_BROKEN`, terminate the complete process tree (killing all descendant tasks), wait for cleanup, and write the event to the incremental log.
+When a limit is crossed or runaway execution is detected, classify the run as `LIMIT_EXCEEDED` / `RUNAWAY_BROKEN`, terminate the complete process tree (killing parent and all descendant tasks), wait for cleanup, and write the event to the incremental log.
 
 ## Agent-generated, OS-specific implementation
 
@@ -60,9 +61,13 @@ The generated runner should:
 
 Avoid unnecessary watchdog threads; a single supervisory flow is preferred.
 
-## Benchmarking
+## Host Benchmark & FLOPS Calibration for Tooling Code
 
-Benchmark executions use the same protected limits. A reference program that reaches the 1 second or 1 GiB threshold is classified and logged; it must not be allowed to continue beyond the guard.
+To establish a principled, reproducible hard time limit for generators, validators, and checkers:
+1. The agent compiles and executes a lightweight native micro-benchmark measuring simple CPU arithmetic and memory throughput.
+2. The benchmark computes an estimated host FLOPS/performance rating.
+3. Based on this rating, the agent calculates a reasonable hard time limit for generator execution (e.g. providing generous headroom for $10^5 \sim 10^6$ test generation on slower CPUs while strictly bounding maximum runaway execution time).
+4. This calibrated limit is fed into the protected runner when executing generators, ensuring that generator runaway bugs (such as infinite `while(true)` loops or hangs) are reliably interrupted and terminated.
 
 ## Integrity
 

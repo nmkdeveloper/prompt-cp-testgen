@@ -19,7 +19,7 @@ Immediately after confirming problem statement files exist:
 
 Write the required C++ sources for the actual environment and problem. This includes a protected execution runner and any generators/validators/checkers/brute/reference/benchmark tools that are needed.
 
-- **Protected limits & auto-break**: All untrusted executables run serially under 1 GiB RAM and 1 second limits; an active auto-break watchdog terminates runaway execution (infinite loops, deep recursion) and kills the entire process tree.
+- **Protected limits & auto-break**: All untrusted executables run serially under 1 GiB RAM with hard time limits (solutions/mutants: strict 1000 ms; generators/tooling: calibrated hard limit derived from a host FLOPS benchmark); an active auto-break watchdog terminates runaway execution (infinite loops, deep recursion) and kills the entire process tree.
 - **Token economy**: Generated code must be dense and compact (multiple statements per line where practical) with short, concise variable/function names to conserve token budget.
 - **Selective English comments**: Comment only on functions that genuinely require explanation; state strictly logic, inputs, and return value; write comments exclusively in English.
 

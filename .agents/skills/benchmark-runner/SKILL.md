@@ -13,7 +13,7 @@ Record runtime and, where available, memory, exit status and input dimensions.
 
 ## Execution constraints
 
-Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and 1 second limits. Prefer C++ for executable components.
+Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and enforced hard time limits (strict 1000 ms for reference solutions; calibrated limits for tooling). The benchmark runner can also execute a host micro-benchmark measuring FLOPS to calibrate reasonable hard time limits for generators. Prefer C++ for executable components.
 
 
 ## I/O contract — immutable

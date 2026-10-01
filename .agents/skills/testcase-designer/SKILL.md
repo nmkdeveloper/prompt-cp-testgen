@@ -15,7 +15,7 @@ Never manually edit generated test data. Fix the generator and regenerate instea
 
 ## Execution constraints
 
-Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and 1 second limits. Prefer C++ for executable components.
+Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and enforced hard time limits (solutions/mutants: strict 1000 ms; generators: calibrated hard limit derived from a host FLOPS benchmark). Prefer C++ for executable components.
 
 
 ## Specialized and distributed killer tests

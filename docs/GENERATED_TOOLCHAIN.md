@@ -34,8 +34,11 @@ Immediately after confirming the problem statement/input files exist, the very f
 
 ## Runaway Execution Auto-Break & Process-Tree Termination
 
-The generated protected runner must actively guard against runaway tasks:
-- **Infinite loops & recursion**: Automatically detect and break execution when child processes run past time limits due to infinite loops (`while(true)`), infinite recursion (deep stack hangs), or exponential algorithms.
+The generated protected runner must enforce hard time limits on every executed program:
+- **Differentiated hard time limits**:
+  - **Solutions & Mutants**: Strict **1000 ms** limit (1.0 second wall/CPU time).
+  - **Generators & Tooling**: Enforced calibrated hard time limit computed dynamically by running a lightweight host micro-benchmark measuring FLOPS/compute throughput.
+- **Infinite loops & recursion**: Automatically detect and break execution when child processes run past their hard time limit due to infinite loops (`while(true)`), infinite recursion (deep stack hangs), or exponential algorithms.
 - **Process-tree termination**: When the timeout limit is reached or a runaway break is triggered, forcefully kill the entire process tree (parent executable and all spawned descendant processes).
 - **Zero background leakage**: Guarantee that no orphaned or zombie tasks remain running in the OS.
 

@@ -6,9 +6,9 @@ alwaysApply: true
 
 - The agent must generate the protected runner for the detected host.
 - Do not use a bundled generic runner implementation.
-- Limit protected child executions to 1024 MiB RAM and 1000 ms wall time.
-- Enforce 1000 ms CPU time where the OS provides a reliable mechanism.
-- Active runaway auto-break: detect and break infinite loops (`while(true)`), infinite recursion, and hanging processes.
+- Limit protected child executions to 1024 MiB RAM.
+- Hard time limits: solutions and mutants have a strict 1000 ms limit; generators and tooling code have an enforced calibrated hard limit derived from a host FLOPS benchmark.
+- Active runaway auto-break: detect and break infinite loops (`while(true)`), infinite recursion, and hanging tasks past their hard time limit.
 - Kill the complete process tree (parent and all descendant tasks) on any limit violation or runaway break.
 - Do not leave timed-out or runaway children running.
 - If reliable enforcement is unavailable, do not silently bypass the guard; recover or mark FAIL.
