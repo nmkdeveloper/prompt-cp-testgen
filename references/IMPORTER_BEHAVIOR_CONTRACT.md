@@ -1,9 +1,9 @@
-# FuraOJ / VNOJ Importer Behavior Contract
+# FuraOJ Importer Behavior Contract
 
-This contract is derived from the Fura Online Judge importer at `D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py` and management command `judge/management/commands/import_polygon_package.py`.
+This contract is derived from the Fura Online Judge importer at `references/codeforces_polygon.py`.
 
-**CRITICAL NOTICE — FURAOJ DIRECTORY IS READONLY**:
-The codebase at `D:\Workspaces\Github\furavietnam\furaoj` is strictly **READONLY**. Do not write, modify, or create files within `D:\Workspaces\Github\furavietnam\furaoj`. It serves solely as an authoritative behavioral reference.
+**CRITICAL NOTICE — IMPORTER CODE IS READONLY**:
+The reference file `references/codeforces_polygon.py` is strictly **READONLY**. Do not write, modify, or delete `references/codeforces_polygon.py`. It serves solely as an authoritative behavioral reference.
 
 ## Default Resource Limits & Scoring
 
@@ -81,15 +81,11 @@ The agent must create an offline preflight verifier that models these accesses a
 
 The importer reads the `judging` input-file/output-file attributes and only configures file I/O when both are non-empty. The package generator must preserve the source values exactly rather than forcing a local stdin/stdout convention. Separately preserve `problem-properties.json` inputFile/outputFile metadata.
 
-## Bilingual tutorial rule
+## Bilingual tutorial rule & multilingual editorial import
 
-The target package may contain tutorials for multiple statement languages. Keep both default language tutorial artifacts in the package even though this importer selects one main tutorial language when importing into the site.
-
-
-## Exact I/O behavior
-
-The supplied importer inspects `judging` file attributes and only activates file I/O when both `input-file` and `output-file` are non-empty. Do not use this importer behavior as permission to rewrite the source problem: preserve the original contract first, then ensure the generated package and executables are consistent with it.
-
-## Tutorial retention
-
-The importer may select one tutorial for the destination site's single tutorial field. The package itself should retain both English and Vietnamese tutorials when the target profile is bilingual.
+The target package must provide tutorials for both default languages (`vietnamese` and `english`). In `codeforces_polygon.py`:
+- All statement tutorials are extracted from `problem-properties.json` `tutorial` and converted to markdown via Pandoc.
+- Tutorials are mapped to site languages (`default_lang_map = {'vietnamese': 'vi', 'english': 'en', 'russian': 'ru'}`).
+- If Vietnamese (`vi`) is present, it is saved into the primary `Solution(content=...)`, while other languages (such as English `en`) are saved as `SolutionTranslation(solution=..., language='en', content=...)`. If `vi` is absent, the primary tutorial is English (`en`) and other languages are added as translations.
+- When `<solution tag="main">` is present, its source code is formatted in a markdown spoiler block (`<blockquote class="spoiler">\n```<lang>\n...\n```\n</blockquote>`) and appended to the main tutorial as well as all tutorial translations.
+- Keep both languages represented and synchronized in package artifacts (`statements/`, `statement-sections/`, and `problem.xml`).

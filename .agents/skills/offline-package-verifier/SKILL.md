@@ -1,10 +1,10 @@
 ---
 name: offline-package-verifier
-description: Builds and runs an offline, locally generated Polygon/VNOJ package verifier using the supplied golden package, available Polygon/package specifications, XML/schema tooling, and real compile/runtime checks; no Polygon API is required.
+description: Builds and runs an offline, locally generated Polygon package verifier using available Polygon/package specifications, XML/schema tooling, and real compile/runtime checks; no Polygon API is required.
 ---
 # Offline Package Verifier
 
-This skill is the authoritative offline verification stage before a Polygon/VNOJ package may be declared valid.
+This skill is the authoritative offline verification stage before a Polygon package may be declared valid.
 
 ## Core rule
 
@@ -366,13 +366,13 @@ The final report must include a verification matrix:
 The report must never claim a check ran when it did not.
 
 
-## FuraOJ / VNOJ importer compatibility layer
+## FuraOJ importer compatibility layer
 
-The offline verifier must include a dedicated compatibility layer derived from the Fura Online Judge importer implementation (`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`) and `references/vnoj_codeforces_polygon_importer.py`. The importer source is behavioral truth for this target.
+The offline verifier must include a dedicated compatibility layer derived from the Fura Online Judge importer implementation (`references/codeforces_polygon.py`). The importer source is behavioral truth for this target.
 
-**CRITICAL NOTICE ON FURAOJ DIRECTORY**:
-The directory `D:\Workspaces\Github\furavietnam\furaoj` contains the Fura Online Judge codebase.
-**THIS DIRECTORY IS STRICTLY READONLY**. Never write to, modify, or delete any files in `D:\Workspaces\Github\furavietnam\furaoj`.
+**CRITICAL NOTICE ON IMPORTER CODE**:
+The local reference `references/codeforces_polygon.py` contains the Fura Online Judge importer codebase snapshot.
+**IT IS STRICTLY READONLY**. Never write to, modify, or delete `references/codeforces_polygon.py`.
 
 At minimum, model and verify these observed assumptions:
 
@@ -385,19 +385,21 @@ At minimum, model and verify these observed assumptions:
   - `time-limit` defaults to `1000` (milliseconds, corresponding to 1s time limit in FuraOJ).
   - `memory-limit` defaults to `1073741824` (bytes, corresponding to 1048576 KB / 1 GB RAM in FuraOJ).
   - Points default to `1đ` (1 point: unbatched non-partial imports award 1 point via `last_case.points = 1`, or subtask points must sum to 1đ default or problem points).
+- Batches/groups in `<groups>`: points-policy `complete-group` or `each-test`. If points-policy is `each-test`, dependencies must be empty. Fractional points normalized via GCD.
 - Non-interactive packages require a checker. The checker must have `type="testlib"`.
-- Built-in checker names used by the importer map to supported DMOJ checker modes; otherwise a C++ checker source must exist.
+- Built-in checker names used by the importer map to supported DMOJ checker modes; otherwise a C++ checker source must exist (`lang='CPP20'`, `type='testlib'`).
 - Custom checker sources must be `.cpp` and are treated as testlib checker sources.
 - Interactive packages require a C++ interactor source; the importer ignores the checker in this mode.
 - Every statement with `type="application/x-tex"` must have a `path`, and its sibling `<statement-folder>/problem-properties.json` must exist.
 - The `problem-properties.json` object must contain every key actually indexed by the importer: `legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, and `tutorial`; also verify `sampleTests` item shape.
 - The statement language is taken from the `language` attribute; default output profile languages are `english` and `vietnamese`.
-- For multilingual statements, the package must contain valid language identifiers that can be mapped to the target site's configured languages.
+- For multilingual statements and tutorials, the importer maps languages using `default_lang_map = {'vietnamese': 'vi', 'english': 'en', 'russian': 'ru'}`. Vietnamese is stored as the primary `Solution`, and additional languages are stored as `SolutionTranslation`.
+- When `<solution tag="main">` is present, its source code is formatted as a spoiler markdown block and appended to all tutorials.
 - `problem-properties.json` is decoded as UTF-8.
 - Images referenced after statement conversion must point to actual package members before importer media upload.
 - Main solution is expected under `<solutions>` with `tag="main"` if solution parsing is needed; its source path must exist.
 
-The verifier must report importer-contract failures before the ZIP is handed to FuraOJ / VNOJ.
+The verifier must report importer-contract failures before the ZIP is handed to FuraOJ / Polygon.
 
 ## Golden package comparison
 
@@ -441,4 +443,4 @@ For successful packages using tutorials, require both English and Vietnamese tut
 - generated translation is faithful to the source tutorial;
 - tutorial language and statement language remain consistent.
 
-The importer selecting one main tutorial is not permission to omit the other tutorial from the Polygon package.
+Both tutorials must be present in the Polygon package; the importer imports primary tutorials and stores additional languages via solution translations.

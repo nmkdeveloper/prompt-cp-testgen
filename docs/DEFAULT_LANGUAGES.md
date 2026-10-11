@@ -24,4 +24,4 @@ Original source language(s), if different, remain preserved internally for prove
 
 ## Tutorial languages
 
-The default tutorial languages are also `english` and `vietnamese` when a tutorial is part of the target package. Never silently remove the second tutorial because the VNOJ importer selects one main tutorial for site display.
+The default tutorial languages are also `english` and `vietnamese` when a tutorial is part of the target package. Both tutorials are imported and supported through the importer's solution translations.

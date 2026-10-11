@@ -25,10 +25,11 @@ Non-negotiable principles:
 - Log significant work incrementally and write a detailed final report.
 - Do not ask the user for approval during autonomous execution.
 - If a problem becomes unrecoverably abnormal after reasonable automatic recovery, write `FAIL`, document it, skip the problem in batch mode and continue.
-- Dual packaging requirement: Generate two final test package ZIPs on success: (1) Polygon Full Package ZIP (for FuraOJ / VNOJ / Polygon), and (2) Standard Themis Package ZIP (for Themis grading software).
+- Dual packaging requirement: Generate two final test package ZIPs on success: (1) Polygon Full Package ZIP (for FuraOJ / Polygon), and (2) Standard Themis Package ZIP (for Themis grading software).
+- AI Agent Todo List & Task Tracking: Maintain a persistent, structured `todo.md` checklist following `docs/TODO_LIST_PROTOCOL.md` throughout execution. Track task states with standard markers (`- [ ]`, `- [-]`, `- [x]`, `- [!]`), enforce strictly one task in progress at a time, dynamically insert recovery subtasks upon failure, and verify all tasks are completed before declaring final success.
 
 
-Golden Package Profile (FuraOJ / VNOJ Polygon Full Package)
+Golden Package Profile (FuraOJ Polygon Full Package)
 
 - Treat the user-provided sample Polygon package as the structural golden template.
 - Mirror its package layout and descriptor relationships as closely as the target problem permits.
@@ -81,9 +82,9 @@ Before declaring final packages successful, run the `offline-package-verifier` s
 
 Fura Online Judge (FuraOJ) importer source-of-truth rule
 
-- The directory `D:\Workspaces\Github\furavietnam\furaoj` is the authoritative codebase of Fura Online Judge (containing `judge/management/commands/import_polygon_package.py` and `judge/utils/codeforces_polygon.py`).
-- **CRITICAL — STRICTLY READONLY**: `D:\Workspaces\Github\furavietnam\furaoj` is strictly **READONLY**. Never modify, delete, or create files in `D:\Workspaces\Github\furavietnam\furaoj`. All package generation, tooling, verification, and code must occur within `prompt-cp-testgen`.
-- Treat the FuraOJ `codeforces_polygon.py` importer logic and the supplied Polygon Full Package ZIP as structural/behavioral golden references.
+- The local reference snapshot `references/codeforces_polygon.py` represents the authoritative codebase and behavioral contract of Fura Online Judge.
+- **CRITICAL — STRICTLY READONLY**: `references/codeforces_polygon.py` is strictly **READONLY**. Never modify, delete, or overwrite `references/codeforces_polygon.py`. All package generation, tooling, verification, and code must occur within this workspace.
+- Treat the FuraOJ `codeforces_polygon.py` importer logic and the golden package layout as structural and behavioral golden references.
 - Default import settings are **1 GB RAM** (`1073741824` bytes), **1s time** (`1000` ms), and **1đ** (1 point).
 - **TeX, LaTeX, Markdown & Character Sanitization (Preventing Page Crashes)**:
   - Statements, problem names, notes, scoring, and tutorials must be strictly sanitized against `DMOJ_PROBLEM_STATEMENT_DISALLOWED_CHARACTERS`:
@@ -131,7 +132,7 @@ Treat the original I/O mode as immutable source data and test inputs/outputs as 
 
 ## BILINGUAL TUTORIAL — ABSOLUTE
 
-The final default package must contain both English and Vietnamese tutorials whenever tutorials are supported by the target profile. Preserve supplied tutorial source text verbatim and faithfully translate only the missing default language. Keep both languages represented in package artifacts even though the importer selects one main tutorial for the site.
+The final default package must contain both English and Vietnamese tutorials whenever tutorials are supported by the target profile. Preserve supplied tutorial source text verbatim and faithfully translate only the missing default language. Keep both languages represented in package artifacts; the importer imports primary tutorials and stores additional languages via solution translations.
 
 ## TOOLCHAIN PREFLIGHT & PORTABLE RUNTIME
 
@@ -158,3 +159,21 @@ The final default package must contain both English and Vietnamese tutorials whe
   - Comment ONLY on functions that genuinely require explanation. Avoid trivial or boilerplate comments.
   - When commenting, strictly record: (1) core logic, (2) received data/parameters, (3) return value/result.
   - All comments must be written exclusively in English.
+
+## AI AGENT TODO LIST & TASK TRACKING — ABSOLUTE
+
+To prevent goal drift, ensure total verification, and provide real-time visibility across complex 15-phase test engineering:
+
+- **Initialize `todo.md`**: At the very beginning of processing a problem, initialize `todo.md` at the workspace root based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
+- **Atomic Checklist Format**: Tasks must use standard GitHub markdown checkbox syntax:
+  - `- [ ]` Pending
+  - `- [-]` In Progress (strictly ONE task in progress at any given moment)
+  - `- [x]` Completed (verified with concrete evidence)
+  - `- [!]` Blocked / Failed (requires automatic remediation loop)
+- **Plan → Execute → Update Loop**:
+  - Before starting any phase, mark it `- [-]`.
+  - Execute the phase serially following all integrity and protected execution rules.
+  - After verifying results, immediately mark it `- [x]` with a brief note of verified findings before moving to the next task.
+- **Dynamic Recovery Insertion**: When any step fails (e.g., differential check mismatch, compilation error, generator timeout, unkilled mutant), dynamically insert remediation subtasks directly under the failing phase instead of losing context.
+- **Pre-Completion Audit**: Never declare completion or return a final report until every phase in `todo.md` has been successfully executed, verified, and checked off as `- [x]`.
+

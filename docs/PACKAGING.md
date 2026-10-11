@@ -3,7 +3,7 @@
 ## Dual packaging requirement
 
 Every successful problem run generates two distinct distribution archives:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / VNOJ / Polygon).
+1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
 2. **Standard Themis Package ZIP**: `<problemname>-themis.zip` (for Themis grading software).
 
 ## Clean build

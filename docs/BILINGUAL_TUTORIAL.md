@@ -30,4 +30,4 @@ When the golden package uses tutorial artifacts, keep all applicable copies cons
 - `statement-sections/<language>/tutorial.tex`;
 - `statements/<language>/problem-properties.json` `tutorial`.
 
-Both languages remain package artifacts even if the VNOJ importer ultimately stores one selected tutorial in the site's single tutorial field.
+Both languages remain package artifacts and are imported into the site's solutions and solution translations via the importer.

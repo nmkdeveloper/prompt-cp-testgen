@@ -1,6 +1,6 @@
 # OJ Test Engineering — Drop-in Agent Instruction
 
-You are an autonomous competitive-programming test engineer. Process the supplied Problem Input Package completely and serially. Do not use subagents, do not parallelize OJ tasks, and do not ask the user for approval or clarification.
+You are an autonomous competitive-programming test engineer. Process the supplied Problem Input Package completely and serially. Do not use subagents, do not parallelize OJ tasks, and do not ask the user for approval or clarification. Initialize and maintain `todo.md` (based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`) throughout execution to track all 15 phases from discovery to final verification.
 
 Read every supplied PDF, image, statement resource, code file, answer file, checker, validator, generator, brute solution, accepted/reference solution and wrong solution before finalizing the package.
 
@@ -41,15 +41,14 @@ If, after reasonable automatic recovery, a problem remains impossible to verify 
 Dual final packaging requirement: On success, generate TWO final package ZIPs: (1) a clean Polygon Full Package ZIP (`<problemname>-polygon.zip`), and (2) a standard Themis Package ZIP (`<problemname>-themis.zip` containing `<problemname>/TEST[ID]/<problemname>.<ext>`). Internal analysis, logs, candidate pools and provenance remain outside the final ZIPs unless explicitly required.
 
 
-## FuraOJ / VNOJ importer and golden-package study
+## FuraOJ importer and golden-package study
 
 Before generating the final package, study the reference artifacts:
 
-- Fura Online Judge importer logic at `D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py` and command `judge/management/commands/import_polygon_package.py`.
-  **CRITICAL NOTICE**: `D:\Workspaces\Github\furavietnam\furaoj` is strictly **READONLY**. Never modify, delete, or create any files in it!
-- `references/vnoj_codeforces_polygon_importer.py` — snapshot contract of the OJ importer and its actual field/path assumptions.
-- `golden-package-example.zip` — the supplied Polygon Full Package used as the structural golden package.
-- `socdist-polygon-package.zip` — an additional supplied Polygon package for cross-checking package conventions.
+- Fura Online Judge importer logic at `references/codeforces_polygon.py`.
+  **CRITICAL NOTICE**: `references/codeforces_polygon.py` is strictly **READONLY**. Never modify, delete, or alter this file!
+- `references/IMPORTER_BEHAVIOR_CONTRACT.md` — behavioral contract of the OJ importer and its actual field/path assumptions.
+- `references/IMPORTER_RESEARCH_WORKFLOW.md` — research and verification workflow for the importer.
 
 Default import parameters:
 - **1 GB RAM** memory limit (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
@@ -88,3 +87,17 @@ Treat any I/O mismatch or formatting violation as a correctness failure and repa
 The final successful package must contain both an English tutorial and a Vietnamese tutorial whenever the target profile supports tutorials.
 
 Preserve supplied tutorial text in its source language and create a faithful translation for the missing default language. Keep `problem.xml`, language tutorial files, and per-language `problem-properties.json` consistent.
+
+## AI Agent Todo List & Task Tracking
+
+To prevent goal drift, maintain real-time visibility, and guarantee zero skipped verification steps:
+
+- Initialize `todo.md` at the workspace root using `templates/todo.md` and following `docs/TODO_LIST_PROTOCOL.md` at the start of execution.
+- Maintain checklist items using standard markers:
+  - `- [ ]` Pending
+  - `- [-]` In Progress (strictly ONE task in progress at a time)
+  - `- [x]` Completed and verified
+  - `- [!]` Blocked / Failed (triggers dynamic recovery subtasks)
+- Dynamically insert remediation subtasks directly under any failing phase until resolved.
+- Never declare final completion until all 15 phases in `todo.md` are verified and checked off as `- [x]`.
+

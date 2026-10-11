@@ -55,16 +55,36 @@ Run benchmark inputs serially under the protected 1 second / 1 GiB policy and id
 
 Select the optimal, reasonable number of final tests (dynamically calculated; no rigid 100-test requirement). Preserve samples first, completely cover all subtasks and essential test types, satisfy subtask boundaries, maximize useful coverage, minimize answer redundancy, and include natural no-solution cases.
 
-## Phase 12 — Final Audit
+## Phase 12 — Strict Formatting & Whitespace Audit
 
-Re-run required checks. Verify no generated artifact was manually edited.
+Audit every candidate and selected test file against strict formatting rules:
+- Zero trailing spaces or tabs on any line.
+- Zero redundant blank lines.
+- Exactly one terminating newline (`\n`) at EOF.
+- LaTeX math subscripts escaped (`$s\_1$`, `$a\_i$`).
+- Verify no generated artifact was manually edited.
 
 ## Phase 13 — Dual Packaging (Polygon & Themis)
 
 Build clean staging trees for both targets:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / VNOJ / Polygon).
+1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
 2. **Standard Themis Package ZIP**: `<problemname>-themis.zip` (hierarchy `<problemname>/TEST[ID]/<problemname>.<ext>` for Themis grading).
-Verify both packages using `offline-package-verifier`.
+
+## Phase 14 — Offline Package Verification & Importer Check
+
+Run `offline-package-verifier` against both packages and verify compatibility with `references/codeforces_polygon.py` (strictly READONLY). Check XML schema, ZIP integrity, testlib compilation, solutions, and subtask coverage.
+
+## Phase 15 — Final Execution Report Generation
+
+Generate comprehensive `report.md` documenting subtask ladder, verification matrix, wrong-solution kill table, benchmark timings, and audit evidence.
+
+## Task State Management (`todo.md`)
+
+Throughout execution, the AI agent maintains a persistent `todo.md` checklist initialized from `templates/todo.md` following `docs/TODO_LIST_PROTOCOL.md`:
+- **State transitions**: Mark the active phase `- [-]` before beginning, and `- [x]` immediately upon verifying its artifacts.
+- **Single active task**: Exactly ONE task is `- [-]` at any given time.
+- **Dynamic recovery**: If an invariant is violated (e.g. Phase 8 brute mismatch, Phase 9 unkilled mutant), mark the phase `- [!]` and insert remediation subtasks directly beneath it.
+- **Completion requirement**: All 16 phases (Phase 0 through Phase 15) must be verified and checked off as `- [x]` before declaring final success.
 
 ## Failure Recovery
 

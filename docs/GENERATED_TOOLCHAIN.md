@@ -105,7 +105,7 @@ If generated source is wrong, fix the source and regenerate. Never manually patc
 
 ## Polygon-package runtime artifacts
 
-The generated C++/script toolchain may be internal during test engineering, but when the target Polygon/VNOJ profile requires sources, scripts or binaries inside the final package, the agent must generate and package those artifacts in the same role/layout as the golden package.
+The generated C++/script toolchain may be internal during test engineering, but when the target Polygon profile requires sources, scripts or binaries inside the final package, the agent must generate and package those artifacts in the same role/layout as the golden package.
 
 The generated package-side C++ testlib components must use:
 

@@ -1,4 +1,4 @@
-# Offline Polygon/VNOJ Package Verification
+# Offline Polygon Package Verification
 
 This workflow verifies a generated Polygon Full Package without relying on Polygon API calls.
 
@@ -35,7 +35,7 @@ Do not install or require a package merely to make the verifier appear stronger.
 
 ## Golden package as structural oracle
 
-The supplied sample package is the primary structural reference for VNOJ compatibility.
+The supplied sample package is the primary structural reference for target compatibility.
 
 Use it to learn package conventions such as:
 

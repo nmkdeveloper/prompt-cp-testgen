@@ -61,13 +61,13 @@ Success requires dynamic optimal final tests (covering all subtasks and test typ
 If recovery is exhausted, write `FAIL` in the report and skip the problem in batch mode.
 
 
-## Golden-package output contract (FuraOJ / VNOJ profile)
+## Golden-package output contract (FuraOJ / Polygon profile)
 
-The final package must mirror the user-supplied Polygon Full Package structure as closely as possible and comply with the Fura Online Judge importer (`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`).
+The final package must mirror the user-supplied Polygon Full Package structure as closely as possible and comply with the Fura Online Judge importer (`references/codeforces_polygon.py`).
 
-**CRITICAL NOTICE ON FURAOJ DIRECTORY**:
-The directory `D:\Workspaces\Github\furavietnam\furaoj` contains the Fura Online Judge codebase.
-**THIS DIRECTORY IS STRICTLY READONLY**. Never write to, modify, or delete any files in `D:\Workspaces\Github\furavietnam\furaoj`. All package generation, code, and verification must happen in the workspace `prompt-cp-testgen`.
+**CRITICAL NOTICE ON IMPORTER CODE**:
+The local reference `references/codeforces_polygon.py` contains the Fura Online Judge importer codebase snapshot.
+**IT IS STRICTLY READONLY**. Never write to, modify, or delete `references/codeforces_polygon.py`. All package generation, code, and verification must happen within this workspace.
 
 Default resource limits and scoring for `problem.xml`:
 - **Default Memory Limit**: **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).

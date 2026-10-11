@@ -8,7 +8,7 @@ The I/O mechanism is part of the problem specification, not a formatting prefere
 2. Determine whether the task uses standard streams or explicit files.
 3. Record the exact mode and filenames in the internal problem model.
 4. Use that exact mode for every generated executable.
-5. Preserve the same mode in the final Polygon/VNOJ package.
+5. Preserve the same mode in the final Polygon package.
 
 ### Standard I/O
 

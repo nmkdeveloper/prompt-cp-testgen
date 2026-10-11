@@ -1,6 +1,6 @@
 # Final Verification Checklist
 
-Before declaring a Polygon/VNOJ package successful, the agent must check every applicable item.
+Before declaring a Polygon package successful, the agent must check every applicable item.
 
 ## Archive
 
@@ -51,7 +51,7 @@ Before declaring a Polygon/VNOJ package successful, the agent must check every a
 - [ ] All 8 keys present in `problem-properties.json` (`legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, `tutorial`).
 - [ ] Full package check: test 1 input and answer exist at resolved paths.
 - [ ] Batches/groups: non-empty, valid points policy, valid dependencies.
-- [ ] `D:\Workspaces\Github\furavietnam\furaoj` treated strictly as READONLY.
+- [ ] `references/codeforces_polygon.py` treated strictly as READONLY.
 
 ## Tests & Strict I/O Whitespace Formatting
 

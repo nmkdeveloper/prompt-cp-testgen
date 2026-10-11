@@ -1,0 +1,17 @@
+---
+description: Enforces persistent AI agent todo list tracking and status updating across all execution phases.
+alwaysApply: true
+---
+# AI Agent Todo List & Task Tracking
+
+Maintain structured task management and progress visibility across complex multi-phase execution:
+
+- **Initialize `todo.md`**: Upon receiving a task, create or load `todo.md` at the project root based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
+- **Status Markers**:
+  - `- [ ]` Pending
+  - `- [-]` In Progress (exactly ONE task active at a time)
+  - `- [x]` Completed and verified
+  - `- [!]` Blocked / Failed (triggers automatic recovery)
+- **Plan-Execute-Update**: Update `todo.md` immediately before starting a task and immediately after verifying its completion.
+- **Dynamic Recovery Loops**: If an anomaly or test failure occurs, dynamically insert recovery subtasks under the affected item, resolve them, and re-verify before progressing.
+- **Completion Gate**: Do not declare success or finalize the packaging report while any pending or in-progress tasks remain in `todo.md`. All items must be marked `- [x]`.

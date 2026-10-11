@@ -15,6 +15,6 @@ Use testlib where applicable and only with `#include <testlib.h>`.
 
 Preserve original statement and samples exactly. Verify supplied AC/reference code before reuse. Never manually edit generated `.in/.out`; fix source and regenerate.
 
-Log work incrementally, write a detailed report, produce an optimal, reasonable number of final tests covering all subtasks and essential test types on success, and build two clean package archives: (1) Polygon Full Package conforming to Fura Online Judge (`D:\Workspaces\Github\furavietnam\furaoj`, strictly READONLY) defaults: 1 GB RAM, 1s time limit, and 1đ problem score, and (2) Standard Themis package (`<problemname>/TEST[ID]/<problemname>.<ext>`).
+Log work incrementally, write a detailed report, produce an optimal, reasonable number of final tests covering all subtasks and essential test types on success, and build two clean package archives: (1) Polygon Full Package conforming to Fura Online Judge importer contract (`references/codeforces_polygon.py`, strictly READONLY) defaults: 1 GB RAM, 1s time limit, and 1đ problem score, and (2) Standard Themis package (`<problemname>/TEST[ID]/<problemname>.<ext>`).
 
 Do not ask the user for approval or clarification. Automatically recover from ordinary failures. If reasonable recovery is exhausted, record `FAIL`, skip the problem in batch mode, and continue to the next problem.

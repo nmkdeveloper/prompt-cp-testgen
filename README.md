@@ -148,9 +148,9 @@ Do not fabricate success. If a problem remains unrecoverable after reasonable au
 
 No generic runtime source is shipped. The agent generates it per problem and per platform.
 
-## VNOJ Polygon golden-package profile
+## Polygon golden-package profile
 
-The final package builder is configured around the user-supplied Polygon Full Package as a structural golden template for VNOJ compatibility. The goal is not to reproduce one problem's content; it is to reproduce the same *package grammar and artifact relationships*.
+The final package builder is configured around the user-supplied Polygon Full Package as a structural golden template for target compatibility. The goal is not to reproduce one problem's content; it is to reproduce the same *package grammar and artifact relationships*.
 
 Default statement languages:
 
@@ -210,15 +210,13 @@ The bundle now includes `offline-package-verifier`. It is a mandatory pre-releas
 A package is not PASS merely because its ZIP opens or `problem.xml` parses. All mandatory layers must pass.
 
 
-## Supplied VNOJ importer + golden packages
+## Supplied FuraOJ importer reference
+ 
+This bundle ships a read-only reference artifact under `references/`:
 
-This bundle ships read-only reference artifacts under `references/`:
+- `codeforces_polygon.py` — the supplied importer behavior snapshot (strictly READONLY).
 
-- `vnoj_codeforces_polygon_importer.py` — the supplied importer behavior snapshot.
-- `golden-package-example.zip` — the supplied Polygon Full Package used as the primary structural golden package.
-- `socdist-polygon-package.zip` — an latest supplied Polygon package, used as a high-priority structural reference.
-
-The agent must research these before package generation. The importer is the behavioral contract; the golden package is the structural contract.
+The agent must research this before package generation. The importer represents the behavioral contract for target package ingestion.
 
 
 ## v2.4.2 — I/O immutability and bilingual tutorial hardening

@@ -1,4 +1,4 @@
-# Polygon/VNOJ Golden Package Profile
+# Polygon Golden Package Profile
 
 This document records the structural profile observed from the user-provided reference package and used by `polygon-package-builder`.
 
@@ -177,7 +177,7 @@ The descriptor must be internally consistent with every packaged path and artifa
 
 ### Fura Online Judge Default Limits & Scoring
 
-Unless explicitly specified otherwise in the reconstructed problem statement, standard package defaults conforming to Fura Online Judge (`D:\Workspaces\Github\furavietnam\furaoj`, strictly READONLY) are:
+Unless explicitly specified otherwise in the reconstructed problem statement, standard package defaults conforming to Fura Online Judge (`references/codeforces_polygon.py`, strictly READONLY) are:
 
 - **Time limit**: Default **1s** (`<time-limit>1000</time-limit>` milliseconds). FuraOJ parses this as seconds: `float(testset.find('time-limit').text) / 1000` = `1.0`s.
 - **Memory limit**: Default **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes). FuraOJ parses this into kilobytes: `int(testset.find('memory-limit').text) // 1024` = `1048576` KB (1024 MB).
@@ -189,13 +189,10 @@ Do not invent undocumented Polygon XML elements. For groups, points policies, de
 
 ## Fura Online Judge Importer Reference
 
-The authoritative importer implementation is maintained in the Fura Online Judge repository at:
-`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`
-and CLI command:
-`D:\Workspaces\Github\furavietnam\furaoj\judge\management\commands\import_polygon_package.py`
+The authoritative importer implementation is maintained at `references/codeforces_polygon.py`.
 
 **CRITICAL NOTICE**:
-`D:\Workspaces\Github\furavietnam\furaoj` is strictly **READONLY**. Never modify, delete, or add files to this directory. It is used exclusively as a behavioral reference.
+The reference `references/codeforces_polygon.py` is strictly **READONLY**. Never modify, delete, or add files to this file. It is used exclusively as a behavioral reference.
 
 ## Golden-template principle
 

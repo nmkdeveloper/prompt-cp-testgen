@@ -31,16 +31,19 @@ policy_changes:
   protected_wall_time_ms: 1000
   protected_cpu_time_ms: 1000
   kill_process_tree_on_limit: true
+  task_tracking_required: true
+  todo_list_protocol: docs/TODO_LIST_PROTOCOL.md
 notes:
   - testlib.h is an external dependency and is not vendored as a frozen snapshot.
   - Final Polygon ZIPs are generated per problem and are not included in this bundle.
   - Default Polygon statement languages are English and Vietnamese.
-  - The user-provided Polygon package is the golden structural template for VNOJ-compatible Full Packages.
+  - The user-provided Polygon package is the golden structural template for FuraOJ-compatible Full Packages.
   - No generic runtime Python/C++ implementation is bundled. The agent generates tooling per actual problem and host.
   - Offline package verification is mandatory and does not depend on Polygon API.
 
 skills:
   offline_package_verifier: .agents/skills/offline-package-verifier/SKILL.md
+  polygon_importer_tester: .agents/skills/polygon-importer-tester/SKILL.md
 verification:
   mode: offline
   polygon_api_authoritative: false
@@ -48,7 +51,4 @@ verification:
   golden_template_required: true
 
 references:
-  vnoj_importer_source: references/vnoj_codeforces_polygon_importer.py
-  golden_package: references/golden-package-example.zip
-  supplemental_package: references/socdist-polygon-package.zip
-    latest_user_supplied_package: references/socdist-polygon-package.zip
+  importer_source: references/codeforces_polygon.py

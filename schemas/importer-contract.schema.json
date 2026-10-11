@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "FuraOJ / VNOJ Polygon Importer Contract",
+  "title": "FuraOJ Polygon Importer Contract",
   "type": "object",
   "required": ["statement", "problem_properties", "testset", "checker"],
   "properties": {

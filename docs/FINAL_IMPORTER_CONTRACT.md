@@ -1,7 +1,7 @@
-# Final FuraOJ / VNOJ Contract
+# Final FuraOJ Importer Contract
 
-The final target is a Fura Online Judge / VNOJ compatible Polygon Full Package, not merely a ZIP that looks plausible.
-The authoritative importer is in Fura Online Judge (`D:\Workspaces\Github\furavietnam\furaoj`, strictly READONLY).
+The final target is a Fura Online Judge compatible Polygon Full Package, not merely a ZIP that looks plausible.
+The authoritative importer is in Fura Online Judge (`references/codeforces_polygon.py`, strictly READONLY).
 
 ## Default Resource Limits & Scoring
 

@@ -7,7 +7,7 @@ description: Builds clean Polygon and Themis packages from verified generated ar
 Create clean staging directories. Use an allowlist, not a recursive zip of the whole workspace.
 
 Every successful problem run generates two distinct distribution archives:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / VNOJ / Polygon).
+1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
 2. **Themis Package ZIP**: `<problemname>-themis.zip` (for Themis grading software).
 
 Exclude internal analysis, logs, reports, candidate pools, provenance, caches, temporary files and unrelated source files.
@@ -20,7 +20,7 @@ Run the offline-package-verifier after staging and again after ZIP creation for 
 Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and 1 second limits. Prefer C++ for executable components.
 
 
-## FuraOJ / VNOJ golden-template mode
+## FuraOJ golden-template mode
 
 Use the user-supplied Polygon Full Package as the golden structural template. Reproduce its package grammar and relationships as closely as possible while replacing only problem-specific content.
 
@@ -168,17 +168,17 @@ After staging:
 11. Open and structurally inspect both Polygon and Themis ZIPs before success.
 
 
-## FuraOJ / VNOJ importer compatibility is mandatory
+## FuraOJ importer compatibility is mandatory
 
 Do not declare package success from Polygon-like structure alone. Before final ZIP success, run the agent-generated offline verifier against:
 
 1. Polygon package structure,
 2. the user-supplied golden package, and
-3. the Fura Online Judge importer logic (`D:\Workspaces\Github\furavietnam\furaoj\judge\utils\codeforces_polygon.py`).
+3. the Fura Online Judge importer logic (`references/codeforces_polygon.py`).
 
-**CRITICAL NOTICE ON FURAOJ DIRECTORY**:
-The directory `D:\Workspaces\Github\furavietnam\furaoj` contains the Fura Online Judge codebase (including `judge/management/commands/import_polygon_package.py` and `judge/utils/codeforces_polygon.py`).
-**THIS DIRECTORY IS STRICTLY READONLY**. Never write to, modify, or delete any files in `D:\Workspaces\Github\furavietnam\furaoj`. All package creation and testing must reside strictly in the workspace `prompt-cp-testgen`.
+**CRITICAL NOTICE ON IMPORTER CODE**:
+The local reference `references/codeforces_polygon.py` contains the Fura Online Judge importer codebase snapshot.
+**IT IS STRICTLY READONLY**. Never write to, modify, or delete `references/codeforces_polygon.py`. All package creation and testing must reside strictly within this workspace.
 
 The staged package must satisfy the actual access patterns of `PolygonImporter` and prevent upload conflicts or page crashes:
 - `time-limit` defaults to 1000 ms (1s) and `memory-limit` defaults to 1073741824 bytes (1 GB); limits must remain within FuraOJ supported range.
@@ -231,4 +231,4 @@ Keep:
 - `statement-sections/vietnamese/tutorial.tex`;
 - both languages' `problem-properties.json` `tutorial`.
 
-A supplied tutorial must be preserved in its source language. If the other default language is missing, create a faithful translation. Do not delete the second tutorial because the site importer later selects one main tutorial.
+A supplied tutorial must be preserved in its source language. If the other default language is missing, create a faithful translation. Both tutorials must be included; the importer imports primary tutorials and stores additional languages via solution translations.

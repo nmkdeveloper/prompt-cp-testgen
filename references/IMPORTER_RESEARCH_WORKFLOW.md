@@ -1,6 +1,6 @@
-# VNOJ Importer Research Workflow
+# Importer Research Workflow
 
-1. Read the supplied importer source.
+1. Read the supplied importer source (`references/codeforces_polygon.py`).
 2. Enumerate every `self.package.read(...)`, `self.package.open(...)`, XML lookup, JSON key access and file path construction.
 3. Convert these operations into explicit package assertions.
 4. Compare those assertions against the supplied golden package.

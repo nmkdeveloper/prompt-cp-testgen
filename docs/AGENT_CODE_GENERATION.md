@@ -51,7 +51,7 @@ Detect before writing the runner/toolchain:
 - available native process APIs
 - available resource-limit APIs
 - available testlib installation
-- target Polygon/VNOJ packaging constraints
+- target Polygon packaging constraints
 
 Use this information to select the most appropriate native implementation.
 

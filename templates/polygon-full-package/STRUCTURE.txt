@@ -1,4 +1,4 @@
-Polygon/VNOJ Full Package Golden Structure
+Polygon Full Package Golden Structure
 
 ROOT
   problem.xml
