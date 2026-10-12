@@ -105,7 +105,8 @@ To prevent goal drift, maintain real-time visibility, and guarantee zero skipped
 
 For every problem:
 - Immediately create `work/<problem-id>/` (where `<problem-id>` is the problem code/short name).
-- Perform all test engineering inside `work/<problem-id>/`: statement reconstruction (`problem.md`), task tracking (`todo.md`), C++ tools/runners/binaries, candidate tests, and execution logs.
+- Perform all test engineering inside `work/<problem-id>/`: statement reconstruction (`problem.md`), task tracking (`todo.md`), candidate tests, and execution logs.
+- All problem source code files (`.cpp`, `.py`, `.h`, `.sh`, `.bat`) and all compiled binaries/executables (`.exe`, ELF binaries, `.o`) MUST be written, compiled, and executed exclusively inside `work/<problem-id>/`. Never leave source files or compiled binaries in the repository root.
 - Stage packages cleanly in `work/<problem-id>/polygon-package/` and `work/<problem-id>/themis-package/<problem-id>/`.
 - Export final packages to `work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`.
 

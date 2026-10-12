@@ -72,7 +72,7 @@ At the start of each problem, the agent must detect:
 
 Then generate the smallest project-specific native toolchain needed for the problem.
 
-The agent may create temporary source files inside the working directory, compile them, test them, replace them, and regenerate them. None of these internal source files should enter the final Polygon ZIP unless the target package requires them.
+The agent must create and compile all problem-specific source files (`.cpp`, `.py`, `.h`, `.sh`), compilation outputs, and executables (`.exe`, ELF binaries) strictly inside `work/<problem-id>/`. None of these internal source files or compiled binaries should enter the final Polygon or Themis ZIPs unless the target package format explicitly requires them.
 
 ## No Generic Runtime Assumption
 

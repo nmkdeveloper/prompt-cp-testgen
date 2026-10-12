@@ -13,3 +13,5 @@ description: "Always-on policy for agent-generated OS-adapted executable tooling
 - Token economy in generated code: write dense, compact code (multiple statements per line where practical) and short, concise variable/function names to minimize tokens.
 - Code comments: comment only on functions that genuinely require explanation; state only logic, received inputs, and return value; write all comments exclusively in English.
 - Use `#include <testlib.h>` only when testlib is used.
+- **Strict work directory placement**: ALL source files (`.cpp`, `.py`, `.h`, `.sh`, `.bat`), compiled binaries (`.exe`, ELF executables, `.o`), and runtime tooling generated for the problem MUST be created, compiled, and executed strictly inside `work/<problem-id>/`. Never output or compile source files or binaries in the workspace root.
+

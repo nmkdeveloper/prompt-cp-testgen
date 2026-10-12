@@ -25,7 +25,7 @@ Non-negotiable principles:
 - Log significant work incrementally and write a detailed final report.
 - Do not ask the user for approval during autonomous execution.
 - If a problem becomes unrecoverably abnormal after reasonable automatic recovery, write `FAIL`, document it, skip the problem in batch mode and continue.
-- Isolated work directory: Always create a dedicated working directory `work/<problem-id>/` (where `<problem-id>` is the problem code/identifier) and perform all problem-related work within it. All intermediate sources, binaries, candidate tests, logs, `todo.md`, `report.md`, staging folders, and the final Polygon and Themis package ZIPs (`work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`) MUST reside inside `work/<problem-id>/`.
+- Isolated work directory: Always create a dedicated working directory `work/<problem-id>/` (where `<problem-id>` is the problem code/identifier) and perform all problem-related work within it. All problem source files (`.cpp`, `.py`, `.h`, `.sh`, or any other code), all compiled binaries (`.exe`, ELF executables, `.o`), candidate tests, logs, `todo.md`, `report.md`, staging folders, and the final Polygon and Themis package ZIPs (`work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`) MUST reside inside `work/<problem-id>/`.
 - Dual packaging requirement: Generate two final test package ZIPs on success inside `work/<problem-id>/`: (1) Polygon Full Package ZIP (`work/<problem-id>/<problem-id>-polygon.zip` for FuraOJ / Polygon), and (2) Standard Themis Package ZIP (`work/<problem-id>/<problem-id>-themis.zip` for Themis grading software).
 - AI Agent Todo List & Task Tracking: Maintain a persistent, structured checklist at `work/<problem-id>/todo.md` following `docs/TODO_LIST_PROTOCOL.md` throughout execution. Track task states with standard markers (`- [ ]`, `- [-]`, `- [x]`, `- [!]`), enforce strictly one task in progress at a time, dynamically insert recovery subtasks upon failure, and verify all tasks are completed before declaring final success.
 
@@ -185,6 +185,10 @@ To prevent goal drift, ensure total verification, and provide real-time visibili
 To prevent workspace clutter, isolate test generation artifacts, and ensure clean separation between problems:
 
 - **Directory Creation**: Before performing any task for a problem, create the dedicated directory structure `work/<problem-id>/` (where `<problem-id>` is the problem code/short name, e.g. `work/socdist/`, `work/sum/`).
+- **All Sources & Compiled Binaries Contained**:
+  - Every source code file (`.cpp`, `.py`, `.h`, `.sh`, `.bat`, or any other helper script/tool written for the problem) MUST be created and stored strictly inside `work/<problem-id>/`.
+  - Every compiled file (executables `.exe`, ELF binaries, intermediate `.o`, etc.) MUST be compiled directly inside `work/<problem-id>/`.
+  - Absolutely NO `.cpp`, `.py`, `.exe`, ELF binary, or build artifact may ever be placed or compiled in the repository root or outside `work/<problem-id>/`.
 - **All Operations Contained**: ALL work must be conducted inside `work/<problem-id>/`:
   - Canonical statement: `work/<problem-id>/problem.md`.
   - Task tracking: `work/<problem-id>/todo.md`.

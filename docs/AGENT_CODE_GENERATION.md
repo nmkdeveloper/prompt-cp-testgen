@@ -89,9 +89,9 @@ When testlib is used, generated C++ must contain:
 
 Never use the quoted form.
 
-## Generated source lifecycle
+## Generated source lifecycle & directory isolation
 
-Source code may be generated, compiled, tested, replaced and regenerated during the job. Generated artifacts have provenance. Runtime source is normally excluded from the final Polygon ZIP.
+All source code files (`.cpp`, `.py`, `.h`, `.sh`, `.bat`), compilation outputs, and compiled binaries (`.exe`, ELF executables, `.o`) for the problem MUST be created, compiled, tested, and stored strictly inside `work/<problem-id>/`. Never output source files or compiled binaries to the repository root. Runtime source is excluded from the final Polygon ZIP unless the target format explicitly specifies it.
 
 ## Failure handling
 

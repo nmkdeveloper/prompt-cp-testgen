@@ -12,3 +12,5 @@ alwaysApply: true
 - Token economy: write dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve tokens.
 - Code comments: comment only on functions that truly need explanation; state only logic, received inputs, and return value; write all comments in English.
 - Use native OS APIs for enforcement when available.
+- **Strict work directory placement**: ALL problem-specific source files (`.cpp`, `.py`, `.h`, `.sh`, `.bat`), compiled executables (`.exe`, ELF binaries), and build artifacts MUST be written and compiled directly inside `work/<problem-id>/`. Never leave source files or compiled binaries in the repository root.
+
