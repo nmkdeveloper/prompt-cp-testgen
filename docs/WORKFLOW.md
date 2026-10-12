@@ -1,12 +1,12 @@
 # Workflow
 
-## Phase 0 — Input Discovery
+## Phase 0 — Input Discovery & Workspace Isolation
 
-Inspect every supplied file and classify its role. Do not trust filenames alone.
+Inspect every supplied file and classify its role. Do not trust filenames alone. Immediately create the dedicated problem directory `work/<problem-id>/` (where `<problem-id>` is the problem code/short name, e.g. `work/aplusb/`) and initialize `work/<problem-id>/todo.md`. All subsequent work will be contained strictly inside `work/<problem-id>/`.
 
 ## Phase 1 — Problem Reconstruction
 
-Read PDFs, scans, images, diagrams and text. Reconstruct a complete `problem.md` without changing meaning. Samples and explicit source data are immutable.
+Read PDFs, scans, images, diagrams and text. Reconstruct a complete canonical statement at `work/<problem-id>/problem.md` without changing meaning. Samples and explicit source data are immutable.
 
 ## Phase 2 — Host/Toolchain Preflight & Portable Fallback
 
@@ -66,21 +66,23 @@ Audit every candidate and selected test file against strict formatting rules:
 
 ## Phase 13 — Dual Packaging (Polygon & Themis)
 
-Build clean staging trees for both targets:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
-2. **Standard Themis Package ZIP**: `<problemname>-themis.zip` (hierarchy `<problemname>/TEST[ID]/<problemname>.<ext>` for Themis grading).
+Build clean staging trees and final ZIP archives directly inside `work/<problem-id>/`:
+- Polygon staging tree: `work/<problem-id>/polygon-package/`
+- Themis staging tree: `work/<problem-id>/themis-package/<problem-id>/`
+- Final Polygon Full Package ZIP: `work/<problem-id>/<problem-id>-polygon.zip` (for FuraOJ / Polygon).
+- Final Standard Themis Package ZIP: `work/<problem-id>/<problem-id>-themis.zip` (hierarchy `<problemname>/TEST[ID]/<problemname>.<ext>` for Themis grading).
 
 ## Phase 14 — Offline Package Verification & Importer Check
 
-Run `offline-package-verifier` against both packages and verify compatibility with `references/codeforces_polygon.py` (strictly READONLY). Check XML schema, ZIP integrity, testlib compilation, solutions, and subtask coverage.
+Run `offline-package-verifier` against both packages in `work/<problem-id>/` and verify compatibility with `references/codeforces_polygon.py` (strictly READONLY). Check XML schema, ZIP integrity, testlib compilation, solutions, and subtask coverage.
 
 ## Phase 15 — Final Execution Report Generation
 
-Generate comprehensive `report.md` documenting subtask ladder, verification matrix, wrong-solution kill table, benchmark timings, and audit evidence.
+Generate comprehensive execution report at `work/<problem-id>/report.md` documenting subtask ladder, verification matrix, wrong-solution kill table, benchmark timings, and audit evidence.
 
 ## Task State Management (`todo.md`)
 
-Throughout execution, the AI agent maintains a persistent `todo.md` checklist initialized from `templates/todo.md` following `docs/TODO_LIST_PROTOCOL.md`:
+Throughout execution, the AI agent maintains a persistent checklist at `work/<problem-id>/todo.md` initialized from `templates/todo.md` following `docs/TODO_LIST_PROTOCOL.md`:
 - **State transitions**: Mark the active phase `- [-]` before beginning, and `- [x]` immediately upon verifying its artifacts.
 - **Single active task**: Exactly ONE task is `- [-]` at any given time.
 - **Dynamic recovery**: If an invariant is violated (e.g. Phase 8 brute mismatch, Phase 9 unkilled mutant), mark the phase `- [!]` and insert remediation subtasks directly beneath it.

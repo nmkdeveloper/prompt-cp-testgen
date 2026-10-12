@@ -6,7 +6,7 @@ description: "Always-on task tracking and dynamic todo list management for AI ag
 
 To maintain execution rigor and prevent goal drift across multi-phase competitive programming tasks:
 
-- **Persistent Todo List**: At the start of every task, the agent must initialize and maintain a structured `todo.md` checklist at the project root (or within its active workspace context) following `docs/TODO_LIST_PROTOCOL.md`.
+- **Persistent Todo List**: At the start of every task, the agent must initialize and maintain a structured `todo.md` checklist inside the problem working directory (`work/<problem-id>/todo.md`) following `docs/TODO_LIST_PROTOCOL.md`.
 - **Atomic Checklist Format**: Tasks must use markdown checkbox syntax:
   - `- [ ]` Pending
   - `- [-]` In Progress (strictly ONE task in progress at any given moment)

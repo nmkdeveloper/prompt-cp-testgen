@@ -15,13 +15,13 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 - Testlib C++ include must be `#include <testlib.h>`.
 
 ## Required order
-1. Discover every input file and classify its role.
-2. Reconstruct `problem.md` from authoritative sources without semantic changes.
+1. Discover every input file and classify its role. Immediately create the dedicated working directory `work/<problem-id>/` (where `<problem-id>` is the problem code/short name) and initialize `work/<problem-id>/todo.md`.
+2. Reconstruct `problem.md` inside `work/<problem-id>/problem.md` from authoritative sources without semantic changes.
 3. Immediately check system availability of `g++` and `python`. If either is missing, automatically download portable standalone builds from trusted sources, extract locally, and configure environment paths to use them.
 4. Preserve all original samples exactly and reserve them as the first tests.
 5. Resolve canonical filenames when unspecified.
 6. Detect OS, architecture, compiler, C++ standard, process/resource facilities, testlib availability, and run a host micro-benchmark to estimate FLOPS/performance for generator hard limit calibration.
-7. Generate the minimal native C++ toolchain required for the problem, including a protected runner enforcing 1000 ms for solutions/mutants and the calibrated hard limit for generators, with an active runaway auto-break watchdog.
+7. Generate the minimal native C++ toolchain required for the problem inside `work/<problem-id>/`, including a protected runner enforcing 1000 ms for solutions/mutants and the calibrated hard limit for generators, with an active runaway auto-break watchdog.
 8. Verify any supplied AC/official/reference code before trusting or reusing it.
 9. Determine the safe brute domain and run differential checks serially.
 10. Analyze intended, partial and wrong solution classes.
@@ -33,9 +33,9 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 16. Generate targeted counterexamples for meaningful survivors.
 17. Dynamically calculate and select the optimal, reasonable number of final tests, preserving samples and completely covering all subtasks and essential test types.
 18. Audit answer diversity without editing answers.
-19. Re-run final validation and produce incremental logs/final report.
-20. Build clean Polygon and Themis packages (producing both Polygon Full Package ZIP and standard Themis package ZIP).
-21. Run the offline-package-verifier against both staged packages and final ZIPs. Do not use Polygon API as the authoritative verification path.
+19. Re-run final validation and produce incremental logs/final report at `work/<problem-id>/report.md`.
+20. Build clean Polygon and Themis packages directly inside `work/<problem-id>/` (producing `work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`).
+21. Run the offline-package-verifier against both staged packages and final ZIPs in `work/<problem-id>/`. Do not use Polygon API as the authoritative verification path.
 22. Only declare success after all mandatory offline verification layers pass; otherwise record FAIL and skip in batch mode.
 
 ## Generated code policy
@@ -102,7 +102,7 @@ Do not invent unsupported Polygon XML elements. If a feature is not present in t
 
 ## Themis package output contract (Themis CP profile)
 
-In addition to the Polygon package, always generate a companion Themis package ZIP (`<problemname>-themis.zip`):
+In addition to the Polygon package, always generate a companion Themis package ZIP inside `work/<problem-id>/` (`work/<problem-id>/<problem-id>-themis.zip`):
 - Internal layout:
   ```text
   <problemname>/

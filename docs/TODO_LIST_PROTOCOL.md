@@ -7,7 +7,7 @@ This document defines the standard protocol for AI agent task tracking, state ma
 Complex competitive programming test engineering consists of 15+ interdependent phases (discovery, statement reconstruction, compiler preflight, runner generation, reference verification, brute differential testing, subtask ladder design, candidate generation, wrong-solution killer attacks, benchmarking, test selection, format auditing, dual packaging, and offline package verification).
 
 To prevent goal drift, lost context, skipped verification phases, or premature completion:
-- The AI agent must maintain a persistent, structured **`todo.md`** file at the workspace root (or in its active execution context).
+- The AI agent must maintain a persistent, structured **`todo.md`** file inside the problem's dedicated working directory (`work/<problem-id>/todo.md`).
 - The todo list serves as the single source of truth for the agent's real-time execution state.
 - The agent must read, update, and persist this checklist incrementally as work progresses.
 
@@ -24,7 +24,7 @@ The todo list strictly uses GitHub-flavored markdown checklist syntax with stand
 
 ## 3. Standard OJ Execution Task Template
 
-When starting a competitive programming test generation task, the AI agent initializes `todo.md` with the following canonical phases:
+When starting a competitive programming test generation task, the AI agent creates directory `work/<problem-id>/` and initializes `work/<problem-id>/todo.md` with the following canonical phases:
 
 ```markdown
 # Problem Execution Todo List: <problemname>

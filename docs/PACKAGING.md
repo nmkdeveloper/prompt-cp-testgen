@@ -2,13 +2,13 @@
 
 ## Dual packaging requirement
 
-Every successful problem run generates two distinct distribution archives:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
-2. **Standard Themis Package ZIP**: `<problemname>-themis.zip` (for Themis grading software).
+Every successful problem run generates two distinct distribution archives directly inside `work/<problem-id>/`:
+1. **Polygon Full Package ZIP**: `work/<problem-id>/<problem-id>-polygon.zip` (for FuraOJ / Polygon).
+2. **Standard Themis Package ZIP**: `work/<problem-id>/<problem-id>-themis.zip` (for Themis grading software).
 
 ## Clean build
 
-Build both packages in clean staging directories (`polygon-package/` and `themis-package/<problemname>/`). Never zip the whole workspace directory.
+Build both packages in clean staging directories inside `work/<problem-id>/` (`work/<problem-id>/polygon-package/` and `work/<problem-id>/themis-package/<problem-id>/`). Never zip the whole workspace directory.
 
 ## Allowlist principle
 
@@ -59,7 +59,7 @@ Final `.in/.out` files are generated artifacts. Any correction is made by changi
 
 ## Agent-generated runtime code
 
-The agent may create `protected_runner.cpp`, generators, validators, brute/reference programs, wrong-solution mutants, benchmarks and checkers in the working directory. These are internal implementation artifacts unless the target package explicitly requires them.
+The agent may create `protected_runner.cpp`, generators, validators, brute/reference programs, wrong-solution mutants, benchmarks and checkers in the problem working directory `work/<problem-id>/`. These are internal implementation artifacts unless the target package explicitly requires them.
 
 ## Final checks
 

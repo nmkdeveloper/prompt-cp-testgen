@@ -1,0 +1,17 @@
+---
+description: Enforces dedicated work directory work/<problem-id>/ for all problem-specific test engineering, todo tracking, and final packaging.
+alwaysApply: true
+---
+# Isolated Work Directory Hierarchy
+
+For every competitive programming problem processed:
+
+- **Dedicated Directory**: Immediately create and work inside `work/<problem-id>/` (where `<problem-id>` is the problem code/short name).
+- **All Operations Contained**: All intermediate files (`problem.md`, `todo.md`, `report.md`, C++ sources, binaries, candidate test inputs/outputs, logs) MUST reside in `work/<problem-id>/`.
+- **Packaging Staging**:
+  - Polygon staging tree: `work/<problem-id>/polygon-package/`
+  - Themis staging tree: `work/<problem-id>/themis-package/<problem-id>/`
+- **Final Output ZIP Archives**: Both final test distribution packages MUST be generated directly inside `work/<problem-id>/`:
+  1. Polygon Full Package ZIP: `work/<problem-id>/<problem-id>-polygon.zip`
+  2. Standard Themis Package ZIP: `work/<problem-id>/<problem-id>-themis.zip`
+- **Zero Workspace Clutter**: Never output problem artifacts or test zips to the repository root.

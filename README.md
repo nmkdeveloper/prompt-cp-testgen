@@ -53,8 +53,18 @@ Select optimal final tests
         ↓
 Final audit
         ↓
-Clean Polygon & Themis ZIPs
+Clean Polygon & Themis ZIPs (in work/<problem-id>/)
 ```
+
+## Isolated Work Directory Hierarchy
+
+For every target problem, all operations and files are strictly isolated inside `work/<problem-id>/` (where `<problem-id>` is the problem code/short name):
+- Canonical statement: `work/<problem-id>/problem.md`
+- Task tracking: `work/<problem-id>/todo.md`
+- Intermediate code, runners, binaries, and candidate tests
+- Package staging: `work/<problem-id>/polygon-package/` and `work/<problem-id>/themis-package/<problem-id>/`
+- Final package archives: `work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`
+- Final report: `work/<problem-id>/report.md`
 
 ## Toolchain Preflight & Portable Fallback
 
@@ -175,7 +185,7 @@ The agent must generate all problem-specific C++ and script content itself. The 
 
 ## Standard Themis package profile
 
-In addition to the Polygon package, the agent generates a companion Themis package ZIP (`<problemname>-themis.zip` or `themis-package.zip`) conforming to Vietnamese grading conventions:
+In addition to the Polygon package, the agent generates a companion Themis package ZIP inside `work/<problem-id>/` (`work/<problem-id>/<problem-id>-themis.zip`):
 ```text
 <problemname>/
   TEST01/

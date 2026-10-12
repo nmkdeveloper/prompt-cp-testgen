@@ -25,8 +25,10 @@ Non-negotiable principles:
 - Log significant work incrementally and write a detailed final report.
 - Do not ask the user for approval during autonomous execution.
 - If a problem becomes unrecoverably abnormal after reasonable automatic recovery, write `FAIL`, document it, skip the problem in batch mode and continue.
-- Dual packaging requirement: Generate two final test package ZIPs on success: (1) Polygon Full Package ZIP (for FuraOJ / Polygon), and (2) Standard Themis Package ZIP (for Themis grading software).
-- AI Agent Todo List & Task Tracking: Maintain a persistent, structured `todo.md` checklist following `docs/TODO_LIST_PROTOCOL.md` throughout execution. Track task states with standard markers (`- [ ]`, `- [-]`, `- [x]`, `- [!]`), enforce strictly one task in progress at a time, dynamically insert recovery subtasks upon failure, and verify all tasks are completed before declaring final success.
+- Isolated work directory: Always create a dedicated working directory `work/<problem-id>/` (where `<problem-id>` is the problem code/identifier) and perform all problem-related work within it. All intermediate sources, binaries, candidate tests, logs, `todo.md`, `report.md`, staging folders, and the final Polygon and Themis package ZIPs (`work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`) MUST reside inside `work/<problem-id>/`.
+- Dual packaging requirement: Generate two final test package ZIPs on success inside `work/<problem-id>/`: (1) Polygon Full Package ZIP (`work/<problem-id>/<problem-id>-polygon.zip` for FuraOJ / Polygon), and (2) Standard Themis Package ZIP (`work/<problem-id>/<problem-id>-themis.zip` for Themis grading software).
+- AI Agent Todo List & Task Tracking: Maintain a persistent, structured checklist at `work/<problem-id>/todo.md` following `docs/TODO_LIST_PROTOCOL.md` throughout execution. Track task states with standard markers (`- [ ]`, `- [-]`, `- [x]`, `- [!]`), enforce strictly one task in progress at a time, dynamically insert recovery subtasks upon failure, and verify all tasks are completed before declaring final success.
+
 
 
 Golden Package Profile (FuraOJ Polygon Full Package)
@@ -43,10 +45,11 @@ Golden Package Profile (FuraOJ Polygon Full Package)
 - Do not guess Polygon XML structures for features that are not evidenced by the golden template or verified platform knowledge; preserve/emit only valid package schema.
 - Final `problem.xml` must reference every packaged source/binary/resource path consistently.
 - On successful processing, final tests are contiguous `tests/01` through `tests/NN` with corresponding `tests/01.a` through `tests/NN.a` (%02d pattern preferred).
+- Final package output location: `work/<problem-id>/<problem-id>-polygon.zip`.
 
 Themis Package Profile (Standard Themis Package)
 
-- In addition to the Polygon package, always generate a companion Themis package ZIP (`<problemname>-themis.zip` or `themis-package.zip`).
+- In addition to the Polygon package, always generate a companion Themis package ZIP (`work/<problem-id>/<problem-id>-themis.zip`).
 - Archive layout inside the ZIP:
   ```text
   <problemname>/
@@ -164,7 +167,7 @@ The final default package must contain both English and Vietnamese tutorials whe
 
 To prevent goal drift, ensure total verification, and provide real-time visibility across complex 15-phase test engineering:
 
-- **Initialize `todo.md`**: At the very beginning of processing a problem, initialize `todo.md` at the workspace root based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
+- **Initialize `todo.md`**: At the very beginning of processing a problem, initialize `todo.md` inside the problem working directory (`work/<problem-id>/todo.md`) based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
 - **Atomic Checklist Format**: Tasks must use standard GitHub markdown checkbox syntax:
   - `- [ ]` Pending
   - `- [-]` In Progress (strictly ONE task in progress at any given moment)
@@ -176,4 +179,23 @@ To prevent goal drift, ensure total verification, and provide real-time visibili
   - After verifying results, immediately mark it `- [x]` with a brief note of verified findings before moving to the next task.
 - **Dynamic Recovery Insertion**: When any step fails (e.g., differential check mismatch, compilation error, generator timeout, unkilled mutant), dynamically insert remediation subtasks directly under the failing phase instead of losing context.
 - **Pre-Completion Audit**: Never declare completion or return a final report until every phase in `todo.md` has been successfully executed, verified, and checked off as `- [x]`.
+
+## ISOLATED WORK DIRECTORY HIERARCHY — ABSOLUTE
+
+To prevent workspace clutter, isolate test generation artifacts, and ensure clean separation between problems:
+
+- **Directory Creation**: Before performing any task for a problem, create the dedicated directory structure `work/<problem-id>/` (where `<problem-id>` is the problem code/short name, e.g. `work/socdist/`, `work/sum/`).
+- **All Operations Contained**: ALL work must be conducted inside `work/<problem-id>/`:
+  - Canonical statement: `work/<problem-id>/problem.md`.
+  - Task tracking: `work/<problem-id>/todo.md`.
+  - Intermediate code: reference solution, brute force, generator, validator, checker, runner, benchmarks, and compiled binaries.
+  - Candidate test pool, logs, and benchmark profiling outputs.
+  - Final execution report: `work/<problem-id>/report.md`.
+- **Package Staging & Output Archives**:
+  - Polygon staging folder: `work/<problem-id>/polygon-package/`.
+  - Themis staging folder: `work/<problem-id>/themis-package/<problem-id>/`.
+  - Final Polygon package ZIP: `work/<problem-id>/<problem-id>-polygon.zip`.
+  - Final Themis package ZIP: `work/<problem-id>/<problem-id>-themis.zip`.
+  - Both final ZIP files MUST reside directly in `work/<problem-id>/`.
+
 

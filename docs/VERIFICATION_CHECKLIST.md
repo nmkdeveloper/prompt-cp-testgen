@@ -102,10 +102,11 @@ Before declaring a Polygon package successful, the agent must check every applic
 
 ## Packaging (Dual Packaging: Polygon & Themis)
 
-- [ ] Clean staging directories (`polygon-package/` and `themis-package/<problemname>/`).
+- [ ] Isolated problem work directory created (`work/<problem-id>/`).
+- [ ] Clean staging directories inside work folder (`work/<problem-id>/polygon-package/` and `work/<problem-id>/themis-package/<problem-id>/`).
 - [ ] Allowlist packaging only.
-- [ ] Polygon Full Package ZIP created (`<problemname>-polygon.zip` or `polygon-package.zip`).
-- [ ] Themis Package ZIP created (`<problemname>-themis.zip` or `themis-package.zip`).
+- [ ] Polygon Full Package ZIP created inside work folder (`work/<problem-id>/<problem-id>-polygon.zip`).
+- [ ] Themis Package ZIP created inside work folder (`work/<problem-id>/<problem-id>-themis.zip`).
 - [ ] Themis archive contains `<problemname>/TEST[ID]/<problemname>.<ext>` hierarchy.
 - [ ] Themis test files match Polygon tests byte-for-byte with strict whitespace conformity.
-- [ ] Both ZIPs can be reopened and pass offline package verification without errors.
+- [ ] Both ZIPs inside `work/<problem-id>/` can be reopened and pass offline package verification without errors.

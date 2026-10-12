@@ -4,11 +4,12 @@ description: Builds clean Polygon and Themis packages from verified generated ar
 ---
 # Package Builder (Polygon + Themis)
 
-Create clean staging directories. Use an allowlist, not a recursive zip of the whole workspace.
+Create clean staging directories inside `work/<problem-id>/`. Use an allowlist, not a recursive zip of the whole workspace.
 
-Every successful problem run generates two distinct distribution archives:
-1. **Polygon Full Package ZIP**: `<problemname>-polygon.zip` (for FuraOJ / Polygon).
-2. **Themis Package ZIP**: `<problemname>-themis.zip` (for Themis grading software).
+Every successful problem run generates two distinct distribution archives directly inside `work/<problem-id>/`:
+1. **Polygon Full Package ZIP**: `work/<problem-id>/<problem-id>-polygon.zip` (for FuraOJ / Polygon).
+2. **Themis Package ZIP**: `work/<problem-id>/<problem-id>-themis.zip` (for Themis grading software).
+
 
 Exclude internal analysis, logs, reports, candidate pools, provenance, caches, temporary files and unrelated source files.
 
@@ -130,7 +131,7 @@ Before finalizing statement files and packaging:
 
 ### Themis Package Layout & Staging
 
-In parallel with the Polygon package, stage the Themis package in a clean staging directory `themis-package/<problemname>/`:
+In parallel with the Polygon package, stage the Themis package in a clean staging directory `work/<problem-id>/themis-package/<problemname>/`:
 ```text
 <problemname>/
   TEST01/
@@ -149,7 +150,7 @@ In parallel with the Polygon package, stage the Themis package in a clean stagin
 - `TEST[ID]`: directory name formatted as `TEST01`, `TEST02`, ... `TESTNN` (%02d pattern, or %03d if tests >= 100).
 - `<problemname>.<ext_inp>` & `<problemname>.<ext_out>`: exact filenames and extensions specified in problem statement (or `<problemname>.INP` / `<problemname>.OUT` for standard I/O).
 - All files must be byte-for-byte identical to Polygon tests and follow strict whitespace rules (zero trailing spaces, zero redundant empty lines, exact 1 newline at EOF).
-- Zip into `<problemname>-themis.zip` (or `themis-package.zip`).
+- Zip directly into `work/<problem-id>/<problem-id>-themis.zip`.
 
 ### Final verification
 

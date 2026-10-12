@@ -48,6 +48,10 @@ Run every applicable layer, serially.
 
 ### Layer 0 — Safe archive inspection
 
+Inspect both target packages inside `work/<problem-id>/`:
+- Polygon Full Package ZIP: `work/<problem-id>/<problem-id>-polygon.zip`
+- Standard Themis Package ZIP: `work/<problem-id>/<problem-id>-themis.zip`
+
 Verify:
 - ZIP can be opened and fully read;
 - no CRC errors;
@@ -310,7 +314,7 @@ Generated `.in` and `.out` artifacts remain immutable.
 
 ### Layer 11 — Themis package verification
 
-Verify the companion Themis package ZIP (`<problemname>-themis.zip` or `themis-package.zip`):
+Verify the companion Themis package ZIP (`work/<problem-id>/<problem-id>-themis.zip`):
 - **ZIP Safety & Integrity**: Themis archive opens cleanly without CRC errors, absolute paths, or traversal elements.
 - **Root Directory Layout**: Top-level directory contains `<problemname>/` (the problem code / short name).
 - **Subdirectory Numbering**: Test subdirectories are `TEST01`, `TEST02`, ... `TESTNN` matching the total test count and numbering of the Polygon package.

@@ -6,7 +6,7 @@ alwaysApply: true
 
 Maintain structured task management and progress visibility across complex multi-phase execution:
 
-- **Initialize `todo.md`**: Upon receiving a task, create or load `todo.md` at the project root based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
+- **Initialize `todo.md`**: Upon receiving a task, create or load `todo.md` inside the problem working directory (`work/<problem-id>/todo.md`) based on `templates/todo.md` and `docs/TODO_LIST_PROTOCOL.md`.
 - **Status Markers**:
   - `- [ ]` Pending
   - `- [-]` In Progress (exactly ONE task active at a time)

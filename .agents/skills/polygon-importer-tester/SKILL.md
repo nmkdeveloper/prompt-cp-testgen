@@ -4,7 +4,7 @@ description: Generates an offline standalone Python importer test script based o
 ---
 # Polygon Importer Tester
 
-This skill provides the methodology to generate and run an offline, standalone Python verification script that mirrors the exact structure, parsing pipeline, and validation rules of `references/codeforces_polygon.py` (which is strictly **READONLY**). It validates that a staged or generated Polygon Full Package ZIP (`<problemname>-polygon.zip`) can synchronize and import seamlessly into Fura Online Judge without runtime errors, schema crashes, or data truncation.
+This skill provides the methodology to generate and run an offline, standalone Python verification script that mirrors the exact structure, parsing pipeline, and validation rules of `references/codeforces_polygon.py` (which is strictly **READONLY**). It validates that a staged or generated Polygon Full Package ZIP (`work/<problem-id>/<problem-id>-polygon.zip`) can synchronize and import seamlessly into Fura Online Judge without runtime errors, schema crashes, or data truncation.
 
 ## Authoritative reference & strictly READONLY rule
 
@@ -120,12 +120,12 @@ class StandalonePolygonImporter:
 
 1. **Preflight**:
    - Confirm `references/codeforces_polygon.py` exists and is untouched (read-only).
-   - Ensure the generated Polygon ZIP archive exists (e.g. `<problemname>-polygon.zip`).
+   - Ensure the generated Polygon ZIP archive exists in the problem work directory: `work/<problem-id>/<problem-id>-polygon.zip`.
 2. **Generate Test Script**:
-   - Write `sync_test_importer.py` in the workspace or scratch directory.
+   - Write `sync_test_importer.py` in `work/<problem-id>/` or scratch directory.
    - Include dense, compact Python code with English comments on core functions.
 3. **Execute Test Script**:
-   - Run: `python sync_test_importer.py <path_to_polygon_zip> <problem_code>`
+   - Run: `python work/<problem-id>/sync_test_importer.py work/<problem-id>/<problem-id>-polygon.zip <problem_code>`
    - Capture stdout and returncode.
 4. **Evaluate Results**:
    - If the script runs to completion and logs success, the package is verified to be 100% synchronized and compatible with `codeforces_polygon.py`.

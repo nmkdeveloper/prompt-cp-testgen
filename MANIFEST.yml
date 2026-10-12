@@ -33,6 +33,8 @@ policy_changes:
   kill_process_tree_on_limit: true
   task_tracking_required: true
   todo_list_protocol: docs/TODO_LIST_PROTOCOL.md
+  work_directory_isolation: true
+  work_directory_pattern: "work/<problem-id>/"
 notes:
   - testlib.h is an external dependency and is not vendored as a frozen snapshot.
   - Final Polygon ZIPs are generated per problem and are not included in this bundle.
@@ -40,6 +42,7 @@ notes:
   - The user-provided Polygon package is the golden structural template for FuraOJ-compatible Full Packages.
   - No generic runtime Python/C++ implementation is bundled. The agent generates tooling per actual problem and host.
   - Offline package verification is mandatory and does not depend on Polygon API.
+  - All problem-specific test engineering, intermediate code, and final packages must be isolated inside work/<problem-id>/.
 
 skills:
   offline_package_verifier: .agents/skills/offline-package-verifier/SKILL.md
