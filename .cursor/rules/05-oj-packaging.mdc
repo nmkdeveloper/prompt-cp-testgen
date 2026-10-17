@@ -14,7 +14,7 @@ The packaging pipeline must produce TWO final ZIP archives on success, both plac
 
 ## Golden FuraOJ template
 
-Use the user-provided Polygon package as the structural golden template and conform to Fura Online Judge importer logic (`references/codeforces_polygon.py`, strictly READONLY). Default import limits & score: 1 GB RAM (`<memory-limit>1073741824</memory-limit>`), 1s time limit (`<time-limit>1000</time-limit>`), and 1đ problem score. Default language directories are `english` and `vietnamese`. Mirror `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, root scripts, `tags`, and checker/validator resource relationships as applicable.
+Use the user-provided Polygon package as the structural golden template and conform to Fura Online Judge importer logic (`references/codeforces_polygon.py`, strictly READONLY). Default import limits & score: 1 GB RAM (`<memory-limit>1073741824</memory-limit>`), 1s time limit (`<time-limit>1000</time-limit>`), and problem score matching statement points (or default 1đ if unspecified). Total test count must be a multiple of 10 (except for special problem types). Default language directories are `english` and `vietnamese`. Mirror `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, root scripts, `tags`, and checker/validator resource relationships as applicable.
 
 Include the actual `files/testlib.h` used by the package when testlib is used. Testlib C++ sources must use `#include <testlib.h>`.
 

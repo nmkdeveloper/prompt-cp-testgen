@@ -2,7 +2,7 @@
 
 ## Dynamic optimal final size
 
-The final test count is dynamically calculated to be reasonable and optimal for the specific problem (no rigid 100-test requirement). Candidate generation is not capped. The final selected test suite MUST completely cover all subtasks as well as all essential test types:
+The final test count is dynamically calculated to be reasonable and optimal for the specific problem (no rigid 100-test requirement). The total number of final tests selected must always be a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types). Candidate generation is not capped. The final selected test suite MUST completely cover all subtasks as well as all essential test types:
 1. Samples first (byte-for-byte unchanged).
 2. Minimal/boundary tests.
 3. Brute-verified small cases.
@@ -49,11 +49,13 @@ Derive families from the actual problem, including only those that are relevant:
 - complexity worst cases
 - wrong-solution targeted killers
 
-## Answer diversity
+## Answer diversity & Output distribution statistics
 
-Answers must come from the verified reference/oracle. Do not patch answer files. Penalize unnecessary duplicate outputs, but keep duplicate-answer tests when they add correctness, boundary, subtask, structural or killer value.
+Answers must come from the verified reference/oracle. Never manually alter or fabricate outputs.
 
-For numeric outputs, spread values over meaningful regions of the attainable range. Use linear buckets for naturally linear distributions and logarithmic buckets for scale-heavy distributions. Keep a small fraction of valid zero/no-solution results when the statement defines such a case and natural valid cases exist.
+- **Statistical Distribution Audit**: Compute output frequency and value distribution statistics across all non-sample testcases.
+- **Spectrum Diversity & Anti-O(1)**: The output distribution must exhibit broad spread across the valid output domain (some small, some medium, some large, boundary extremes, and a small fraction of valid zero/no-solution cases when applicable). Avoid generating testsets where answers overwhelmingly cluster on a constant value (e.g., all 0, all -1, all 1), which could permit trivial constant/$O(1)$ guessing solutions to pass.
+- **Generator Modification & Regeneration Loop**: If post-generation analysis reveals that too many non-sample outputs are identical (excluding problem-specific structural exceptions like boolean YES/NO), test selection alone is insufficient: the agent MUST immediately modify generator parameters and generation logic (`generator.cpp`) and regenerate the candidate test pool from scratch until output diversity is achieved.
 
 ## Selection
 

@@ -13,10 +13,10 @@ When generating a Polygon package for Fura Online Judge, use these standard defa
   `self.meta['time_limit'] = float(testset.find('time-limit').text) / 1000` -> `1.0` second.
 - **Memory Limit**: Default **1 GB RAM** (`1073741824` bytes in `problem.xml`). FuraOJ parses this as:
   `self.meta['memory_limit'] = int(testset.find('memory-limit').text) // 1024` -> `1048576` KB (1024 MB).
-- **Points**: Default **1đ** (1 point).
+- **Points**: Equal to points explicitly stated in the problem statement (e.g. 100, 70, 10). If not specified in the statement, default to **1đ** (1 point).
   In FuraOJ's importer, if testcases have 0 points (or unbatched non-partial):
   `if not self.meta['partial'] and last_case is not None: last_case.points = 1`
-  awarding exactly 1đ for solving the problem. If subtasks are used, subtask point values should sum to the problem's total points or default 1đ.
+  awarding exactly 1đ for solving the problem. If subtasks or statement points are used, subtask point values should sum to the problem's statement points or default 1đ.
 
 ## Hard package assumptions observed in the importer
 
@@ -62,6 +62,8 @@ All test files (`.inp`, `.out`, `tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.
 - Absolutely ZERO trailing whitespace (no trailing spaces ` ` or tabs `\t` on any line).
 - Absolutely ZERO redundant newlines (no empty lines `\n\n`, exactly one trailing newline `\n` at EOF).
 - Token outputs must not include trailing spaces before newline (e.g. `cout << a[i] << (i + 1 == n ? '\n' : ' ');`).
+- **Test Count Multiple of 10**: Total number of final testcases is always a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types).
+- **Output Distribution Statistics & Regeneration**: Statistically audit output distributions across non-sample tests. If outputs cluster excessively on identical values (excluding problem-specific structural formats like boolean YES/NO), modify generator code and regenerate candidate tests from scratch until diversity is achieved across the spectrum.
 
 ## Upload Conflict & Page Crash Prevention
 

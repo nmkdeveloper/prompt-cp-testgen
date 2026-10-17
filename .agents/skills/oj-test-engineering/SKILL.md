@@ -31,8 +31,8 @@ Use the full pipeline in `../../../docs/WORKFLOW.md` and enforce `../../../AGENT
 14. Validate candidates and run brute/reference/wrong-solution checks serially.
 15. Benchmark performance-sensitive structures under the same protected limits.
 16. Generate targeted counterexamples for meaningful survivors.
-17. Dynamically calculate and select the optimal, reasonable number of final tests, preserving samples and completely covering all subtasks and essential test types.
-18. Audit answer diversity without editing answers.
+17. Dynamically calculate and select the optimal, reasonable number of final tests, ensuring the total count is always a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types), preserving samples and completely covering all subtasks and essential test types.
+18. Audit answer diversity and output distribution statistics (excluding samples and problem-specific formats like YES/NO). If too many non-sample outputs are identical or lack spectrum diversity (clustering on trivial values, risking trivial O(1) solutions), modify generator code and regenerate candidate tests from scratch until diversity is achieved.
 19. Re-run final validation and produce incremental logs/final report at `work/<problem-id>/report.md`.
 20. Build clean Polygon and Themis packages directly inside `work/<problem-id>/` (producing `work/<problem-id>/<problem-id>-polygon.zip` and `work/<problem-id>/<problem-id>-themis.zip`).
 21. Run the offline-package-verifier against both staged packages and final ZIPs in `work/<problem-id>/`. Do not use Polygon API as the authoritative verification path.
@@ -56,7 +56,7 @@ Do not include a generic runner implementation from the bundle.
 - LaTeX math subscript escaping (`$s\_1$` mandatory): all subscripts in math expressions must escape underscores with backslash (`$s\_1$`, `$a\_i$`, `$dp\_{i, j}$`) to avoid Markdown parser italic corruption.
 
 ## Final conditions
-Success requires dynamic optimal final tests (covering all subtasks and test types), preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, answer-diversity audit, protected execution, incremental logs, detailed report, clean Polygon and Themis ZIPs, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
+Success requires dynamic optimal final tests (count is a multiple of 10, covering all subtasks and test types), preserved samples first, subtask boundary coverage, reference/brute verification where applicable, wrong-solution analysis, output distribution statistics audit & generator regeneration loop if clustering occurs, answer-diversity audit, statement-specified scoring (or 1đ default), protected execution, incremental logs, detailed report, clean Polygon and Themis ZIPs, and a PASS from the offline-package-verifier. ZIP readability or XML parse success alone is never sufficient.
 
 If recovery is exhausted, write `FAIL` in the report and skip the problem in batch mode.
 
@@ -72,7 +72,7 @@ The local reference `references/codeforces_polygon.py` contains the Fura Online 
 Default resource limits and scoring for `problem.xml`:
 - **Default Memory Limit**: **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
 - **Default Time Limit**: **1s time** (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
-- **Default Points**: **1đ** (1 point: unbatched non-partial imports assign `last_case.points = 1` giving 1đ total for the problem, or default problem point value 1đ).
+- **Problem Score / Default Points**: When importing via Polygon package, problem score equals the points explicitly specified in the problem statement. If not specified in the statement, default to **1đ** (1 point: unbatched non-partial imports assign `last_case.points = 1` giving 1đ total for the problem, or default problem point value 1đ).
 
 Default statement languages are exactly:
 

@@ -112,7 +112,7 @@ The exact set of `tutorial`, `notes`, `legend`, `input`, `output`, and example s
 
 ## Tests
 
-Successful problems have a dynamically calculated optimal test suite covering all subtasks and essential test types:
+Successful problems have a dynamically calculated optimal test suite covering all subtasks and essential test types (total test count must always be a multiple of 10, e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types):
 
 ```text
 01 ... NN
@@ -120,6 +120,11 @@ Successful problems have a dynamically calculated optimal test suite covering al
 ```
 
 The first tests are the original samples, preserved exactly. The sample order and contents are immutable.
+
+### Output Distribution Statistics & Anti-O(1) Protection
+
+- Statistically analyze output distributions across non-sample tests. The outputs must display broad spectrum diversity (some small, some large, boundary extremes, and natural zero/no-solution cases where valid), preventing trivial constant / $O(1)$ guessing codes from passing.
+- If too many non-sample outputs are identical (excluding problem-specific structural formats like boolean YES/NO), modify generator logic (`generator.cpp`) and regenerate candidate tests from scratch until diversity is achieved.
 
 ### Strict Whitespace & Formatting Hygiene
 
@@ -181,7 +186,7 @@ Unless explicitly specified otherwise in the reconstructed problem statement, st
 
 - **Time limit**: Default **1s** (`<time-limit>1000</time-limit>` milliseconds). FuraOJ parses this as seconds: `float(testset.find('time-limit').text) / 1000` = `1.0`s.
 - **Memory limit**: Default **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes). FuraOJ parses this into kilobytes: `int(testset.find('memory-limit').text) // 1024` = `1048576` KB (1024 MB).
-- **Points**: Default **1đ** (1 point). For non-batched/standard tests, FuraOJ's importer sets `last_case.points = 1` if `total_points == 0`, giving 1 point total for solving the problem. For subtasks, point allocations should sum to the target points or 1đ default.
+- **Points**: Equal to points explicitly stated in the problem statement (e.g. 100, 70, 10). If not specified in the statement, default to **1đ** (1 point). For non-batched/standard tests, FuraOJ's importer sets `last_case.points = 1` if `total_points == 0`, giving 1 point total for solving the problem. For subtasks, point allocations should sum to the statement points or 1đ default.
 
 For the main final testset, use the dynamically selected optimal test set covering all subtasks and test types. `%02d` is preferred because it matches the reference profile.
 

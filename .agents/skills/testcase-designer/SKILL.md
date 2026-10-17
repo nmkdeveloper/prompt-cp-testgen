@@ -10,12 +10,17 @@ Use testlib-based C++ generators when appropriate. Generators must be determinis
 
 Candidate roles may include minimal, boundary, brute-small, structural, adversarial, maximum, stress and wrong-solution killer cases.
 
+## Output Spectrum Diversity & Anti-O(1) Design
+- Design generator parameters and probability distributions so generated testcases yield broad spectrum diversity across valid outputs (some small, some medium, some large, boundary extremes, and a small fraction of valid zero/no-solution outputs when applicable).
+- Avoid generating tests that overwhelmingly produce identical answers (e.g. all 0, all -1, all 1, or constant values), preventing trivial constant / $O(1)$ guess algorithms from passing.
+- If post-generation statistical analysis reveals that too many non-sample outputs are identical (excluding problem-specific structural formats like boolean YES/NO), modify generator code and regenerate the candidate pool from scratch.
+
 Never manually edit generated test data. Fix the generator and regenerate instead.
 
 
 ## Execution constraints
 
-Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and enforced hard time limits (solutions/mutants: strict 1000 ms; generators: calibrated hard limit derived from a host FLOPS benchmark). Prefer C++ for executable components.
+Run this skill as part of a single-agent, strictly serial workflow. Do not spawn subagents and do not execute multiple OJ tasks concurrently. All code, generator sources, binaries, and test artifacts must be located strictly inside `work/<problem-id>/`. Any executable work must use the agent-generated, OS-adapted protected toolchain with 1 GiB RAM and enforced hard time limits (solutions/mutants: strict 1000 ms; generators: calibrated hard limit derived from a host FLOPS benchmark). Prefer C++ for executable components.
 
 
 ## Specialized and distributed killer tests

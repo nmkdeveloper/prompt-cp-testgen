@@ -201,9 +201,9 @@ Before a package can be accepted, all textual and markup components must pass st
      - Time limit: default `1000` ms (1.0s), strictly within `[0.01, 60.0]` seconds.
      - Memory limit: default `1073741824` bytes (1 GB = 1048576 KB), strictly within `[0, 1048576]` KB (`DMOJ_PROBLEM_MAX_MEMORY_LIMIT`).
    - **Total Points > 0**:
-     - Total problem points must be strictly greater than 0 (default 1đ).
-     - For non-partial/unbatched problems, FuraOJ awards 1đ via `last_case.points = 1`.
-     - For batched subtasks, verify that all batches contain at least one test, dependencies are valid, and sum of points > 0.
+     - Total problem points must equal the points specified in the problem statement (e.g., 100, 70, 10) or strictly default to 1đ (1 point) when unspecified.
+     - For non-partial/unbatched problems, FuraOJ awards 1đ via `last_case.points = 1` (or statement points).
+     - For batched subtasks, verify that all batches contain at least one test, dependencies are valid, and sum of points matches the statement points (or 1đ default).
    - **init.yml Compilation Safety**:
      - Verify that `ProblemDataCompiler.generate` would succeed without raising `ProblemDataError` or setting `problem_data.feedback`.
 
@@ -212,6 +212,8 @@ Before a package can be accepted, all textual and markup components must pass st
 Verify the final testset has a valid, dynamically calculated optimal test count covering all subtasks and essential test types for a successful problem (no rigid 100-test requirement).
 
 Verify:
+- total test count is always a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types);
+- output distribution statistics: confirm statistical output diversity across non-sample tests (some small, some large, avoiding excessive identical answers or trivial O(1) domination, except for structural formats like YES/NO);
 - tests are contiguous 01..NN under the target naming convention (%02d pattern preferred);
 - every input has an answer;
 - no missing answer files;
@@ -388,7 +390,7 @@ At minimum, model and verify these observed assumptions:
 - Default resource limits and scoring in `problem.xml`:
   - `time-limit` defaults to `1000` (milliseconds, corresponding to 1s time limit in FuraOJ).
   - `memory-limit` defaults to `1073741824` (bytes, corresponding to 1048576 KB / 1 GB RAM in FuraOJ).
-  - Points default to `1đ` (1 point: unbatched non-partial imports award 1 point via `last_case.points = 1`, or subtask points must sum to 1đ default or problem points).
+  - Points: equal to points explicitly stated in the problem statement, defaulting to `1đ` (1 point) when unspecified (unbatched non-partial imports award statement points or 1 point via `last_case.points = 1`, or subtask points must sum to the statement points or 1đ default).
 - Batches/groups in `<groups>`: points-policy `complete-group` or `each-test`. If points-policy is `each-test`, dependencies must be empty. Fractional points normalized via GCD.
 - Non-interactive packages require a checker. The checker must have `type="testlib"`.
 - Built-in checker names used by the importer map to supported DMOJ checker modes; otherwise a C++ checker source must exist (`lang='CPP20'`, `type='testlib'`).

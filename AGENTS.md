@@ -11,11 +11,11 @@ Non-negotiable principles:
 - Never invent or silently repair the statement, samples, constraints, scoring or explicit filenames.
 - Prefer supplied AC/reference code, but verify it with brute/adversarial checks before promoting it to the reference.
 - Dynamically design subtasks; prefer nested ladders when naturally possible and use meaningful structural subtasks when appropriate.
-- Dynamically calculate the optimal, reasonable number of final tests (no rigid 100-test requirement); the suite MUST completely cover all subtasks as well as all essential test types (samples, minimal/boundary, brute-verified, structural/special cases, distributed adversarial killers, max-boundary stress, zero/no-solution).
+- Dynamically calculate the optimal, reasonable number of final tests (no rigid 100-test requirement); ensure the total number of testcases is always a multiple of 10 (except for special problem types) such as 10, 20, 30, 40, 50, 60, 70, 80, 90, 100...; the suite MUST completely cover all subtasks as well as all essential test types (samples, minimal/boundary, brute-verified, structural/special cases, distributed adversarial killers, max-boundary stress, zero/no-solution).
 - Put multiple meaningful max-boundary tests at the end of each subtask whenever feasible.
 - Use testlib for direct C++ test-engineering components where applicable and include it as `#include <testlib.h>` only.
 - Do not manually edit generated `.in/.out` files. Fix source and regenerate.
-- Keep answers generated from the verified reference; minimize unnecessary answer duplication and include a small number of valid no-solution/zero cases when applicable.
+- Output statistics & answer diversity: compile statistical frequency analysis of outputs across all non-sample tests; if there are too many identical outputs (excluding samples and problem-specific structural exceptions), modify generator code and regenerate tests from scratch until satisfied. Ensure output diversity across the entire spectrum (some small, some large, broad spread) and actively prevent trivial $O(1)$ solutions from succeeding (except for special problem types). Keep answers generated from the verified reference and include a small number of valid no-solution/zero cases when applicable.
 - Every untrusted executable must be run through an agent-generated native protected runner with 1 GiB RAM and enforced hard time limits: solutions and mutant codes have a strict 1000 ms limit; generators and tooling codes have a calibrated hard limit derived from a host FLOPS benchmark. Include an active auto-break watchdog that terminates runaway execution (infinite loops, infinite recursion) and kills the entire process tree.
 - Token economy in generated code: generate dense, compact code (multiple statements per line where practical) and concise variable/function names to conserve tokens without altering semantics.
 - Code comments convention: comment only on functions that genuinely require explanation; comments must strictly state core logic, inputs, and return value, and must be written exclusively in English.
@@ -39,7 +39,7 @@ Golden Package Profile (FuraOJ Polygon Full Package)
 - Default import resource limits & scoring:
   - **1 GB RAM** memory limit (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
   - **1s time** limit (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
-  - **1đ** problem score (1 point: unbatched / non-partial imports assign `last_case.points = 1` yielding 1đ total for the problem, or default problem point value 1đ).
+  - **Problem score**: equals the points specified in the problem statement; if not specified, defaults to **1đ** (1 point: unbatched / non-partial imports assign `last_case.points = 1` yielding 1đ total for the problem, or default problem point value 1đ).
 - Produce the same categories of artifacts when applicable: `problem.xml`, `tests/`, `statements/`, `statement-sections/`, `files/`, `solutions/`, `stresses/`, `scripts/`, `doall.sh`, `doall.bat`, `wipe.sh`, `wipe.bat`, root checker mirrors, solution `.desc` metadata, generated platform binaries, validator/checker tests, and `tags`.
 - Include `files/testlib.h` in the final Polygon package when the target profile uses testlib, and ensure all testlib-based C++ sources contain exactly `#include <testlib.h>`.
 - Do not guess Polygon XML structures for features that are not evidenced by the golden template or verified platform knowledge; preserve/emit only valid package schema.
@@ -88,7 +88,7 @@ Fura Online Judge (FuraOJ) importer source-of-truth rule
 - The local reference snapshot `references/codeforces_polygon.py` represents the authoritative codebase and behavioral contract of Fura Online Judge.
 - **CRITICAL — STRICTLY READONLY**: `references/codeforces_polygon.py` is strictly **READONLY**. Never modify, delete, or overwrite `references/codeforces_polygon.py`. All package generation, tooling, verification, and code must occur within this workspace.
 - Treat the FuraOJ `codeforces_polygon.py` importer logic and the golden package layout as structural and behavioral golden references.
-- Default import settings are **1 GB RAM** (`1073741824` bytes), **1s time** (`1000` ms), and **1đ** (1 point).
+- Default import settings are **1 GB RAM** (`1073741824` bytes), **1s time** (`1000` ms), and problem score matching statement points (or default **1đ** / 1 point if unspecified).
 - **TeX, LaTeX, Markdown & Character Sanitization (Preventing Page Crashes)**:
   - Statements, problem names, notes, scoring, and tutorials must be strictly sanitized against `DMOJ_PROBLEM_STATEMENT_DISALLOWED_CHARACTERS`:
     `{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`.
@@ -107,7 +107,7 @@ Fura Online Judge (FuraOJ) importer source-of-truth rule
   - Problem code must be alphanumeric lowercase (`^[a-z0-9]+$`), maximum length 20.
   - Problem name must be non-empty, maximum length 100, and free of disallowed characters.
   - Limits must stay within FuraOJ supported range (time: 0.01s - 60s; memory: 0 - 1048576 KB).
-  - Total points must be strictly greater than 0 (default 1đ).
+  - Total points must be strictly greater than 0: equal to points specified in the problem statement, or default 1đ if unspecified.
 - Before declaring a generated package valid, derive and execute an offline compatibility checklist from the FuraOJ importer source, then compare the staged package against the golden package's artifact layout.
 - In particular, validate every `statement` language referenced by `problem.xml`, the corresponding `problem-properties.json`, required keys such as `legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, and `tutorial`, and every path consumed by the importer.
 - Do not require these fields merely because a generic Polygon specification suggests them; require them because the target importer source actually consumes them.

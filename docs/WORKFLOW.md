@@ -51,9 +51,10 @@ Run provided wrong solutions and meaningful mutants serially. Generate targeted 
 
 Run benchmark inputs serially under the protected 1 second / 1 GiB policy and identify performance-sensitive structures.
 
-## Phase 11 — Final Selection
+## Phase 11 — Final Selection & Output Statistics
 
-Select the optimal, reasonable number of final tests (dynamically calculated; no rigid 100-test requirement). Preserve samples first, completely cover all subtasks and essential test types, satisfy subtask boundaries, maximize useful coverage, minimize answer redundancy, and include natural no-solution cases.
+Select the optimal, reasonable number of final tests (dynamically calculated; total test count must always be a multiple of 10, e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types). Preserve samples first, completely cover all subtasks and essential test types, satisfy subtask boundaries, maximize useful coverage, and include natural no-solution cases.
+Perform statistical audit of output distributions across non-sample tests. If too many outputs are identical or fail to exhibit spectrum diversity (risking trivial O(1) guess solutions, excluding structural formats like boolean YES/NO), modify generator source code (`generator.cpp`) and regenerate tests from scratch until diversity is achieved.
 
 ## Phase 12 — Strict Formatting & Whitespace Audit
 
@@ -67,6 +68,7 @@ Audit every candidate and selected test file against strict formatting rules:
 ## Phase 13 — Dual Packaging (Polygon & Themis)
 
 Build clean staging trees and final ZIP archives directly inside `work/<problem-id>/`:
+- Configure problem scoring in `problem.xml` to match the points specified in the problem statement (e.g. 100, 70, 10) or default to 1đ (1 point) when unspecified.
 - Polygon staging tree: `work/<problem-id>/polygon-package/`
 - Themis staging tree: `work/<problem-id>/themis-package/<problem-id>/`
 - Final Polygon Full Package ZIP: `work/<problem-id>/<problem-id>-polygon.zip` (for FuraOJ / Polygon).

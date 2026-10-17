@@ -30,7 +30,7 @@ Use the user-supplied Polygon Full Package as the golden structural template. Re
 When building the package and generating `problem.xml`, use the standard Fura Online Judge defaults:
 - **Default Memory Limit**: **1 GB RAM** (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ's importer as `1048576` KB = 1024 MB).
 - **Default Time Limit**: **1s time** (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ's importer as `1.0` second).
-- **Default Points**: **1đ** (1 point: for standard unbatched tests, FuraOJ's importer sets `last_case.points = 1` when `total_points == 0`, giving 1 point total for passing all tests; if subtasks are specified, ensure subtask points sum to the target score or 1đ default).
+- **Problem Score / Default Points**: When importing via Polygon package, problem score equals the points explicitly specified in the problem statement. If not specified in the statement, default to **1đ** (1 point: for standard unbatched tests, FuraOJ's importer sets `last_case.points = 1` when `total_points == 0`, giving 1 point total for passing all tests; if subtasks are specified, ensure subtask points sum to the statement points or 1đ default).
 
 ### Default languages
 
@@ -81,7 +81,7 @@ The exact presence of an artifact is conditional on whether the problem actually
 
 ### Test descriptor
 
-For a successful problem, `problem.xml` must declare the selected final tests (contiguous `01`..`NN`) and reference:
+For a successful problem, `problem.xml` must declare the selected final tests (contiguous `01`..`NN`). The total test count must always be a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types) and reference:
 
 ```text
 tests/%02d
@@ -183,7 +183,7 @@ The local reference `references/codeforces_polygon.py` contains the Fura Online 
 
 The staged package must satisfy the actual access patterns of `PolygonImporter` and prevent upload conflicts or page crashes:
 - `time-limit` defaults to 1000 ms (1s) and `memory-limit` defaults to 1073741824 bytes (1 GB); limits must remain within FuraOJ supported range.
-- Points default to 1đ (1 point), total points must be strictly > 0.
+- Points equal the points specified in the problem statement, or default to 1đ (1 point); total points must be strictly > 0.
 - All text fields in `statement/<language>/problem-properties.json` (`legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, `tutorial`) must be present, valid UTF-8, and free of disallowed characters.
 - Problem code must be clean lowercase alphanumeric (`^[a-z0-9]+$`), length <= 20.
 - Problem name must be non-empty, length <= 100, and free of disallowed characters.

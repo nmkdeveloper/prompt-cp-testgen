@@ -128,15 +128,15 @@ Subtask count is not fixed. If the problem has no useful subtasks, the agent des
 
 ## Dynamic optimal final tests
 
-The final test count is dynamically calculated to be reasonable and optimal for each specific problem (no rigid 100-test requirement). The agent may generate a much larger candidate pool before selecting them. The selected test suite MUST completely cover all subtasks and include all essential test types (samples first, minimal/boundary, brute-verified small, structural/special cases, distributed adversarial killers, max-boundary stress ending each subtask, zero/no-solution).
+The final test count is dynamically calculated to be reasonable and optimal for each specific problem (no rigid 100-test requirement). The total number of final tests selected must always be a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types). The agent may generate a much larger candidate pool before selecting them. The selected test suite MUST completely cover all subtasks and include all essential test types (samples first, minimal/boundary, brute-verified small, structural/special cases, distributed adversarial killers, max-boundary stress ending each subtask, zero/no-solution).
 
 ## Reference priority
 
 Provided AC/accepted/reference code is prioritized but never trusted blindly. Verify it with brute force on a safe small domain and with adversarial/boundary checks before promoting it to `VERIFIED_REFERENCE`. Once verified, reuse it rather than rewriting it unnecessarily.
 
-## Answer policy
+## Answer policy & Output distribution statistics
 
-Answers are generated from the verified reference/oracle. Avoid unnecessary repeated results; distribute numeric answers over meaningful ranges and include a small amount of valid zero/no-solution coverage when the statement naturally supports it. Never modify an answer by hand to improve diversity.
+Answers are generated from the verified reference/oracle. Compute statistical frequency and value distribution across all non-sample testcases. If too many outputs are identical or fail to exhibit spectrum diversity across the valid range (some small, some large, boundary extremes, anti-O(1) protection, excluding structural formats like boolean YES/NO), modify generator code (`generator.cpp`) and regenerate tests from scratch until diversity is achieved. Never modify an answer by hand to improve diversity.
 
 ## Logging and final report
 

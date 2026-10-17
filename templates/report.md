@@ -11,7 +11,8 @@
 - Reconstructed statement: `problem.md`
 - Samples: {{SAMPLE_COUNT}}
 - Subtasks: {{SUBTASK_COUNT}}
-- Final tests: {{FINAL_TEST_COUNT}}
+- Final tests: {{FINAL_TEST_COUNT}} (multiple of 10: {{MULTIPLE_OF_10_CONFIRMED}})
+- Problem score: {{PROBLEM_SCORE}} (statement points or 1đ default)
 - Candidate tests generated: {{CANDIDATE_COUNT}}
 - Brute-verified candidates: {{BRUTE_VERIFIED_COUNT}}
 
@@ -33,15 +34,20 @@
 |---|---|---:|---:|---|---|---|
 | {{WRONG_ROWS}} |
 
-## Answer distribution
+## Answer distribution & Output statistics
 
 - Unique answers: {{UNIQUE_ANSWERS}}
 - Duplicate-answer tests: {{DUPLICATE_ANSWER_TESTS}}
 - Zero/no-solution cases: {{ZERO_CASES}}
+- Output distribution statistics: {{OUTPUT_DISTRIBUTION_AUDIT}}
+- Generator regeneration loop triggered: {{GENERATOR_REGENERATION_TRIGGERED}}
 - Distribution notes: {{ANSWER_DISTRIBUTION}}
 
 ## Verification
 
+- Test count multiple of 10: {{MULTIPLE_OF_10_STATUS}}
+- Output statistics & anti-O(1) diversity: {{OUTPUT_DIVERSITY_STATUS}}
+- Problem score matches statement/default: {{PROBLEM_SCORE_STATUS}}
 - Validator: {{VALIDATOR_STATUS}}
 - Reference on all final tests: {{REFERENCE_FINAL_STATUS}}
 - Brute/reference differential: {{BRUTE_FINAL_STATUS}}

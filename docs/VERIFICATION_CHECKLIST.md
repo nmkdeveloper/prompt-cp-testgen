@@ -47,7 +47,7 @@ Before declaring a Polygon package successful, the agent must check every applic
 - [ ] Problem name: non-empty, max 100 characters.
 - [ ] Memory limit: default 1 GB RAM (`<memory-limit>1073741824</memory-limit>` bytes = 1048576 KB, within range).
 - [ ] Time limit: default 1s (`<time-limit>1000</time-limit>` ms, within range 0.01 - 60.0s).
-- [ ] Points: default 1đ, total problem points strictly > 0.
+- [ ] Points: matches points specified in problem statement or defaults to 1đ (total problem points strictly > 0).
 - [ ] All 8 keys present in `problem-properties.json` (`legend`, `input`, `output`, `interaction`, `scoring`, `sampleTests`, `notes`, `tutorial`).
 - [ ] Full package check: test 1 input and answer exist at resolved paths.
 - [ ] Batches/groups: non-empty, valid points policy, valid dependencies.
@@ -55,7 +55,8 @@ Before declaring a Polygon package successful, the agent must check every applic
 
 ## Tests & Strict I/O Whitespace Formatting
 
-- [ ] Dynamically calculated optimal final test count (no rigid 100-test requirement; complete coverage of all subtasks and test types).
+- [ ] Dynamically calculated optimal final test count: total test count must always be a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100... except for specialized problem types; complete coverage of all subtasks and test types).
+- [ ] Output distribution statistics: statistical frequency of non-sample outputs demonstrates broad spectrum diversity (some small, some large, anti-O(1) protection); if outputs overly cluster on identical values (excluding samples and YES/NO tasks), generator was modified and candidate tests regenerated from scratch.
 - [ ] Samples are first.
 - [ ] Every input has an answer.
 - [ ] Strict I/O whitespace compliance: all test inputs and outputs (`tests/01`..`tests/NN`, `tests/01.a`..`tests/NN.a`, `.inp`, `.out`) adhere strictly to problem format.

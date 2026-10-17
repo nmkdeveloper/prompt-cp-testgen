@@ -24,9 +24,9 @@ Apply token economy in all generated code: write dense, compact code (multiple s
 
 Design a dynamic number of meaningful subtasks. If the problem already has useful subtasks, analyze and preserve them. If it has none, create the best meaningful decomposition you can using constraints, algorithmic thresholds, structural properties, mathematical properties and special cases. Prefer nested ladders when naturally possible. Every subtask should end with multiple maximum-boundary tests when feasible.
 
-Generate a large candidate pool. Verify candidates with validator, brute/reference differential checks, wrong-solution execution and benchmark analysis. Dynamically calculate and select the optimal, reasonable number of final tests on success (no rigid 100-test requirement; must completely cover all subtasks and essential test types). Samples must come first. Do not manually edit any `.in` or `.out`; fix source and regenerate.
+Generate a large candidate pool. Verify candidates with validator, brute/reference differential checks, wrong-solution execution and benchmark analysis. Dynamically calculate and select the optimal, reasonable number of final tests on success, ensuring the total test count is always a multiple of 10 (e.g. 10, 20, 30, 40, 50, 60, 70, 80, 90, 100...) except for special problem types (no rigid 100-test requirement; must completely cover all subtasks and essential test types). Samples must come first. Do not manually edit any `.in` or `.out`; fix source and regenerate.
 
-Optimize answer diversity without fabricating outputs. Include a small natural share of zero/no-solution cases when the statement defines them.
+Optimize answer diversity without fabricating outputs. Perform output statistics across all non-sample tests: if there are too many identical outputs (excluding samples and problem-specific structural exceptions), modify generator code and regenerate tests from scratch until satisfied. Ensure output diversity across the spectrum (some small, some large, broad spread) and actively prevent trivial $O(1)$ solutions from dominating. Include a small natural share of zero/no-solution cases when the statement defines them.
 
 Create specialized killer tests that are distributed throughout the final suite. Whenever feasible, find tests where all known wrong solutions are WA/TLE/RE while the verified reference is AC. Otherwise create a distributed hitting set that kills every meaningful wrong solution.
 
@@ -53,7 +53,7 @@ Before generating the final package, study the reference artifacts:
 Default import parameters:
 - **1 GB RAM** memory limit (`<memory-limit>1073741824</memory-limit>` bytes, parsed by FuraOJ as `1048576` KB = 1024 MB).
 - **1s time** limit (`<time-limit>1000</time-limit>` milliseconds, parsed by FuraOJ as `1.0` second).
-- **1đ** problem score (1 point: unbatched non-partial imports assign `last_case.points = 1`, giving 1đ total for the problem).
+- **Problem score**: When imported via Polygon package, problem score equals the points stated in the problem statement; if not specified, defaults to **1đ** (1 point: unbatched non-partial imports assign `last_case.points = 1`, giving 1đ total for the problem).
 - **Vietnamese Unicode**: Fully support Vietnamese Unicode across statements, problem names, notes, and tutorials in UTF-8 without BOM; normalize to **Unicode NFC** (`unicodedata.normalize('NFC', text)`) and preserve all Vietnamese letters and diacritics. Disallowed characters check (`{ '“', '”', '‘', '’', '−', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ' }`) strictly applies to typographic punctuation, never touching Vietnamese letters.
 - **LaTeX Subscript Escaping (`$s\_1$` mandatory)**: Do NOT use raw `$s_1$` or `$a_i$`; math subscripts MUST escape underscores with a backslash: `$s\_1$`, `$a\_i$`, `$dp\_{i, j}$` to prevent Markdown parsers from interpreting raw underscores as italic emphasis.
 
